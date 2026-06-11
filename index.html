@@ -1451,7 +1451,7 @@ jobs:
                             <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-satellite-dish text-gradient"></i> Real-Time Workflow Dashboard</h2>
                         </div>
                         <div style="display: flex; gap: 15px;">
-                            <button onclick="triggerAllWorkflows()" class="btn-view-code" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); border: none; cursor: pointer; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);"><i class="fa-solid fa-rocket fa-lg"></i> TRIGGER ALL WORKFLOWS</button>
+                            <button id="trigger-all-btn" onclick="triggerAllWorkflows()" class="btn-view-code" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); border: none; cursor: pointer; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); transition: all 0.3s ease;"><i class="fa-solid fa-rocket fa-lg"></i> TRIGGER ALL WORKFLOWS</button>
                             <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
                         </div>
                     </div>
@@ -1757,6 +1757,13 @@ jobs:
                 alert("Please add your GitHub PAT using the Key icon first!");
                 return;
             }
+            
+            const btn = document.getElementById('trigger-all-btn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin fa-lg"></i> DISPATCHING...';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+            
             const repo = "gjarunselvan/Github_Action_Example";
             const workflows = [
                 "01-ci-pipeline.yml", "02-scheduled-job.yml", "03-manual-trigger.yml",
@@ -1775,7 +1782,6 @@ jobs:
             let triggeredCount = 0;
             for (const wf of workflows) {
                 try {
-                    // Try to trigger the workflow. Some might fail if they don't have workflow_dispatch on the main branch yet.
                     const res = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/${wf}/dispatches`, {
                         method: 'POST',
                         headers,
@@ -1785,9 +1791,19 @@ jobs:
                 } catch(e) {
                     console.error("Failed to trigger", wf, e);
                 }
+                // Wait 300ms between each API call to prevent GitHub Abuse Rate Limits and 504 Gateway Timeouts
+                await new Promise(r => setTimeout(r, 300));
             }
             
-            alert(`Successfully dispatched ${triggeredCount} workflows! Give the API 3-5 seconds, then watch the dashboard light up!`);
+            btn.innerHTML = '<i class="fa-solid fa-check-circle fa-lg"></i> LAUNCHED!';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            btn.style.opacity = '1';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = 'linear-gradient(135deg, #8b5cf6, #6d28d9)';
+                btn.style.pointerEvents = 'auto';
+            }, 4000);
         }
         
         // --- API Authenticator ---
