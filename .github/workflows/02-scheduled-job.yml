@@ -1,0 +1,13 @@
+name: 02 - Scheduled Job (Cron)
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC
+    - cron: '0 12 * * *'
+
+jobs:
+  daily-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run daily backup or check
+        run: echo "This is a scheduled job that runs automatically."

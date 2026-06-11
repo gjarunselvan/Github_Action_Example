@@ -1,0 +1,22 @@
+name: 07 - Reusable Workflow (Called)
+
+on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  reusable-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print input and mask secret
+        run: |
+          echo "Using config path: ${{ inputs.config-path }}"
+          echo "Secret token length: ${#SECRET_TOKEN}"
+        env:
+          SECRET_TOKEN: ${{ secrets.token }}

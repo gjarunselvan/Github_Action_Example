@@ -1,0 +1,32 @@
+name: 09 - Upload and Download Artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a file
+        run: echo "Hello world from build job" > hello.txt
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: hello.txt
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+
+      - name: Display structure of downloaded files
+        run: ls -R
+      
+      - name: Verify Content
+        run: cat hello.txt

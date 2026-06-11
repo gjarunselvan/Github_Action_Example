@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GitHub Actions Masterclass</title>
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/dracula.min.css" id="theme">
+    
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 700;
+            background: -webkit-linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal p, .reveal li {
+            font-size: 0.8em;
+            line-height: 1.4em;
+        }
+        .reveal .code-wrapper pre {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.2em 0.6em;
+            font-size: 0.5em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+            background-color: #007bff;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Intro Slide -->
+            <section>
+                <h1>GitHub Actions</h1>
+                <h3>The Ultimate Scenario Guide</h3>
+                <p>Mastering Automation, CI/CD, and Workflows</p>
+            </section>
+
+            <!-- Scenario 1 -->
+            <section>
+                <span class="badge" style="background-color: #28a745;">Scenario 01</span>
+                <h2>Basic CI Pipeline</h2>
+                <p>Run tests automatically on push and pull requests to ensure code quality.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm test
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 2 -->
+            <section>
+                <span class="badge" style="background-color: #17a2b8;">Scenario 02</span>
+                <h2>Scheduled Jobs (Cron)</h2>
+                <p>Run tasks at specific times, like daily database backups or nightly builds.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+on:
+  schedule:
+    - cron: '0 12 * * *' # Every day at 12 PM UTC
+
+jobs:
+  daily-backup:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./run_backup.sh
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 3 -->
+            <section>
+                <span class="badge" style="background-color: #ffc107; color: black;">Scenario 03</span>
+                <h2>Manual Trigger</h2>
+                <p>Allow developers to trigger workflows from the UI and pass custom inputs.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Target Environment'
+        default: 'staging'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to ${{ inputs.env }}"
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 4 -->
+            <section>
+                <span class="badge" style="background-color: #dc3545;">Scenario 04</span>
+                <h2>Matrix Strategy</h2>
+                <p>Test your code simultaneously across different operating systems and languages.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [18, 20]
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 5 -->
+            <section>
+                <span class="badge" style="background-color: #6f42c1;">Scenario 05</span>
+                <h2>Issue Management</h2>
+                <p>Automate community engagement by acting on GitHub events (e.g., Issue opened).</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Thanks for the issue!"
+            })
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 6 -->
+            <section>
+                <span class="badge" style="background-color: #007bff;">Scenario 06</span>
+                <h2>Docker Build & Publish</h2>
+                <p>Automate your container lifecycle. Build and push to DockerHub on new tags.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+steps:
+  - uses: docker/login-action@v3
+    with:
+      username: ${{ secrets.DOCKER_USER }}
+      password: ${{ secrets.DOCKER_PAT }}
+  - uses: docker/build-push-action@v5
+    with:
+      push: true
+      tags: user/app:${{ github.ref_name }}
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 7 -->
+            <section>
+                <span class="badge" style="background-color: #20c997;">Scenario 07</span>
+                <h2>Reusable Workflows</h2>
+                <p>DRY (Don't Repeat Yourself). Create templates to share across multiple repositories.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+# In the Caller Workflow:
+jobs:
+  call-template:
+    uses: ./.github/workflows/template.yml
+    with:
+      config: 'prod'
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 8 -->
+            <section>
+                <span class="badge" style="background-color: #e83e8c;">Scenario 08</span>
+                <h2>Contexts & Expressions</h2>
+                <p>Dynamically control your workflows using conditional logic and GitHub contexts.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+jobs:
+  conditional-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run only if branch is main
+        if: github.ref == 'refs/heads/main'
+        run: echo "Production Deploy!"
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 9 -->
+            <section>
+                <span class="badge" style="background-color: #fd7e14;">Scenario 09</span>
+                <h2>Artifacts</h2>
+                <p>Pass files (like build binaries or test reports) between jobs.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+- uses: actions/upload-artifact@v4
+  with:
+    name: build-output
+    path: dist/
+    
+# In a later job:
+- uses: actions/download-artifact@v4
+  with:
+    name: build-output
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 10 -->
+            <section>
+                <span class="badge" style="background-color: #6610f2;">Scenario 10</span>
+                <h2>Environment Vars & Secrets</h2>
+                <p>Securely inject API keys, passwords, and environment data.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+env:
+  GLOBAL_VAR: "Hello"
+  
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -H "Auth: ${{ secrets.API_KEY }}"
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 11 -->
+            <section>
+                <span class="badge" style="background-color: #28a745;">Scenario 11</span>
+                <h2>Dependency Caching</h2>
+                <p>Speed up your pipelines by caching massive dependency directories.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+    restore-keys: |
+      ${{ runner.os }}-node-
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 12 -->
+            <section>
+                <span class="badge" style="background-color: #17a2b8;">Scenario 12</span>
+                <h2>Auto Create Release</h2>
+                <p>Draft and publish GitHub Releases automatically when tags are pushed.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+- uses: softprops/action-gh-release@v2
+  with:
+    generate_release_notes: true
+    draft: false
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Scenario 13 -->
+            <section>
+                <span class="badge" style="background-color: #ffc107; color: black;">Scenario 13</span>
+                <h2>Auto Approve & Merge</h2>
+                <p>Approve Dependabot PRs instantly to keep dependencies up-to-date.</p>
+                <div class="code-wrapper">
+                    <pre><code class="language-yaml" data-trim>
+- uses: hmarr/auto-approve-action@v4
+  if: github.actor == 'dependabot[bot]'
+  
+- run: gh pr merge --auto --merge "$PR_URL"
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- Outro Slide -->
+            <section>
+                <h2>Thank You!</h2>
+                <p>You can find all these YAML examples in the <code>.github/workflows</code> folder.</p>
+                <p>Happy Automating! 🚀</p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [ RevealHighlight ],
+            transition: 'slide',
+            backgroundTransition: 'zoom'
+        });
+    </script>
+</body>
+</html>
