@@ -237,6 +237,120 @@
                 </div>
             </section>
 
+            <!-- Why GitHub Actions? -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div class="flex-container">
+                        <div class="content-col" style="flex: 1;">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 100%; max-height: 500px;">
+                        </div>
+                        <div class="code-col" style="flex: 1.5; padding-left: 40px; justify-content: center;">
+                            <h2 style="font-size: 3em; margin-bottom: 20px;"><i class="fa-solid fa-lightbulb text-gradient"></i> Why GitHub Actions?</h2>
+                            <p style="font-size: 1.5em; margin-bottom: 40px; color: #94a3b8;">The modern industry standard for automation.</p>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-brands fa-github" style="color: #38bdf8;"></i> Native Integration</strong>
+                                <p>Built directly into where your code lives. No external webhooks or messy credentials to manage.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-server" style="color: #34d399;"></i> Zero Infrastructure</strong>
+                                <p>GitHub hosts the runners (Linux, Windows, macOS). No servers to patch, secure, or maintain.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #f472b6;">
+                                <strong><i class="fa-solid fa-bolt" style="color: #f472b6;"></i> Event-Driven Architecture</strong>
+                                <p>It can trigger on <em>any</em> GitHub event (issues, comments, PRs, releases), not just code pushes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actions vs Jenkins -->
+            <section data-transition="slide">
+                <div class="glass-panel center">
+                    <h2 style="font-size: 3em; margin-bottom: 50px;">GitHub Actions <span style="color: #ef4444;">vs.</span> Jenkins</h2>
+                    <div class="flex-row" style="width: 100%; display: flex; gap: 40px;">
+                        <!-- Jenkins -->
+                        <div style="flex: 1; background: rgba(239,68,68,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(239,68,68,0.3); text-align: left;">
+                            <h3 style="color: #fca5a5; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-brands fa-jenkins"></i> Legacy CI/CD</h3>
+                            <div class="detail-block" style="border-left-color: #ef4444;">
+                                <strong><i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> High Maintenance</strong>
+                                <p>Requires dedicated VMs to host. You are responsible for security patching and OS updates.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #ef4444;">
+                                <strong><i class="fa-solid fa-puzzle-piece" style="color: #ef4444;"></i> Plugin Hell</strong>
+                                <p>Extending functionality requires brittle plugins that frequently break during upgrades.</p>
+                            </div>
+                        </div>
+                        <!-- GitHub Actions -->
+                        <div style="flex: 1; background: rgba(52,211,153,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(52,211,153,0.3); text-align: left;">
+                            <h3 style="color: #6ee7b7; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-brands fa-github"></i> GitHub Actions</h3>
+                            <div class="detail-block" style="border-left-color: #10b981;">
+                                <strong><i class="fa-solid fa-cloud" style="color: #10b981;"></i> Fully Managed & Serverless</strong>
+                                <p>GitHub provides elastic compute instantly. You only pay for what you run.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #10b981;">
+                                <strong><i class="fa-solid fa-file-code" style="color: #10b981;"></i> Declarative YAML</strong>
+                                <p>Clean, standard YAML syntax stored directly in the repository next to your code.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- The Base Codebase -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <!-- Slide Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #64748b, #334155);">Setup</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;" class="text-gradient"><i class="fa-brands fa-node-js" style="color: #4ade80;"></i> The Base Application</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/server.js" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #3b82f6, #2563eb);"><i class="fa-solid fa-file-code fa-lg"></i> View Source Code</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-layer-group" style="color: #38bdf8;"></i> A Real Test Subject</strong>
+                                <p>To make these GitHub Actions real, we aren't just using empty YAML files. This repository contains a fully functional Node.js application that the workflows will operate on.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-sitemap" style="color: #a78bfa;"></i> Repository Structure</strong>
+                                <p>We have <code>server.js</code> (an HTTP web server), <code>test.js</code> (an automated testing script), <code>package.json</code> (dependencies), and a <code>Dockerfile</code> for containerization.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-link" style="color: #fbbf24;"></i> How it connects to the workflows</strong>
+                                <p>When you see <code>npm test</code> or <code>docker build</code> in the upcoming slides, the GitHub Action is actually natively executing those commands against this exact codebase in real-time!</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-javascript" data-trim>
+// test.js (Our Automated Test Script)
+const assert = require('assert');
+const server = require('./server');
+
+console.log("Running automated CI tests...");
+
+try {
+  // Ensure the server module loaded correctly
+  assert.ok(server !== null, "Server should be defined");
+  
+  console.log("✅ Test Passed: Server loaded successfully!");
+  process.exit(0);
+} catch (err) {
+  console.error("❌ Test Failed!", err);
+  process.exit(1);
+}
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Scenario 1 -->
             <section data-transition="slide">
                 <div class="glass-panel">
