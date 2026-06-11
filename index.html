@@ -1421,11 +1421,13 @@ jobs:
                 const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
                 const fileData = await fileRes.json();
                 const fileSha = fileData.sha;
-                const fileContent = atob(fileData.content);
+                // Safe UTF-8 Base64 decode
+                const fileContent = decodeURIComponent(escape(atob(fileData.content)));
                 
                 // 4. Inject Error into test.js
                 const brokenContent = fileContent.replace("process.exit(0);", "console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);");
-                const encodedContent = btoa(brokenContent);
+                // Safe UTF-8 Base64 encode
+                const encodedContent = btoa(unescape(encodeURIComponent(brokenContent)));
                 
                 // 5. Commit Broken File
                 await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
