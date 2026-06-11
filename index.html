@@ -1517,7 +1517,8 @@ jobs:
                 const runsData = await runsRes.json();
                 
                 // Filter runs specifically to the commit we just pushed!
-                const run = runsData.workflow_runs.find(r => r.head_sha === commitSha);
+                // Filter strictly to the 01-ci-pipeline.yml workflow to avoid polling the wrong action!
+                const run = runsData.workflow_runs.find(r => r.head_sha === commitSha && r.path === ".github/workflows/01-ci-pipeline.yml");
                 
                 if (run) {
                     appendTerm(`Found active CI Pipeline! (Run #${run.run_number})`, "#10b981");
