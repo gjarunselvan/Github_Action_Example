@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 🚫 NO SECRETS REQUIRED!
+      # 🛑 NO SECRETS REQUIRED!
       # We just tell AWS which IAM Role we want to assume
       - name: Configure AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4

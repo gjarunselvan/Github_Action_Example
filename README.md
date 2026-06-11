@@ -15,6 +15,10 @@
 
 This repository hosts a stunning, animated, full-screen HTML presentation that explains the core concepts of GitHub Actions, compares it to legacy tools like Jenkins, and dives deep into the code.
 
+✨ **New Features Added**:
+- **Live Interactive Demo**: Simulates a live CI failure and resolution natively from the browser using the GitHub API.
+- **Mass Parallel Dispatch**: Triggers all 15 workflows simultaneously to populate a real-time Live Dashboard.
+
 👉 **[View the Live Presentation Demo Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
 
 ---
@@ -42,7 +46,7 @@ The workflows in this repository don't just run in a vacuum—they are actively 
 
 ## 🛠️ Workflows Included in this Repository
 
-This repository contains **13 fully functioning GitHub Action workflows** covering almost every enterprise scenario. You can view the raw YAML files in the [`.github/workflows/`](.github/workflows/) directory:
+This repository contains **15 fully functioning GitHub Action workflows** covering almost every enterprise scenario. You can view the raw YAML files in the [`.github/workflows/`](.github/workflows/) directory:
 
 1. **`01-ci-pipeline.yml`**: Basic Continuous Integration (npm install & test on push).
 2. **`02-scheduled-job.yml`**: Running tasks using Unix Cron scheduling.
@@ -57,7 +61,8 @@ This repository contains **13 fully functioning GitHub Action workflows** coveri
 11. **`11-caching.yml`**: Using `actions/cache` to speed up builds (caching `node_modules`).
 12. **`12-github-release.yml`**: Automatically creating a GitHub Release with changelogs.
 13. **`13-auto-merge-pr.yml`**: Automating Pull Request merges based on labels.
-
+14. **`14-oidc.yml`**: Secretless Authentication for Cloud Providers using OpenID Connect.
+15. **`15-self-hosted.yml`**: Executing pipelines securely on private corporate firewalls.
 ---
 
 ## 🚀 How to Use This Repo
