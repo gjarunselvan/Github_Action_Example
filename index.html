@@ -1764,6 +1764,16 @@ jobs:
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
             
+            // Instantly clear the dashboard to provide immediate visual feedback
+            const list = document.getElementById('live-actions-dashboard');
+            if (list) {
+                list.innerHTML = `<div style="text-align: center; margin-top: 50px;">
+                    <i class="fa-solid fa-rocket fa-bounce fa-3x" style="color: #8b5cf6;"></i>
+                    <p style="margin-top: 20px; color: #cbd5e1; font-size: 1.2em;">Booting up 15 parallel CI/CD Pipelines...</p>
+                    <p style="color: #94a3b8; font-size: 0.9em;">Awaiting GitHub VM allocation...</p>
+                </div>`;
+            }
+            
             const repo = "gjarunselvan/Github_Action_Example";
             const workflows = [
                 "01-ci-pipeline.yml", "02-scheduled-job.yml", "03-manual-trigger.yml",
