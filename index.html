@@ -265,36 +265,88 @@
                 </div>
             </section>
 
-            <!-- Actions vs Jenkins -->
+            <!-- Advantages & Disadvantages -->
             <section data-transition="slide">
                 <div class="glass-panel center">
-                    <h2 style="font-size: 3em; margin-bottom: 50px;">GitHub Actions <span style="color: #ef4444;">vs.</span> Jenkins</h2>
+                    <h2 style="font-size: 3em; margin-bottom: 50px;">GitHub Actions: <span style="color: #34d399;">Pros</span> & <span style="color: #ef4444;">Cons</span></h2>
                     <div class="flex-row" style="width: 100%; display: flex; gap: 40px;">
-                        <!-- Jenkins -->
-                        <div style="flex: 1; background: rgba(239,68,68,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(239,68,68,0.3); text-align: left;">
-                            <h3 style="color: #fca5a5; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-brands fa-jenkins"></i> Legacy CI/CD</h3>
-                            <div class="detail-block" style="border-left-color: #ef4444;">
-                                <strong><i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> High Maintenance</strong>
-                                <p>Requires dedicated VMs to host. You are responsible for security patching and OS updates.</p>
-                            </div>
-                            <div class="detail-block" style="border-left-color: #ef4444;">
-                                <strong><i class="fa-solid fa-puzzle-piece" style="color: #ef4444;"></i> Plugin Hell</strong>
-                                <p>Extending functionality requires brittle plugins that frequently break during upgrades.</p>
-                            </div>
-                        </div>
-                        <!-- GitHub Actions -->
+                        <!-- Advantages -->
                         <div style="flex: 1; background: rgba(52,211,153,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(52,211,153,0.3); text-align: left;">
-                            <h3 style="color: #6ee7b7; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-brands fa-github"></i> GitHub Actions</h3>
+                            <h3 style="color: #6ee7b7; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-solid fa-thumbs-up"></i> Advantages</h3>
                             <div class="detail-block" style="border-left-color: #10b981;">
                                 <strong><i class="fa-solid fa-cloud" style="color: #10b981;"></i> Fully Managed & Serverless</strong>
                                 <p>GitHub provides elastic compute instantly. You only pay for what you run.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #10b981;">
-                                <strong><i class="fa-solid fa-file-code" style="color: #10b981;"></i> Declarative YAML</strong>
-                                <p>Clean, standard YAML syntax stored directly in the repository next to your code.</p>
+                                <strong><i class="fa-solid fa-file-code" style="color: #10b981;"></i> Native Code Integration</strong>
+                                <p>Lives precisely where your developers work, natively triggering on Pull Requests and Comments.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #10b981;">
+                                <strong><i class="fa-solid fa-store" style="color: #10b981;"></i> Massive Ecosystem</strong>
+                                <p>Over 20,000+ open-source actions available instantly. Do not reinvent the wheel.</p>
+                            </div>
+                        </div>
+                        <!-- Disadvantages -->
+                        <div style="flex: 1; background: rgba(239,68,68,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(239,68,68,0.3); text-align: left;">
+                            <h3 style="color: #fca5a5; text-align: center; font-size: 2.2em; margin-bottom: 30px;"><i class="fa-solid fa-thumbs-down"></i> Disadvantages</h3>
+                            <div class="detail-block" style="border-left-color: #ef4444;">
+                                <strong><i class="fa-solid fa-link-slash" style="color: #ef4444;"></i> Vendor Lock-In</strong>
+                                <p>Tightly coupled to GitHub. Migrating away to GitLab or Bitbucket later requires rewriting all pipelines.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #ef4444;">
+                                <strong><i class="fa-solid fa-bug" style="color: #ef4444;"></i> Difficult Local Testing</strong>
+                                <p>Debugging workflows locally is hard. Often requires "commit-and-push" trial and error to see if it works.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #ef4444;">
+                                <strong><i class="fa-solid fa-chart-pie" style="color: #ef4444;"></i> Limited Enterprise Dashboarding</strong>
+                                <p>Lacks the massive, cross-organization visual analytics dashboards that legacy tools like Jenkins excel at.</p>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Tool Comparison -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <h2 style="font-size: 3em; margin-bottom: 30px; text-align: center;"><i class="fa-solid fa-scale-balanced text-gradient"></i> Industry Tool Comparison</h2>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9em; color: #cbd5e1; background: rgba(0,0,0,0.3); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                        <thead>
+                            <tr style="background: rgba(255,255,255,0.1); text-align: left;">
+                                <th style="padding: 20px;">Feature</th>
+                                <th style="padding: 20px; color: #38bdf8;"><i class="fa-brands fa-github"></i> GitHub Actions</th>
+                                <th style="padding: 20px; color: #fca5a5;"><i class="fa-brands fa-jenkins"></i> Jenkins</th>
+                                <th style="padding: 20px; color: #f97316;"><i class="fa-brands fa-gitlab"></i> GitLab CI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 20px; font-weight: bold;">Infrastructure</td>
+                                <td style="padding: 20px;">SaaS (Fully Managed)</td>
+                                <td style="padding: 20px;">Self-Hosted VM (Heavy)</td>
+                                <td style="padding: 20px;">SaaS or Self-Hosted</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 20px; font-weight: bold;">Syntax</td>
+                                <td style="padding: 20px;">YAML</td>
+                                <td style="padding: 20px;">Groovy Scripting</td>
+                                <td style="padding: 20px;">YAML</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 20px; font-weight: bold;">Ecosystem</td>
+                                <td style="padding: 20px;">Marketplace (20k+ Actions)</td>
+                                <td style="padding: 20px;">Plugin Hell</td>
+                                <td style="padding: 20px;">Uses raw Docker images</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px; font-weight: bold;">Native Integration</td>
+                                <td style="padding: 20px;">Flawless GitHub native</td>
+                                <td style="padding: 20px;">Fragile Webhooks</td>
+                                <td style="padding: 20px;">Flawless GitLab native</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
@@ -373,7 +425,7 @@ try {
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The workflow triggers precisely on <code>push</code> or <code>pull_request</code> to the <code>main</code> branch. It provisions an <code>ubuntu-latest</code> virtual machine, checks out the repository source code using a pre-built action, installs the Node.js runtime environment (v20), installs dependencies via <code>npm install</code>, and runs the automated test suite via <code>npm test</code>.</p>
+                                <p>The workflow triggers precisely on <code>push</code> or <code>pull_request</code> to the <code>main</code> branch. It provisions an <code>ubuntu-latest</code> virtual machine, checks out the repository source code using a pre-built action, installs the Node.js runtime environment (v20), installs dependencies via <code>npm install</code>, and runs the automated test suite via <code>npm test</code>. <strong>Notice how this test command executes directly against our Hello World app's <code>test.js</code> script!</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -553,7 +605,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The <code>strategy: matrix:</code> block defines arrays of OS architectures and Node versions. GitHub computes the Cartesian product (e.g., 3 OS types × 2 Node versions = 6 parallel jobs). It spins up 6 independent VMs at the exact same time, dynamically injecting the variables into <code>runs-on: ${{ matrix.os }}</code>.</p>
+                                <p>The <code>strategy: matrix:</code> block defines arrays of OS architectures and Node versions. GitHub computes the Cartesian product (e.g., 3 OS types × 2 Node versions = 6 parallel jobs). It spins up 6 independent VMs at the exact same time, dynamically injecting the variables into <code>runs-on: ${{ matrix.os }}</code>. <strong>This guarantees that our Hello World Node.js application functions flawlessly on Windows, Mac, and Linux environments simultaneously.</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -613,7 +665,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Triggered exclusively when a Git tag (like <code>v1.0</code>) is pushed. The workflow logs into DockerHub securely using encrypted Repository Secrets. It then utilizes Docker's official Buildx Action to compile the <code>Dockerfile</code> natively on the runner and push it to the remote registry automatically tagged with the exact Git reference.</p>
+                                <p>Triggered exclusively when a Git tag (like <code>v1.0</code>) is pushed. The workflow logs into DockerHub securely using encrypted Repository Secrets. It then utilizes Docker's official Buildx Action to compile the <code>Dockerfile</code> natively on the runner and push it to the remote registry automatically tagged with the exact Git reference. <strong>This workflow actually builds the <code>Dockerfile</code> included in our repository, packaging our Hello World <code>server.js</code> into a production-ready container!</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -868,7 +920,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The <code>actions/cache</code> action zips the <code>~/.npm</code> folder. We hash the <code>package.json</code> file to create a unique key. If the <code>package.json</code> hasn't changed, the cache is restored instantly, skipping the massive download step entirely.</p>
+                                <p>The <code>actions/cache</code> action zips the <code>~/.npm</code> folder. We hash the <code>package.json</code> file to create a unique key. If the <code>package.json</code> hasn't changed, the cache is restored instantly, skipping the massive download step entirely. <strong>This workflow specifically caches the dependencies defined in our Hello World app's <code>package.json</code>, accelerating our CI pipeline substantially.</strong></p>
                             </div>
                         </div>
                         <div class="code-col">
