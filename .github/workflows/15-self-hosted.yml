@@ -1,0 +1,28 @@
+name: 15 - Private Firewall Deployment
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  enterprise-build:
+    # Instead of requesting 'ubuntu-latest' from GitHub's Cloud,
+    # we target our own private servers by using custom tags!
+    # For this demo to pass on GitHub's public runners, we revert to ubuntu-latest
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Because this runs inside our Private Network,
+      # we can access internal company databases directly!
+      - name: Run Integration Tests against Internal DB
+        run: |
+          echo "ping internal-corp-database.local"
+          echo "npm run test:e2e"
+        env:
+          DB_HOST: internal-corp-database.local
+
+      # Self-hosted runners can have specialized hardware (GPUs)
+      - name: Train Machine Learning Model
+        run: echo "python train_model.py --use-gpu"

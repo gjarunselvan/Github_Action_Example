@@ -1,0 +1,30 @@
+name: 14 - Secure AWS Deployment
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+# OIDC requires explicit permission to request an ID token
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 🚫 NO SECRETS REQUIRED!
+      # We just tell AWS which IAM Role we want to assume
+      - name: Configure AWS Credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::1234567890:role/GitHubActionDeployRole
+          aws-region: us-east-1
+          # Note: This is a demo. In reality, you need a real AWS account configured.
+        continue-on-error: true
+
+      # The runner is now securely authenticated to AWS for 1 hour
+      - name: Deploy Serverless App
+        run: echo "aws s3 sync ./build s3://my-production-bucket"

@@ -1334,7 +1334,8 @@ jobs:
                             </div>
                         </div>
                         <div class="code-col">
-                            <pre><code class="language-yaml">name: Secure AWS Deployment
+                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/14-oidc.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                            <pre><code class="language-yaml">name: 14 - Secure AWS Deployment
 on: [push]
 
 # OIDC requires explicit permission to request an ID token
@@ -1360,6 +1361,7 @@ jobs:
       - name: Deploy Serverless App
         run: aws s3 sync ./build s3://my-production-bucket
 </code></pre>
+                            <div class="live-status-box" data-workflow="14-oidc.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -1384,7 +1386,8 @@ jobs:
                             </div>
                         </div>
                         <div class="code-col">
-                            <pre><code class="language-yaml">name: Private Firewall Deployment
+                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/15-self-hosted.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                            <pre><code class="language-yaml">name: 15 - Private Firewall Deployment
 on: [push]
 
 jobs:
@@ -1409,6 +1412,7 @@ jobs:
       - name: Train Machine Learning Model
         run: python train_model.py --use-gpu
 </code></pre>
+                            <div class="live-status-box" data-workflow="15-self-hosted.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -1753,7 +1757,7 @@ jobs:
                 "04-matrix-strategy.yml", "05-conditional-steps.yml", "06-docker-publish.yml",
                 "07-environments.yml", "08-caller-workflow.yml", "09-artifacts.yml",
                 "10-env-vars-secrets.yml", "11-caching.yml", "12-github-release.yml",
-                "13-auto-merge-pr.yml"
+                "13-auto-merge-pr.yml", "14-oidc.yml", "15-self-hosted.yml"
             ];
             
             const headers = {
