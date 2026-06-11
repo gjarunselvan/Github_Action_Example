@@ -1,62 +1,62 @@
-# GitHub Actions Examples 🚀
+<div align="center">
+  <img src="https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg" width="100" />
+  <h1>GitHub Actions Masterclass</h1>
+  <p><strong>A comprehensive, production-ready guide to automating your CI/CD workflows.</strong></p>
 
-[![View Presentation](https://img.shields.io/badge/View-Live_Presentation-blueviolet?style=for-the-badge&logo=github)](https://gjarunselvan.github.io/Github_Action_Example/)
+  [![CI Pipeline](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/01-ci-pipeline.yml/badge.svg)](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/01-ci-pipeline.yml)
+  [![Matrix Build](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/04-matrix-strategy.yml/badge.svg)](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/04-matrix-strategy.yml)
+  [![Live Presentation](https://img.shields.io/badge/View-Live_Presentation-10b981?style=for-the-badge&logo=github)](https://gjarunselvan.github.io/Github_Action_Example/)
 
-Welcome to the **GitHub Action Example** repository! This project serves as a comprehensive demonstration of various GitHub Actions use-cases, complete with explanations.
-
-## 🌟 Interactive Presentation
-Want a beautiful, high-level overview to present to your team or leadership? 
-👉 **[Click here to view the Interactive Presentation](https://gjarunselvan.github.io/Github_Action_Example/)** 
-
-## 📂 Workflows Included
-
-All workflows are located in the `.github/workflows/` directory.
-
-### 1. Basic CI Pipeline (`01-ci-pipeline.yml`)
-- **What it does**: Checks out the code, sets up a specific Python version, installs dependencies, and runs tests. Ideal for validating code changes before merging.
-
-### 2. Scheduled Job (`02-scheduled-job.yml`)
-- **What it does**: Runs a script automatically every day at 12:00 UTC using cron.
-
-### 3. Manual Trigger (`03-manual-trigger.yml`)
-- **What it does**: Allows you to run the workflow manually from the GitHub UI with custom inputs (e.g., environment and debug mode).
-
-### 4. Matrix Strategy (`04-matrix-strategy.yml`)
-- **What it does**: Runs jobs across multiple OS (`ubuntu`, `windows`, `macos`) and Node.js versions simultaneously.
-
-### 5. Issue Management (`05-issue-management.yml`)
-- **What it does**: Uses `github-script` to automatically welcome users who open a new issue.
-
-### 6. Docker Build and Publish (`06-docker-publish.yml`)
-- **What it does**: Builds a Docker image and publishes it to DockerHub when a new tag is pushed.
-
-### 7. Reusable Workflows (`07-reusable-workflow.yml` & `07-caller-workflow.yml`)
-- **What it does**: Demonstrates how to create a template workflow and call it from another workflow, passing inputs and secrets.
-
-### 8. Contexts and Expressions (`08-contexts-expressions.yml`)
-- **What it does**: Dumps the `github` context to logs and uses expressions to run steps conditionally.
-
-### 9. Upload and Download Artifacts (`09-artifacts.yml`)
-- **What it does**: Creates a file in one job, uploads it as an artifact, and downloads it in a subsequent job.
-
-### 10. Environment Variables and Secrets (`10-env-vars-secrets.yml`)
-- **What it does**: Shows how to set global, job-level, and step-level environment variables, and how to use secrets securely.
-
-### 11. Dependency Caching (`11-caching.yml`)
-- **What it does**: Caches `node_modules` across workflow runs to speed up the build process.
-
-### 12. Auto Create Release (`12-create-release.yml`)
-- **What it does**: Automatically creates a GitHub Release with auto-generated release notes when a tag (e.g., `v1.0.0`) is pushed.
-
-### 13. Auto Approve and Merge PRs (`13-auto-merge.yml`)
-- **What it does**: Automatically approves and enables auto-merge for PRs created by Dependabot.
-
-## 🛠 How to Use
-
-1. **Clone** or **Fork** this repository.
-2. Navigate to the **Actions** tab on GitHub to see the workflows in action.
-3. You can manually trigger the **Manual Trigger** workflow from the UI.
-4. You can host the presentation yourself by enabling GitHub Pages on your repository (`Settings > Pages`), or simply open `index.html` locally in your browser.
+</div>
 
 ---
-*Created as a demo for learning GitHub Actions.*
+
+## 🎓 Interactive Presentation
+
+This repository hosts a stunning, animated, full-screen HTML presentation that explains the core concepts of GitHub Actions, compares it to legacy tools like Jenkins, and dives deep into the code.
+
+👉 **[View the Live Masterclass Presentation Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
+
+---
+
+## 📦 The "Hello World" Base App
+
+To ensure these workflows are realistic, this repository is not just empty YAML files. It contains a fully functional **Node.js** base application that the GitHub Actions run against:
+- `server.js` - A functional Node.js web server.
+- `test.js` - An automated CI testing script.
+- `Dockerfile` - Containerization instructions.
+
+When the workflows run `npm test` or `docker build`, they are executing natively against this repository's code!
+
+---
+
+## 🛠️ Workflows Included in this Repository
+
+This repository contains **13 fully functioning GitHub Action workflows** covering almost every enterprise scenario. You can view the raw YAML files in the [`.github/workflows/`](.github/workflows/) directory:
+
+1. **`01-ci-pipeline.yml`**: Basic Continuous Integration (npm install & test on push).
+2. **`02-scheduled-job.yml`**: Running tasks using Unix Cron scheduling.
+3. **`03-manual-trigger.yml`**: `workflow_dispatch` with custom UI form inputs.
+4. **`04-matrix-strategy.yml`**: Running parallel jobs across OS (Windows/Mac/Linux) & Node versions.
+5. **`05-conditional-steps.yml`**: Conditionally executing steps using `if` logic.
+6. **`06-docker-publish.yml`**: Automatically building and pushing Docker images on version tags.
+7. **`07-reusable-workflow.yml`**: Defining a workflow template to be called by others (DRY principle).
+8. **`08-caller-workflow.yml`**: Calling the reusable workflow.
+9. **`09-artifacts.yml`**: Uploading and downloading build artifacts between jobs.
+10. **`10-env-vars-secrets.yml`**: Securely injecting repository secrets and environment variables.
+11. **`11-caching.yml`**: Using `actions/cache` to speed up builds (caching `node_modules`).
+12. **`12-github-release.yml`**: Automatically creating a GitHub Release with changelogs.
+13. **`13-auto-merge-pr.yml`**: Automating Pull Request merges based on labels.
+
+---
+
+## 🚀 How to Use This Repo
+
+If you want to use this for your own learning or presentations:
+1. Clone the repository.
+2. Ensure GitHub Pages is enabled pointing to the `main` branch root.
+3. Open the `index.html` file to customize the presentation.
+4. Experiment with the `.github/workflows/` files.
+
+---
+*Created as a comprehensive masterclass for mastering GitHub Actions.*
