@@ -1453,7 +1453,7 @@ jobs:
                 
                 // 3. Get test.js file info
                 appendTerm("Downloading test.js...", "#94a3b8");
-                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
+                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
                 if (!fileRes.ok) throw new Error(`Failed to download test.js: ${fileRes.status}`);
                 const fileData = await fileRes.json();
                 if (!fileData.content) throw new Error("GitHub returned empty content for test.js");
@@ -1467,7 +1467,7 @@ jobs:
                 
                 // 5. Commit Broken File
                 appendTerm("Committing broken code to GitHub...", "#94a3b8");
-                await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
+                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
                     method: 'PUT',
                     headers,
                     body: JSON.stringify({
@@ -1593,7 +1593,7 @@ jobs:
                 
                 // 1. Get broken test.js file info
                 appendTerm(`Downloading broken test.js from ${branchName}...`, "#94a3b8");
-                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
+                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
                 const fileData = await fileRes.json();
                 const fileSha = fileData.sha;
                 const fileContent = decodeURIComponent(escape(atob(fileData.content)));
@@ -1605,7 +1605,7 @@ jobs:
                 
                 // 3. Commit Fixed File
                 appendTerm("Pushing emergency fix to the Pull Request...", "#94a3b8");
-                await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
+                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
                     method: 'PUT',
                     headers,
                     body: JSON.stringify({
@@ -1615,6 +1615,11 @@ jobs:
                         branch: branchName
                     })
                 });
+                
+                if (!putRes.ok) {
+                    const errData = await putRes.json();
+                    throw new Error(`GitHub API Error ${putRes.status}: ${errData.message}`);
+                }
                 
                 appendTerm("Success! The Pull Request has been updated.", "#10b981");
                 appendTerm("Waiting 5 seconds for GitHub Actions to re-trigger...", "#f59e0b");
