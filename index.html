@@ -655,6 +655,343 @@ jobs:
                 </div>
             </section>
 
+            <!-- Scenario 05 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">Scenario 05</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-code-branch text-gradient"></i> Conditional Steps</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/05-conditional-steps.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To intelligently route logic. You may want to run a build on every branch, but only execute the "Deploy" step if the branch is exactly <code>main</code>.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Using the <code>if:</code> keyword allows you to write boolean expressions. In the code, <code>if: github.ref == 'refs/heads/main'</code> ensures that the subsequent run command is completely skipped unless the commit was made to the main production branch.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>You can use <code>if: failure()</code> to send a Slack notification only when a previous step crashes, or <code>if: always()</code> to ensure temporary test databases are torn down even if tests fail.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Application (Runs Always)
+        run: echo "Building app..."
+
+      - name: Deploy to Production (Runs only on Main)
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to production server!"
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 07 & 08 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">Scenario 07 & 08</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-recycle text-gradient"></i> Reusable Workflows</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/08-caller-workflow.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To adhere to DRY (Don't Repeat Yourself). Copy-pasting a 500-line CI script across 50 different microservice repositories is a maintenance nightmare.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Scenario 07 defines a blueprint using <code>on: workflow_call</code>. Scenario 08 (shown here) acts as the "Caller" by using the <code>uses:</code> directive to point to the reusable file, passing in variables via the <code>with:</code> block.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Centralizes CI/CD logic. When the DevOps team updates the central template, all 50 microservices instantly inherit the upgrade without needing to touch their individual repositories.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+# 08-caller-workflow.yml
+jobs:
+  call-reusable-workflow:
+    # We call the template defined in 07
+    uses: ./.github/workflows/07-reusable-workflow.yml
+    with:
+      target_env: 'production'
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 09 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #f97316, #c2410c);">Scenario 09</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-box-open text-gradient"></i> Build Artifacts</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/09-artifacts.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1587293852726-69476477842c?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>Because Jobs execute on completely isolated virtual machines! If Job A compiles a binary file, Job B physically cannot see it unless it is uploaded to temporary storage.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Job 1 uses <code>actions/upload-artifact</code> to package the generated <code>output.txt</code> and send it to GitHub's cloud storage. Job 2 then uses <code>actions/download-artifact</code> to pull that exact file down into its own isolated environment.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World" > output.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: output.txt
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+      - run: cat output.txt
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 10 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 10</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-user-secret text-gradient"></i> Environments & Secrets</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/10-env-vars-secrets.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1614064641913-6b71a30611bf?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>Hardcoding API keys or database passwords in source code is a critical security vulnerability. Furthermore, Production environments require manual approval gates before deployment.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>We define the <code>environment: production</code> block, which ties this job to GitHub's secure environment protections. We securely inject the hidden token using <code>${{ secrets.SUPER_SECRET_TOKEN }}</code>, ensuring it is masked with <code>***</code> in all logs.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+jobs:
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      GLOBAL_APP_NAME: "My Awesome App"
+      
+    steps:
+      - name: Print Variables
+        run: |
+          echo "App Name: $GLOBAL_APP_NAME"
+          
+      - name: Secure Login
+        run: |
+          echo "Logging in securely..."
+          # The secret is masked with *** in logs
+          ./login.sh ${{ secrets.SUPER_SECRET_TOKEN }}
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 11 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">Scenario 11</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-bolt text-gradient"></i> Dependency Caching</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/11-caching.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>Running <code>npm install</code> or downloading Maven dependencies on every single run can add 5+ minutes to build times, destroying developer velocity.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>The <code>actions/cache</code> action zips the <code>~/.npm</code> folder. We hash the <code>package.json</code> file to create a unique key. If the <code>package.json</code> hasn't changed, the cache is restored instantly, skipping the massive download step entirely.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+steps:
+  - uses: actions/checkout@v4
+  
+  - name: Cache Node Modules
+    uses: actions/cache@v4
+    with:
+      path: ~/.npm
+      # Cache key changes if package file changes
+      key: npm-${{ hashFiles('**/package.json') }}
+      restore-keys: |
+        npm-
+        
+  - name: Install dependencies
+    run: npm install
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 12 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #ec4899, #be185d);">Scenario 12</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-gift text-gradient"></i> Automated Releases</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/12-github-release.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1542601098-8fc114e148e2?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>Generating formal software releases manually requires writing changelogs, uploading binary zip files, and tagging code—a tedious process prone to human error.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Triggered exclusively by tags (<code>v*</code>), it builds a <code>dist.zip</code> artifact. It then utilizes <code>softprops/action-gh-release</code> to create an official GitHub Release page automatically, attaching the zip file for public download and auto-generating the changelog.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: zip -r dist.zip ./*
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist.zip
+          generate_release_notes: true
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario 13 -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">Scenario 13</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-robot text-gradient"></i> Auto-Merge PRs</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/13-auto-merge-pr.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80" class="feature-image">
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To unblock developers. If a Pull Request (like an automated Dependabot dependency update) passes all CI tests and has an "automerge" label, there is no reason a human needs to manually click the Merge button.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>It triggers on <code>pull_request</code> when a specific label is applied. The workflow uses the official GitHub CLI (<code>gh pr merge</code>) injected with the <code>GITHUB_TOKEN</code> to squash and merge the PR automatically.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml" data-trim>
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  auto-merge:
+    if: contains(github.event.pull_request.labels.*.name, 'automerge')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+      
+    steps:
+      - name: Auto Merge PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.html_url }} \
+            --auto --squash
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Q&A Slide -->
             <section data-transition="zoom">
                 <div class="glass-panel center" style="padding: 80px 40px;">
