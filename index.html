@@ -84,11 +84,12 @@
             padding: 40px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             box-sizing: border-box;
             text-align: left;
             display: flex;
             flex-direction: column;
+            height: auto;
         }
 
         .glass-panel.center {
@@ -101,17 +102,14 @@
         .flex-container {
             display: flex;
             gap: 40px;
-            height: 100%;
             flex-grow: 1;
-            overflow: hidden;
+            height: auto;
         }
 
         .content-col {
             flex: 1.2;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            padding-right: 15px;
         }
         
         
@@ -129,20 +127,13 @@
         
         /* Force Highlight.js Comments to be highly readable */
         .reveal pre code .hljs-comment {
-            color: #4ade80 !important; /* Bright green */
-            font-style: normal !important;
-            font-weight: 600 !important;
+            color: #7dd3fc !important; /* Soft Sky Blue */
+            font-style: italic !important;
+            font-weight: 400 !important;
             opacity: 1 !important;
         }
 
-        /* Custom scrollbar for content col */
-        .content-col::-webkit-scrollbar {
-            width: 10px;
-        }
-        .content-col::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1); 
-            border-radius: 10px;
-        }
+        
         .content-col::-webkit-scrollbar-thumb {
             background: #38bdf8; 
             border-radius: 10px;
@@ -156,7 +147,6 @@
             flex: 1.8;
             display: flex;
             flex-direction: column;
-            min-height: 0;
         }
 
         /* Beautiful Images */
@@ -174,40 +164,23 @@
         /* Code Blocks styling */
         .reveal pre {
             width: 100%;
-            flex: 1;
             margin: 0;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.1);
             font-size: 0.65em;
-            overflow: hidden;
-            min-height: 0;
         }
 
         .reveal pre code {
-            padding: 30px;
-            line-height: 1.6;
+            padding: 20px;
+            line-height: 1.5;
             border-radius: 12px;
             background: #0f172a !important;
-            height: 100%;
             box-sizing: border-box;
-            overflow-y: auto !important;
-            overflow-x: auto !important;
-            max-height: 100%;
         }
         
-        .reveal pre code::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        .reveal pre code::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.05); 
-            border-radius: 10px;
-        }
-        .reveal pre code::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.3); 
-            border-radius: 10px;
-        }
+        
+        
 
         .badge {
             display: inline-block;
