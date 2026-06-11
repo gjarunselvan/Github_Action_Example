@@ -30,6 +30,16 @@ When the workflows run `npm test` or `docker build`, they are executing natively
 
 ---
 
+## 🔗 How the Workflows Connect to the Codebase
+The workflows in this repository don't just run in a vacuum—they are actively manipulating the Node.js application:
+
+- **CI & Matrix Workflows (`01`, `04`)**: When these run `npm test`, they are physically executing the `test.js` script. If you introduce a typo into `server.js`, the test fails, and the entire GitHub Action immediately turns red, preventing a bad merge.
+- **Docker Workflow (`06`)**: Looks for the `Dockerfile` in the root of the repo and physically copies `server.js` and `package.json` into a Linux container for deployment.
+- **Caching Workflow (`11`)**: Calculates a cryptographic hash of your specific `package.json` file. If you add a new dependency, the hash changes, and GitHub knows to update the cache.
+- **Automated Releases (`12`)**: Physically grabs `server.js` and `package.json`, compresses them into a `dist.zip` file, and attaches them to a public GitHub Release page when a tag is pushed.
+
+---
+
 ## 🛠️ Workflows Included in this Repository
 
 This repository contains **13 fully functioning GitHub Action workflows** covering almost every enterprise scenario. You can view the raw YAML files in the [`.github/workflows/`](.github/workflows/) directory:
