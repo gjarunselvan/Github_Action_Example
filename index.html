@@ -545,10 +545,7 @@ CMD [ "npm", "start" ]
                             <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 01</span>
                             <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;" class="text-gradient-success"><i class="fa-solid fa-vial-circle-check"></i> Basic CI Pipeline</h2>
                         </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button onclick="triggerFailureDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #ef4444, #b91c1c); cursor: pointer; border: none;"><i class="fa-solid fa-bomb"></i> Inject Error & Create PR</button>
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
-                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
                     </div>
 
                     <div class="flex-container">
@@ -1389,10 +1386,21 @@ jobs:
         
         
         // --- Live Demo: Inject Error & Create PR ---
+        function appendTerm(msg, color="#e2e8f0") {
+            const term = document.getElementById('demo-terminal');
+            if(term) {
+                term.innerHTML += `<span style="color: ${color};">$ ${msg}</span><br>`;
+                term.scrollTop = term.scrollHeight;
+            }
+        }
+
         async function triggerFailureDemo() {
+            const term = document.getElementById('demo-terminal');
+            if(term) term.innerHTML = '';
+            
             const token = localStorage.getItem('gh_presentation_token');
             if (!token) {
-                alert("You must add your GitHub PAT first! Click the Key icon in the bottom right.");
+                appendTerm("ERROR: No GitHub PAT found. Click the Key icon in the bottom right to add one.", "#ef4444");
                 return;
             }
             
@@ -1405,12 +1413,17 @@ jobs:
             };
             
             try {
+                appendTerm("Starting Live Destruction Sequence...", "#38bdf8");
+                
                 // 1. Get Main Branch SHA
+                appendTerm("Fetching main branch SHA...", "#94a3b8");
                 const mainRefRes = await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/main`, { headers });
+                if (!mainRefRes.ok) throw new Error("Failed to fetch main. Does your token have 'repo' scope?");
                 const mainRefData = await mainRefRes.json();
                 const mainSha = mainRefData.object.sha;
                 
                 // 2. Create New Branch
+                appendTerm(`Creating new branch: ${branchName}`, "#94a3b8");
                 await fetch(`https://api.github.com/repos/${repo}/git/refs`, {
                     method: 'POST',
                     headers,
@@ -1418,18 +1431,19 @@ jobs:
                 });
                 
                 // 3. Get test.js file info
+                appendTerm("Downloading test.js...", "#94a3b8");
                 const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
                 const fileData = await fileRes.json();
                 const fileSha = fileData.sha;
-                // Safe UTF-8 Base64 decode
                 const fileContent = decodeURIComponent(escape(atob(fileData.content)));
                 
                 // 4. Inject Error into test.js
+                appendTerm("Injecting fatal error into test.js...", "#f59e0b");
                 const brokenContent = fileContent.replace("process.exit(0);", "console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);");
-                // Safe UTF-8 Base64 encode
                 const encodedContent = btoa(unescape(encodeURIComponent(brokenContent)));
                 
                 // 5. Commit Broken File
+                appendTerm("Committing broken code to GitHub...", "#94a3b8");
                 await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
                     method: 'PUT',
                     headers,
@@ -1442,11 +1456,12 @@ jobs:
                 });
                 
                 // 6. Open Pull Request
+                appendTerm("Opening Pull Request against main...", "#94a3b8");
                 const prRes = await fetch(`https://api.github.com/repos/${repo}/pulls`, {
                     method: 'POST',
                     headers,
                     body: JSON.stringify({
-                        title: "🚨 DO NOT MERGE: Live Demo Breakage",
+                        title: `🚨 DO NOT MERGE: Live Demo Breakage (${branchName})`,
                         body: "This PR was automatically created by the presentation to demonstrate GitHub Actions catching a fatal CI error.",
                         head: branchName,
                         base: "main"
@@ -1455,19 +1470,77 @@ jobs:
                 const prData = await prRes.json();
                 
                 if (prData.html_url) {
-                    alert(`Success! Created PR #${prData.number}.\nThe CI pipeline is now running and WILL fail!`);
-                    window.open(prData.html_url, '_blank');
+                    appendTerm(`Success! Pull Request created at: <a href="${prData.html_url}" target="_blank" style="color:#10b981; text-decoration:underline;">${prData.html_url}</a>`, "#10b981");
+                    appendTerm(`Waiting 5 seconds for GitHub Actions to trigger...`, "#f59e0b");
+                    
+                    // Wait for CI to start
+                    setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
                 } else {
-                    alert("Failed to open PR. Check console for details.");
-                    console.log(prData);
+                    appendTerm("Failed to open PR. Check token permissions.", "#ef4444");
                 }
                 
             } catch (err) {
-                console.error(err);
-                alert("An error occurred. Check the browser console.");
+                appendTerm(`ERROR: ${err.message}`, "#ef4444");
             }
         }
 
+        async function fetchActionLogs(repo, branchName, headers) {
+            appendTerm("Polling GitHub API for CI Pipeline execution...", "#38bdf8");
+            
+            try {
+                // Find the workflow run for this branch
+                const runsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs?head_branch=${branchName}`, { headers });
+                const runsData = await runsRes.json();
+                
+                if (runsData.total_count > 0) {
+                    const run = runsData.workflow_runs[0];
+                    appendTerm(`Found active CI Pipeline! (Run #${run.run_number})`, "#10b981");
+                    appendTerm(`Current Status: <strong style="color:#f59e0b;">${run.status}</strong>`, "#e2e8f0");
+                    appendTerm(`View Live Web Interface: <a href="${run.html_url}" target="_blank" style="color:#38bdf8;">${run.html_url}</a>`, "#e2e8f0");
+                    
+                    // Begin polling the specific job status every 3 seconds
+                    pollJobStatus(repo, run.id, headers);
+                } else {
+                    appendTerm("No workflows found yet. Retrying in 5 seconds...", "#f59e0b");
+                    setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
+                }
+            } catch(e) {
+                appendTerm("Error fetching logs.", "#ef4444");
+            }
+        }
+        
+        async function pollJobStatus(repo, runId, headers) {
+            const pollInterval = setInterval(async () => {
+                try {
+                    const jobsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs/${runId}/jobs`, { headers });
+                    const jobsData = await jobsRes.json();
+                    
+                    if (jobsData.jobs && jobsData.jobs.length > 0) {
+                        const job = jobsData.jobs[0]; // Assuming first job is the main one
+                        
+                        if (job.status === "completed") {
+                            clearInterval(pollInterval);
+                            const finalColor = job.conclusion === "success" ? "#10b981" : "#ef4444";
+                            appendTerm(`========================================`, "#94a3b8");
+                            appendTerm(`PIPELINE FINISHED!`, finalColor);
+                            appendTerm(`Conclusion: ${job.conclusion.toUpperCase()}`, finalColor);
+                            
+                            if (job.conclusion === "failure") {
+                                appendTerm(`The PR is now officially BLOCKED from merging to production!`, "#ef4444");
+                            }
+                        } else {
+                            // Find the step currently in progress
+                            const currentStep = job.steps.find(s => s.status === "in_progress");
+                            if (currentStep) {
+                                appendTerm(`[CI Runner] Executing: ${currentStep.name}...`, "#94a3b8");
+                            }
+                        }
+                    }
+                } catch(e) {
+                    console.error(e);
+                }
+            }, 3000);
+        }
         // --- API Authenticator ---
         function setGitHubToken() {
             const token = prompt("Enter a GitHub Personal Access Token (PAT) to bypass the 60 req/hr rate limit:\n(This token is saved ONLY in your local browser storage)");
