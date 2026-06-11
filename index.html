@@ -1313,6 +1313,24 @@ jobs:
                 </div>
             </section>
 
+            
+            <!-- Live Destruction Demo Slide -->
+            <section data-transition="zoom">
+                <div class="glass-panel" style="padding: 30px; text-align: left;">
+                    <h2 style="font-size: 2.5em; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-burst text-gradient"></i> Live Interactive Demo</h2>
+                    <p style="text-align: center; color: #cbd5e1; margin-bottom: 30px;">Let's see what happens when a developer tries to merge broken code into production.</p>
+                    
+                    <div style="display: flex; justify-content: center; margin-bottom: 30px;">
+                        <button onclick="triggerFailureDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #ef4444, #b91c1c); cursor: pointer; border: none; font-size: 0.8em; padding: 15px 40px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);"><i class="fa-solid fa-bomb fa-lg"></i> INTENTIONALLY BREAK THE BUILD</button>
+                    </div>
+
+                    <div style="background: #0f172a; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); padding: 20px; font-family: monospace; font-size: 0.75em; height: 350px; overflow-y: auto;" id="demo-terminal">
+                        <span style="color: #64748b;">$ Waiting for user action...</span><br>
+                        <span style="color: #64748b;">$ Note: Ensure your GitHub PAT has 'repo' scope!</span><br>
+                    </div>
+                </div>
+            </section>
+
             <!-- Live Dashboard API -->
             <section data-transition="slide">
                 <div class="glass-panel">
