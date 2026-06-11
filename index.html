@@ -403,6 +403,43 @@ try {
                 </div>
             </section>
 
+            <!-- Live Dashboard API -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #f43f5e, #be123c);">Live API</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-satellite-dish text-gradient"></i> Real-Time Workflow Dashboard</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col" style="flex: 1;">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 250px;">
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> Live GitHub API Integration</strong>
+                                <p>This slide isn't a screenshot! To prove how powerful this is, we are making a real-time API request to GitHub right now. It fetches the 5 most recent workflow executions for this exact repository.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-play" style="color: #fbbf24;"></i> Demo Instructions</strong>
+                                <p>Go to the repository, push a new commit (or trigger a manual job), and simply refresh this presentation page. You will see your pipeline status instantly appear on this slide as "In Progress"!</p>
+                            </div>
+                        </div>
+                        <div class="code-col" style="flex: 1.5; padding-left: 20px;">
+                            <h3 style="margin-bottom: 20px; font-size: 1.5em; color: #e2e8f0;"><i class="fa-solid fa-server"></i> Recent Executions</h3>
+                            <div id="live-actions-dashboard" style="height: 500px; overflow-y: auto; padding-right: 15px;">
+                                <!-- Populated by JS -->
+                                <div style="text-align: center; margin-top: 50px;">
+                                    <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: #38bdf8;"></i>
+                                    <p style="margin-top: 20px; color: #94a3b8; font-size: 1.2em;">Fetching live workflow data from GitHub API...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Scenario 1 -->
             <section data-transition="slide">
                 <div class="glass-panel">
@@ -1075,6 +1112,60 @@ jobs:
             height: 950,
             disableLayout: false
         });
+
+        // Real-Time GitHub API Fetcher
+        async function fetchLatestRuns() {
+            try {
+                // Change the username/repo below if needed!
+                const response = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/runs?per_page=6');
+                const data = await response.json();
+                const runs = data.workflow_runs;
+                let html = '';
+                
+                runs.forEach(run => {
+                    let statusColor = '#94a3b8';
+                    let statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                    
+                    if (run.status === 'completed') {
+                        if (run.conclusion === 'success') {
+                            statusColor = '#10b981';
+                            statusIcon = '<i class="fa-solid fa-circle-check"></i>';
+                        } else if (run.conclusion === 'failure') {
+                            statusColor = '#ef4444';
+                            statusIcon = '<i class="fa-solid fa-circle-xmark"></i>';
+                        } else {
+                            statusColor = '#f59e0b';
+                            statusIcon = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                        }
+                    } else {
+                        statusColor = '#38bdf8';
+                        statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                    }
+
+                    html += `
+                    <div style="background: rgba(15,23,42,0.8); padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid ${statusColor}; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                        <div style="text-align: left; max-width: 70%;">
+                            <strong style="font-size: 1.2em; color: #f8fafc;">${run.name}</strong>
+                            <p style="margin: 5px 0 0 0; font-size: 0.85em; color: #94a3b8;">
+                                <i class="fa-solid fa-code-branch"></i> ${run.head_branch} &nbsp;|&nbsp; 
+                                <i class="fa-solid fa-user"></i> ${run.triggering_actor.login}
+                            </p>
+                        </div>
+                        <div style="font-size: 1.8em; color: ${statusColor}; display: flex; align-items: center; gap: 15px;">
+                            ${statusIcon}
+                            <a href="${run.html_url}" target="_blank" style="font-size: 0.35em; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;"><i class="fa-solid fa-external-link-alt"></i> View</a>
+                        </div>
+                    </div>`;
+                });
+                
+                document.getElementById('live-actions-dashboard').innerHTML = html;
+            } catch (e) {
+                document.getElementById('live-actions-dashboard').innerHTML = '<p style="color: #ef4444; padding: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> Failed to load live runs. API rate limit exceeded or network error.</p>';
+            }
+        }
+        
+        // Execute on load
+        fetchLatestRuns();
     </script>
 </body>
 </html>
