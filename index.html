@@ -1320,8 +1320,9 @@ jobs:
                     <h2 style="font-size: 2.5em; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-burst text-gradient"></i> Live Interactive Demo</h2>
                     <p style="text-align: center; color: #cbd5e1; margin-bottom: 30px;">Let's see what happens when a developer tries to merge broken code into production.</p>
                     
-                    <div style="display: flex; justify-content: center; margin-bottom: 30px;">
-                        <button onclick="triggerFailureDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #ef4444, #b91c1c); cursor: pointer; border: none; font-size: 0.8em; padding: 15px 40px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);"><i class="fa-solid fa-bomb fa-lg"></i> INTENTIONALLY BREAK THE BUILD</button>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+                        <button onclick="triggerFailureDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #ef4444, #b91c1c); cursor: pointer; border: none; font-size: 0.8em; padding: 15px 40px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);"><i class="fa-solid fa-bomb fa-lg"></i> 1. BREAK THE BUILD</button>
+                        <button onclick="triggerFixDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669); cursor: pointer; border: none; font-size: 0.8em; padding: 15px 40px; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);"><i class="fa-solid fa-wrench fa-lg"></i> 2. PUSH THE FIX</button>
                     </div>
 
                     <div style="background: #0f172a; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); padding: 20px; font-family: monospace; font-size: 0.75em; height: 350px; overflow-y: auto;" id="demo-terminal">
@@ -1424,6 +1425,7 @@ jobs:
             
             const repo = "gjarunselvan/Github_Action_Example";
             const branchName = "demo-failure-" + Math.floor(Math.random() * 10000);
+            window.demoBranchName = branchName;
             const headers = {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
@@ -1559,6 +1561,69 @@ jobs:
                 }
             }, 3000);
         }
+        
+        async function triggerFixDemo() {
+            const term = document.getElementById('demo-terminal');
+            
+            const token = localStorage.getItem('gh_presentation_token');
+            if (!token) {
+                appendTerm("ERROR: No GitHub PAT found.", "#ef4444");
+                return;
+            }
+            
+            if (!window.demoBranchName) {
+                appendTerm("ERROR: You must Break the Build first before you can fix it!", "#ef4444");
+                return;
+            }
+            
+            const repo = "gjarunselvan/Github_Action_Example";
+            const branchName = window.demoBranchName;
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            };
+            
+            try {
+                appendTerm("========================================", "#38bdf8");
+                appendTerm("Starting Emergency Fix Sequence...", "#38bdf8");
+                
+                // 1. Get broken test.js file info
+                appendTerm(`Downloading broken test.js from ${branchName}...`, "#94a3b8");
+                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
+                const fileData = await fileRes.json();
+                const fileSha = fileData.sha;
+                const fileContent = decodeURIComponent(escape(atob(fileData.content)));
+                
+                // 2. Fix Error in test.js
+                appendTerm("Removing fatal error and restoring code...", "#10b981");
+                const fixedContent = fileContent.replace("console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);", "process.exit(0);");
+                const encodedContent = btoa(unescape(encodeURIComponent(fixedContent)));
+                
+                // 3. Commit Fixed File
+                appendTerm("Pushing emergency fix to the Pull Request...", "#94a3b8");
+                await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({
+                        message: "🔧 Fix the build: Restore test.js",
+                        content: encodedContent,
+                        sha: fileSha,
+                        branch: branchName
+                    })
+                });
+                
+                appendTerm("Success! The Pull Request has been updated.", "#10b981");
+                appendTerm("Waiting 5 seconds for GitHub Actions to re-trigger...", "#f59e0b");
+                
+                // Wait for CI to start
+                setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
+                
+            } catch (err) {
+                appendTerm(`ERROR: ${err.message}`, "#ef4444");
+            }
+        }
+
         // --- API Authenticator ---
         function setGitHubToken() {
             const token = prompt("Enter a GitHub Personal Access Token (PAT) to bypass the 60 req/hr rate limit:\n(This token is saved ONLY in your local browser storage)");
