@@ -1438,22 +1438,25 @@ jobs:
                 // 1. Get Main Branch SHA
                 appendTerm("Fetching main branch SHA...", "#94a3b8");
                 const mainRefRes = await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/main`, { headers });
-                if (!mainRefRes.ok) throw new Error("Failed to fetch main. Does your token have 'repo' scope?");
+                if (!mainRefRes.ok) throw new Error(`GitHub API Error: ${mainRefRes.status}. Ensure your PAT has full 'repo' scope!`);
                 const mainRefData = await mainRefRes.json();
                 const mainSha = mainRefData.object.sha;
                 
                 // 2. Create New Branch
                 appendTerm(`Creating new branch: ${branchName}`, "#94a3b8");
-                await fetch(`https://api.github.com/repos/${repo}/git/refs`, {
+                const createRes = await fetch(`https://api.github.com/repos/${repo}/git/refs`, {
                     method: 'POST',
                     headers,
                     body: JSON.stringify({ ref: `refs/heads/${branchName}`, sha: mainSha })
                 });
+                if (!createRes.ok) throw new Error(`GitHub API Error ${createRes.status} on Create Branch. Your Personal Access Token (PAT) MUST have the 'repo' scope checked in GitHub settings to grant write access!`);
                 
                 // 3. Get test.js file info
                 appendTerm("Downloading test.js...", "#94a3b8");
                 const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
+                if (!fileRes.ok) throw new Error(`Failed to download test.js: ${fileRes.status}`);
                 const fileData = await fileRes.json();
+                if (!fileData.content) throw new Error("GitHub returned empty content for test.js");
                 const fileSha = fileData.sha;
                 const fileContent = decodeURIComponent(escape(atob(fileData.content)));
                 
