@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg" width="100" />
-  <h1>GitHub Actions Masterclass</h1>
+  <h1>GitHub Actions: Live Working Demo</h1>
   <p><strong>A comprehensive, production-ready guide to automating your CI/CD workflows.</strong></p>
 
   [![CI Pipeline](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/01-ci-pipeline.yml/badge.svg)](https://github.com/gjarunselvan/Github_Action_Example/actions/workflows/01-ci-pipeline.yml)
@@ -15,7 +15,7 @@
 
 This repository hosts a stunning, animated, full-screen HTML presentation that explains the core concepts of GitHub Actions, compares it to legacy tools like Jenkins, and dives deep into the code.
 
-👉 **[View the Live Masterclass Presentation Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
+👉 **[View the Live Presentation Demo Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
 
 ---
 
@@ -59,4 +59,4 @@ If you want to use this for your own learning or presentations:
 4. Experiment with the `.github/workflows/` files.
 
 ---
-*Created as a comprehensive masterclass for mastering GitHub Actions.*
+*Created as a comprehensive, working demo for mastering GitHub Actions.*
