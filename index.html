@@ -481,32 +481,84 @@ try {
                 </div>
             </section>
 
+
             <!-- Workflow Connection Slide -->
             <section data-transition="slide">
-                <div class="glass-panel" style="padding: 30px;">
-                    <h2 style="font-size: 2.5em; margin-bottom: 30px; text-align: center;"><i class="fa-solid fa-link text-gradient"></i> How the Workflows Manipulate the App</h2>
-                    <p style="font-size: 1.2em; text-align: center; color: #94a3b8; margin-bottom: 40px;">The YAML files are the "robots", but your Node.js application is what the robots are operating on!</p>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="detail-block" style="border-left-color: #38bdf8; background: rgba(56, 189, 248, 0.05);">
-                            <strong><i class="fa-solid fa-vial" style="color: #38bdf8;"></i> 1. The CI Engine (test.js)</strong>
-                            <p>Workflows 01 & 04 run <span class="inline-code">npm test</span>, physically executing your <span class="inline-code">test.js</span> script. If you write bad code, the test fails, the GitHub Action turns Red, and the bad code is blocked from merging.</p>
+                <div class="glass-panel" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Deep Dive</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-link text-gradient"></i> How Workflows Manipulate Code</h2>
                         </div>
-                        <div class="detail-block" style="border-left-color: #10b981; background: rgba(16, 185, 129, 0.05);">
-                            <strong><i class="fa-brands fa-docker" style="color: #10b981;"></i> 2. Dockerizing (Dockerfile)</strong>
-                            <p>Workflow 06 doesn't build a random container. It finds your specific <span class="inline-code">Dockerfile</span> and physically copies your <span class="inline-code">server.js</span> into a Linux container so it can be hosted on AWS or Azure.</p>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col" style="flex: 1.2; padding-right: 20px;">
+                            <p style="font-size: 1.1em; color: #cbd5e1; margin-bottom: 25px;">The YAML files are the "robots," but they require instructions from the actual codebase. Here is the exact relationship:</p>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8; padding: 10px 15px;">
+                                <strong><i class="fa-solid fa-vial" style="color: #38bdf8;"></i> 1. The CI Engine (<a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/test.js" target="_blank" style="color: #38bdf8; text-decoration: underline;">test.js</a>)</strong>
+                                <p style="font-size: 0.85em;">Workflows 01 & 04 run <code>npm test</code>. This looks inside <code>package.json</code> for the test script, which executes our custom <code>test.js</code>. If our Node app throws an error, the GitHub Action runner catches the exit code and fails the pipeline.</p>
+                            </div>
+                            
+                            <div class="detail-block" style="border-left-color: #10b981; padding: 10px 15px;">
+                                <strong><i class="fa-brands fa-docker" style="color: #10b981;"></i> 2. Dockerizing (<a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/Dockerfile" target="_blank" style="color: #10b981; text-decoration: underline;">Dockerfile</a>)</strong>
+                                <p style="font-size: 0.85em;">Workflow 06 uses Docker Buildx. It physically pulls the <code>Dockerfile</code> from the root of our repo. That Dockerfile contains the exact commands to package our <code>server.js</code> into a production-ready Alpine Linux container.</p>
+                            </div>
+                            
+                            <div class="detail-block" style="border-left-color: #f59e0b; padding: 10px 15px;">
+                                <strong><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> 3. Dependency Caching (<a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/package.json" target="_blank" style="color: #f59e0b; text-decoration: underline;">package.json</a>)</strong>
+                                <p style="font-size: 0.85em;">Workflow 11 calculates a cryptographic hash of <code>package.json</code>. If you add a new NPM package, the hash changes, invalidating the cache. This proves the workflow is intimately aware of our app's dependency tree!</p>
+                            </div>
+                            
+                            <div class="detail-block" style="border-left-color: #ec4899; padding: 10px 15px;">
+                                <strong><i class="fa-solid fa-gift" style="color: #ec4899;"></i> 4. Release Delivery (<a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/server.js" target="_blank" style="color: #ec4899; text-decoration: underline;">server.js</a>)</strong>
+                                <p style="font-size: 0.85em;">Workflow 12 directly zips up our actual source code (<code>server.js</code>) and attaches it to a GitHub Release so end-users can download the raw executable script.</p>
+                            </div>
                         </div>
-                        <div class="detail-block" style="border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
-                            <strong><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> 3. Dependency Caching (package.json)</strong>
-                            <p>Workflow 11 calculates a cryptographic hash of your <span class="inline-code">package.json</span> file. If you add a new dependency, the hash changes, and GitHub knows to update the cache instantly.</p>
-                        </div>
-                        <div class="detail-block" style="border-left-color: #ec4899; background: rgba(236, 72, 153, 0.05);">
-                            <strong><i class="fa-solid fa-gift" style="color: #ec4899;"></i> 4. Release Delivery (dist.zip)</strong>
-                            <p>Workflow 12 grabs your <span class="inline-code">server.js</span> and compresses it into a <span class="inline-code">dist.zip</span> file, attaching it to a public GitHub Release page so users can download your exact app binary.</p>
+                        
+                        <div class="code-col" style="flex: 1.8; display: flex; flex-direction: column; gap: 15px; overflow-y: auto;">
+                            <!-- Top Code Block -->
+                            <div style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
+                                <h3 style="font-size: 1em; color: #94a3b8; margin: 0 0 10px 0;"><i class="fa-brands fa-npm"></i> Live package.json</h3>
+                                <pre style="flex: 1; margin: 0; min-height: 0;"><code class="language-json" data-trim>
+{
+  "name": "github-actions-demo",
+  "version": "1.0.0",
+  "description": "Base app manipulated by workflows",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"   <-- THE PIPELINE TRIGGERS THIS
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+                                </code></pre>
+                            </div>
+                            
+                            <!-- Bottom Code Block -->
+                            <div style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
+                                <h3 style="font-size: 1em; color: #94a3b8; margin: 0 0 10px 0;"><i class="fa-brands fa-docker"></i> Live Dockerfile</h3>
+                                <pre style="flex: 1; margin: 0; min-height: 0;"><code class="language-dockerfile" data-trim>
+FROM node:20-alpine
+
+# The workflow physically copies our code into the container
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY server.js ./
+
+EXPOSE 8080
+CMD [ "npm", "start" ]
+                                </code></pre>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+
 
 
 
