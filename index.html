@@ -456,6 +456,34 @@ try {
                 </div>
             </section>
 
+            <!-- Workflow Connection Slide -->
+            <section data-transition="slide">
+                <div class="glass-panel" style="padding: 30px;">
+                    <h2 style="font-size: 2.5em; margin-bottom: 30px; text-align: center;"><i class="fa-solid fa-link text-gradient"></i> How the Workflows Manipulate the App</h2>
+                    <p style="font-size: 1.2em; text-align: center; color: #94a3b8; margin-bottom: 40px;">The YAML files are the "robots", but your Node.js application is what the robots are operating on!</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="detail-block" style="border-left-color: #38bdf8; background: rgba(56, 189, 248, 0.05);">
+                            <strong><i class="fa-solid fa-vial" style="color: #38bdf8;"></i> 1. The CI Engine (test.js)</strong>
+                            <p>Workflows 01 & 04 run <code>npm test</code>, physically executing your <code>test.js</code> script. If you write bad code, the test fails, the GitHub Action turns Red, and the bad code is blocked from merging.</p>
+                        </div>
+                        <div class="detail-block" style="border-left-color: #10b981; background: rgba(16, 185, 129, 0.05);">
+                            <strong><i class="fa-brands fa-docker" style="color: #10b981;"></i> 2. Dockerizing (Dockerfile)</strong>
+                            <p>Workflow 06 doesn't build a random container. It finds your specific <code>Dockerfile</code> and physically copies your <code>server.js</code> into a Linux container so it can be hosted on AWS or Azure.</p>
+                        </div>
+                        <div class="detail-block" style="border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
+                            <strong><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> 3. Dependency Caching (package.json)</strong>
+                            <p>Workflow 11 calculates a cryptographic hash of your <code>package.json</code> file. If you add a new dependency, the hash changes, and GitHub knows to update the cache instantly.</p>
+                        </div>
+                        <div class="detail-block" style="border-left-color: #ec4899; background: rgba(236, 72, 153, 0.05);">
+                            <strong><i class="fa-solid fa-gift" style="color: #ec4899;"></i> 4. Release Delivery (dist.zip)</strong>
+                            <p>Workflow 12 grabs your <code>server.js</code> and compresses it into a <code>dist.zip</code> file, attaching it to a public GitHub Release page so users can download your exact app binary.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
 
 
             <!-- Scenario 1 -->
