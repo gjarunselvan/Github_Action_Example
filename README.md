@@ -1,6 +1,12 @@
 # GitHub Actions Examples 🚀
 
+[![View Presentation](https://img.shields.io/badge/View-Live_Presentation-blueviolet?style=for-the-badge&logo=github)](https://gjarunselvan.github.io/Github_Action_Example/)
+
 Welcome to the **GitHub Action Example** repository! This project serves as a comprehensive demonstration of various GitHub Actions use-cases, complete with explanations.
+
+## 🌟 Interactive Presentation
+Want a beautiful, high-level overview to present to your team or leadership? 
+👉 **[Click here to view the Interactive Presentation](https://gjarunselvan.github.io/Github_Action_Example/)** 
 
 ## 📂 Workflows Included
 
@@ -50,7 +56,7 @@ All workflows are located in the `.github/workflows/` directory.
 1. **Clone** or **Fork** this repository.
 2. Navigate to the **Actions** tab on GitHub to see the workflows in action.
 3. You can manually trigger the **Manual Trigger** workflow from the UI.
-4. Open the `Presentation.html` file in your browser for a beautiful interactive presentation covering these concepts!
+4. You can host the presentation yourself by enabling GitHub Pages on your repository (`Settings > Pages`), or simply open `index.html` locally in your browser.
 
 ---
 *Created as a demo for learning GitHub Actions.*
