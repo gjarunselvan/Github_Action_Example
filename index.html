@@ -1345,63 +1345,103 @@ jobs:
         });
 
         // Real-Time GitHub API Fetcher
-        async function fetchLatestRuns() {
-            try {
-                // Change the username/repo below if needed!
-                const response = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/runs?per_page=6');
-                const data = await response.json();
-                const runs = data.workflow_runs;
-                let html = '';
-                
-                runs.forEach(run => {
-                    let statusColor = '#94a3b8';
-                    let statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-                    
-                    if (run.status === 'completed') {
-                        if (run.conclusion === 'success') {
-                            statusColor = '#10b981';
-                            statusIcon = '<i class="fa-solid fa-circle-check"></i>';
-                        } else if (run.conclusion === 'failure') {
-                            statusColor = '#ef4444';
-                            statusIcon = '<i class="fa-solid fa-circle-xmark"></i>';
-                        } else {
-                            statusColor = '#f59e0b';
-                            statusIcon = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                        }
-                    } else {
-                        statusColor = '#38bdf8';
-                        statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-                    }
-
-                    html += `
-                    <div style="background: rgba(15,23,42,0.8); padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid ${statusColor}; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-                        <div style="text-align: left; max-width: 70%;">
-                            <strong style="font-size: 1.2em; color: #f8fafc;">${run.name}</strong>
-                            <p style="margin: 5px 0 0 0; font-size: 0.85em; color: #94a3b8;">
-                                <i class="fa-solid fa-code-branch"></i> ${run.head_branch} &nbsp;|&nbsp; 
-                                <i class="fa-solid fa-user"></i> ${run.triggering_actor.login}
-                            </p>
-                        </div>
-                        <div style="font-size: 1.8em; color: ${statusColor}; display: flex; align-items: center; gap: 15px;">
-                            ${statusIcon}
-                            <a href="${run.html_url}" target="_blank" style="font-size: 0.35em; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;"><i class="fa-solid fa-external-link-alt"></i> View</a>
-                        </div>
-                    </div>`;
-                });
-                
-                document.getElementById('live-actions-dashboard').innerHTML = html;
-            } catch (e) {
-                document.getElementById('live-actions-dashboard').innerHTML = '<p style="color: #ef4444; padding: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> Failed to load live runs. API rate limit exceeded or network error.</p>';
+        
+        // --- API Authenticator ---
+        function setGitHubToken() {
+            const token = prompt("Enter a GitHub Personal Access Token (PAT) to bypass the 60 req/hr rate limit:\n(This token is saved ONLY in your local browser storage)");
+            if (token) {
+                localStorage.setItem('gh_presentation_token', token);
+                alert("Token saved locally! You now have 5000 requests/hour.");
+                location.reload();
             }
         }
         
+        function getAuthHeaders() {
+            const token = localStorage.getItem('gh_presentation_token');
+            if (token) {
+                return { 'Authorization': `Bearer ${token}` };
+            }
+            return {};
+        }
+        // -------------------------
+
+        async function fetchLatestRuns() {
+            const list = document.getElementById('live-actions-dashboard');
+            if (!list) return;
+            try {
+                const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/runs?per_page=5', {
+                    headers: getAuthHeaders()
+                });
+                
+                if (res.status === 403 || res.status === 429) {
+                    list.innerHTML = `<div style="text-align: center; margin-top: 50px;"><i class="fa-solid fa-lock fa-3x" style="color: #ef4444;"></i><p style="margin-top: 20px; color: #ef4444; font-size: 1.2em;">GitHub API Rate Limit Exceeded (60 req/hr).</p><button onclick="setGitHubToken()" style="margin-top: 15px; padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">🔑 Add GitHub Token</button></div>`;
+                    return;
+                }
+                
+                const data = await res.json();
+                list.innerHTML = ''; 
+
+                if(data.workflow_runs && data.workflow_runs.length > 0) {
+                    data.workflow_runs.forEach(run => {
+                        let statusColor = '#94a3b8';
+                        let statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                        let statusText = 'Running';
+                        
+                        if (run.status === 'completed') {
+                            if (run.conclusion === 'success') {
+                                statusColor = '#10b981';
+                                statusIcon = '<i class="fa-solid fa-circle-check"></i>';
+                                statusText = 'Success';
+                            } else if (run.conclusion === 'failure') {
+                                statusColor = '#ef4444';
+                                statusIcon = '<i class="fa-solid fa-circle-xmark"></i>';
+                                statusText = 'Failed';
+                            } else {
+                                statusColor = '#f59e0b';
+                                statusIcon = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                                statusText = 'Skipped';
+                            }
+                        } else {
+                            statusColor = '#38bdf8';
+                        }
+
+                        const time = new Date(run.updated_at).toLocaleTimeString();
+                        const html = `
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid ${statusColor}; padding: 15px; border-radius: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong style="color: #e2e8f0; font-size: 1.1em; display: block; margin-bottom: 5px;">${run.name}</strong>
+                                    <span style="color: #94a3b8; font-size: 0.85em;"><i class="fa-solid fa-code-branch"></i> ${run.head_branch} | Triggered by <img src="${run.actor.avatar_url}" style="width: 15px; border-radius: 50%; vertical-align: middle;"> ${run.actor.login}</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="color: ${statusColor}; font-weight: bold; display: block; margin-bottom: 5px;">${statusIcon} ${statusText}</span>
+                                    <a href="${run.html_url}" target="_blank" style="font-size: 0.8em; color: #38bdf8; text-decoration: none; background: rgba(56,189,248,0.1); padding: 4px 8px; border-radius: 4px;">View <i class="fa-solid fa-external-link-alt"></i></a>
+                                </div>
+                            </div>
+                        `;
+                        list.innerHTML += html;
+                    });
+                } else {
+                    list.innerHTML = '<p style="color: #94a3b8;">No workflows found yet.</p>';
+                }
+            } catch (error) {
+                list.innerHTML = `<p style="color: #ef4444; text-align: center;"><i class="fa-solid fa-triangle-exclamation"></i> Network error fetching live data.</p>`;
+            }
+        }
         
         async function fetchMiniStatuses() {
             const boxes = document.querySelectorAll('.live-status-box');
             for (let box of boxes) {
                 const wf = box.getAttribute('data-workflow');
                 try {
-                    const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/workflows/' + wf + '/runs?per_page=1');
+                    const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/workflows/' + wf + '/runs?per_page=1', {
+                        headers: getAuthHeaders()
+                    });
+                    
+                    if (res.status === 403 || res.status === 429) {
+                        box.innerHTML = `<span style="color: #ef4444;"><i class="fa-solid fa-lock"></i> API Rate Limit. <button onclick="setGitHubToken()" style="background: none; border: none; color: #38bdf8; text-decoration: underline; cursor: pointer; padding: 0;">Add Token</button></span>`;
+                        continue;
+                    }
+                    
                     const data = await res.json();
                     if (data.workflow_runs && data.workflow_runs.length > 0) {
                         const run = data.workflow_runs[0];
@@ -1440,7 +1480,11 @@ jobs:
         
         fetchLatestRuns();
         fetchMiniStatuses();
+</script>
 
-    </script>
+    <button onclick="setGitHubToken()" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; color: #94a3b8; cursor: pointer; backdrop-filter: blur(5px);" title="Add GitHub Token to bypass API Rate Limits">
+        <i class="fa-solid fa-key"></i>
+    </button>
+    
 </body>
 </html>
