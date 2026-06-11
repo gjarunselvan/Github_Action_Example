@@ -572,7 +572,10 @@ CMD [ "npm", "start" ]
                             <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 01</span>
                             <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;" class="text-gradient-success"><i class="fa-solid fa-vial-circle-check"></i> Basic CI Pipeline</h2>
                         </div>
-                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="triggerFailureDemo()" class="btn-view-code" style="background: linear-gradient(135deg, #ef4444, #b91c1c); cursor: pointer; border: none;"><i class="fa-solid fa-bomb"></i> Inject Error & Create PR</button>
+                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                        </div>
                     </div>
 
                     <div class="flex-container">
@@ -1411,6 +1414,85 @@ jobs:
 
         // Real-Time GitHub API Fetcher
         
+        
+        // --- Live Demo: Inject Error & Create PR ---
+        async function triggerFailureDemo() {
+            const token = localStorage.getItem('gh_presentation_token');
+            if (!token) {
+                alert("You must add your GitHub PAT first! Click the Key icon in the bottom right.");
+                return;
+            }
+            
+            const repo = "gjarunselvan/Github_Action_Example";
+            const branchName = "demo-failure-" + Math.floor(Math.random() * 10000);
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            };
+            
+            try {
+                // 1. Get Main Branch SHA
+                const mainRefRes = await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/main`, { headers });
+                const mainRefData = await mainRefRes.json();
+                const mainSha = mainRefData.object.sha;
+                
+                // 2. Create New Branch
+                await fetch(`https://api.github.com/repos/${repo}/git/refs`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ ref: `refs/heads/${branchName}`, sha: mainSha })
+                });
+                
+                // 3. Get test.js file info
+                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}`, { headers });
+                const fileData = await fileRes.json();
+                const fileSha = fileData.sha;
+                const fileContent = atob(fileData.content);
+                
+                // 4. Inject Error into test.js
+                const brokenContent = fileContent.replace("process.exit(0);", "console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);");
+                const encodedContent = btoa(brokenContent);
+                
+                // 5. Commit Broken File
+                await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({
+                        message: "💥 Break the build for live demo",
+                        content: encodedContent,
+                        sha: fileSha,
+                        branch: branchName
+                    })
+                });
+                
+                // 6. Open Pull Request
+                const prRes = await fetch(`https://api.github.com/repos/${repo}/pulls`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({
+                        title: "🚨 DO NOT MERGE: Live Demo Breakage",
+                        body: "This PR was automatically created by the presentation to demonstrate GitHub Actions catching a fatal CI error.",
+                        head: branchName,
+                        base: "main"
+                    })
+                });
+                const prData = await prRes.json();
+                
+                if (prData.html_url) {
+                    alert(`Success! Created PR #${prData.number}.\nThe CI pipeline is now running and WILL fail!`);
+                    window.open(prData.html_url, '_blank');
+                } else {
+                    alert("Failed to open PR. Check console for details.");
+                    console.log(prData);
+                }
+                
+            } catch (err) {
+                console.error(err);
+                alert("An error occurred. Check the browser console.");
+            }
+        }
+
         // --- API Authenticator ---
         function setGitHubToken() {
             const token = prompt("Enter a GitHub Personal Access Token (PAT) to bypass the 60 req/hr rate limit:\n(This token is saved ONLY in your local browser storage)");
