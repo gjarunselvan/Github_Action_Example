@@ -37,7 +37,7 @@
         /* Utilize Max Space */
         .reveal .slides {
             width: 95% !important;
-            max-width: 1600px !important;
+            max-width: 1700px !important;
             height: 95% !important;
         }
 
@@ -76,23 +76,23 @@
 
         /* Glassmorphism Containers - Maximized */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             width: 100%;
             height: 100%;
             box-sizing: border-box;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
         .glass-panel.center {
             text-align: center;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
@@ -101,110 +101,124 @@
         .flex-container {
             display: flex;
             gap: 40px;
-            align-items: center;
             height: 100%;
+            flex-grow: 1;
+            overflow: hidden;
         }
 
         .content-col {
             flex: 1.2;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+        
+        /* Custom scrollbar for content col */
+        .content-col::-webkit-scrollbar {
+            width: 8px;
+        }
+        .content-col::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05); 
+            border-radius: 10px;
+        }
+        .content-col::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2); 
+            border-radius: 10px;
         }
 
         .code-col {
             flex: 1.8;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         /* Beautiful Images */
         .feature-image {
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            margin: 20px 0;
+            margin: 0 0 20px 0;
             width: 100%;
-            height: 250px;
+            height: 200px;
             object-fit: cover;
             border: 2px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
         }
 
         /* Code Blocks styling */
         .reveal pre {
             width: 100%;
+            height: 100%;
             margin: 0;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.65em;
+            font-size: 0.7em;
         }
 
         .reveal pre code {
-            padding: 25px;
-            line-height: 1.5;
+            padding: 30px;
+            line-height: 1.6;
             border-radius: 12px;
             background: #0f172a !important;
-            max-height: 600px;
+            height: 100%;
+            box-sizing: border-box;
         }
 
         /* Badges */
         .badge {
             display: inline-block;
             padding: 8px 16px;
-            font-size: 0.5em;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 0.4em;
+            font-weight: 800;
+            letter-spacing: 1.5px;
             color: #fff;
             text-transform: uppercase;
             border-radius: 50px;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            margin-bottom: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            vertical-align: middle;
         }
 
-        /* Huge Action Buttons */
-        .btn-primary {
-            display: inline-block;
-            padding: 20px 40px;
-            font-size: 0.9em;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
-            color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.6);
-            margin-top: 30px;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 35px -5px rgba(37, 99, 235, 0.8);
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        }
-
+        /* Buttons */
         .btn-view-code {
             display: inline-block;
-            padding: 15px 30px;
-            font-size: 0.7em;
+            padding: 12px 25px;
+            font-size: 0.6em;
             font-weight: 800;
             color: #fff !important;
             background: linear-gradient(135deg, #ec4899, #e11d48);
             border-radius: 12px;
             text-decoration: none;
             box-shadow: 0 10px 20px rgba(225, 29, 72, 0.5);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: auto;
-            text-align: center;
+            transition: transform 0.2s ease;
+            white-space: nowrap;
         }
 
         .btn-view-code:hover {
             transform: scale(1.05);
-            box-shadow: 0 15px 25px rgba(225, 29, 72, 0.7);
+        }
+        
+        .detail-block {
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #38bdf8;
+        }
+        .detail-block strong {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .detail-block p {
+            margin: 0;
+            font-size: 0.85em;
+            line-height: 1.6;
+            color: #cbd5e1;
         }
     </style>
 </head>
@@ -215,81 +229,46 @@
             <!-- Title Slide -->
             <section data-transition="zoom">
                 <div class="glass-panel center">
-                    <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=1200&q=80" style="width: 100%; height: 350px; object-fit: cover; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                    <h1 class="text-gradient" style="font-size: 3.5em;">GitHub Actions</h1>
-                    <h3 style="font-size: 1.8em;">The Ultimate Masterclass</h3>
-                    <p style="font-size: 1.2em; color: #94a3b8; max-width: 800px;">A visual journey into automating your workflows, optimizing CI/CD pipelines, and shipping code faster.</p>
-                    
-                    <button class="btn-primary" onclick="document.documentElement.requestFullscreen()">
-                        <i class="fa-solid fa-expand"></i> Enter Fullscreen for Presentation
-                    </button>
-                </div>
-            </section>
-
-            <!-- Why GitHub Actions? -->
-            <section data-transition="slide">
-                <div class="glass-panel">
-                    <div class="flex-container">
-                        <div class="content-col" style="flex: 1;">
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 100%;">
-                        </div>
-                        <div class="code-col" style="flex: 1; padding-left: 40px;">
-                            <h2 style="font-size: 2.5em;"><i class="fa-solid fa-lightbulb text-gradient"></i> Why GitHub Actions?</h2>
-                            <p style="font-size: 1.2em; margin-bottom: 30px;">The industry standard for modern automation.</p>
-                            <ul style="font-size: 1.1em; color: #cbd5e1; line-height: 2;">
-                                <li><strong style="color: #38bdf8;">Native Integration:</strong> Built directly into GitHub. No webhooks required.</li>
-                                <li><strong style="color: #34d399;">Zero Infrastructure:</strong> GitHub hosts Linux, Windows, & macOS runners.</li>
-                                <li><strong style="color: #f472b6;">Event-Driven:</strong> Trigger on PRs, issues, releases, and more.</li>
-                                <li><strong style="color: #a78bfa;">Marketplace:</strong> 20,000+ plug-and-play actions available instantly.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Actions vs Jenkins -->
-            <section data-transition="slide">
-                <div class="glass-panel center">
-                    <h2 style="font-size: 2.5em; margin-bottom: 40px;">GitHub Actions <span style="color: #ef4444;">vs.</span> Jenkins</h2>
-                    <div class="flex-row" style="width: 100%; display: flex; gap: 40px;">
-                        <!-- Jenkins -->
-                        <div style="flex: 1; background: rgba(239,68,68,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(239,68,68,0.3); text-align: left;">
-                            <img src="https://images.unsplash.com/photo-1629654291663-b91ad427698f?auto=format&fit=crop&w=800&q=80" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; filter: grayscale(100%);">
-                            <h3 style="color: #fca5a5; text-align: center; font-size: 1.8em;"><i class="fa-brands fa-jenkins"></i> Legacy Tools</h3>
-                            <ul style="font-size: 1.1em; margin-top: 20px; padding-left: 20px; line-height: 1.8;">
-                                <li>Requires dedicated VMs to host and maintain.</li>
-                                <li>Plugin Hell: Constant dependency updates.</li>
-                                <li>Complex Groovy script pipelines.</li>
-                                <li>Isolated from code repositories.</li>
-                            </ul>
-                        </div>
-                        <!-- GitHub Actions -->
-                        <div style="flex: 1; background: rgba(52,211,153,0.1); padding: 40px; border-radius: 20px; border: 2px solid rgba(52,211,153,0.3); text-align: left;">
-                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=800&q=80" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
-                            <h3 style="color: #6ee7b7; text-align: center; font-size: 1.8em;"><i class="fa-brands fa-github"></i> GitHub Actions</h3>
-                            <ul style="font-size: 1.1em; margin-top: 20px; padding-left: 20px; line-height: 1.8;">
-                                <li>Serverless: Fully managed cloud instances.</li>
-                                <li>YAML syntax: Clean, standardized, easy to review.</li>
-                                <li>Seamless enterprise-grade security & secrets.</li>
-                                <li>Executes precisely where developers collaborate.</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=1400&q=80" style="width: 100%; height: 400px; object-fit: cover; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                    <h1 class="text-gradient" style="font-size: 4em;">GitHub Actions</h1>
+                    <h3 style="font-size: 2em;">The Ultimate Masterclass</h3>
+                    <p style="font-size: 1.3em; color: #94a3b8; max-width: 900px;">A visual, deep-dive journey into automating your workflows, optimizing CI/CD pipelines, and shipping highly resilient code faster.</p>
+                    <p style="font-size: 0.8em; margin-top: 15px; color: #64748b;">(Press 'F' at any time to enter Fullscreen)</p>
                 </div>
             </section>
 
             <!-- Scenario 1 -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <!-- Slide Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 01</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;" class="text-gradient-success"><i class="fa-solid fa-vial-circle-check"></i> Basic CI Pipeline</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
                     <div class="flex-container">
                         <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 01</span>
-                            <h2 class="text-gradient-success" style="font-size: 2em;"><i class="fa-solid fa-vial-circle-check"></i> Basic CI Pipeline</h2>
-                            <p style="font-size: 1.1em;">Automatically test your code on every push or Pull Request.</p>
                             <img src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/01-ci-pipeline.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To act as an automated gatekeeper. We must ensure that untested or broken code never merges into our primary production codebase. It establishes baseline trust in every commit.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>The workflow triggers precisely on <code>push</code> or <code>pull_request</code> to the <code>main</code> branch. It provisions an <code>ubuntu-latest</code> virtual machine, checks out the repository source code using a pre-built action, installs the Node.js runtime environment (v20), installs dependencies via <code>npm install</code>, and runs the automated test suite via <code>npm test</code>.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Drastically reduces the volume of critical production bugs, fully automates manual code verification, and increases developer confidence when approving Pull Requests.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>This base pipeline can easily be expanded to execute Code Linters (ESLint), run static security vulnerability analysis (SonarQube/Snyk), and generate massive Code Coverage reports directly onto the Pull Request UI.</p>
+                            </div>
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
@@ -300,15 +279,22 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install
-      - run: npm test
+
+      - name: Install Dependencies
+        run: npm install
+      
+      - name: Run Tests
+        run: npm test
                             </code></pre>
                         </div>
                     </div>
@@ -318,29 +304,50 @@ jobs:
             <!-- Scenario 2 -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Scenario 02</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-regular fa-clock text-gradient"></i> Scheduled Jobs (Cron)</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/02-scheduled-job.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
                     <div class="flex-container">
                         <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Scenario 02</span>
-                            <h2 style="font-size: 2em;"><i class="fa-regular fa-clock text-gradient"></i> Scheduled Jobs (Cron)</h2>
-                            <p style="font-size: 1.1em;">Automate background jobs like daily database backups or midnight health checks.</p>
                             <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/02-scheduled-job.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To completely eliminate manual operational tasks. Infrastructure often requires periodic maintenance, sweeping, or health verification independent of code changes.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Instead of listening for a push, the <code>schedule</code> event uses standard Unix <code>cron</code> syntax (e.g., <code>0 12 * * *</code>). At precisely 12:00 UTC every single day, GitHub Actions provisions a server and executes the custom backup script we define in the repository.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Saves hundreds of engineering hours, guarantees that critical operational tasks (like backing up a database) are never forgotten by human error, and requires absolutely zero external scheduling servers.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>Perfect for triggering nightly end-to-end (E2E) integration tests that take hours to run, sweeping cloud environments to delete orphaned resources, or generating daily analytic reports and sending them directly to Slack.</p>
+                            </div>
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 02 - Scheduled Job (Cron)
+
 on:
   schedule:
-    # Runs every day at 12 PM UTC
-    - cron: '0 12 * * *' 
+    # Runs every day at 12:00 UTC
+    - cron: '0 12 * * *'
 
 jobs:
-  daily-backup:
+  daily-task:
     runs-on: ubuntu-latest
     steps:
-      - name: Run script
-        run: ./scripts/run_backup.sh
+      - name: Run daily backup or check
+        run: echo "This is a scheduled job that runs automatically."
                             </code></pre>
                         </div>
                     </div>
@@ -350,33 +357,61 @@ jobs:
             <!-- Scenario 3 -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #ec4899, #be185d);">Scenario 03</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-hand-pointer text-gradient"></i> Manual Trigger UI</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/03-manual-trigger.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
                     <div class="flex-container">
                         <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #ec4899, #be185d);">Scenario 03</span>
-                            <h2 style="font-size: 2em;"><i class="fa-solid fa-hand-pointer text-gradient"></i> Manual Trigger</h2>
-                            <p style="font-size: 1.1em;">Give your team a visual UI to trigger deployments or maintenance scripts on-demand.</p>
                             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/03-manual-trigger.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To democratize powerful scripts. Not everyone is comfortable using the Command Line. This provides a beautiful, click-and-run GUI in the browser for complex backend operations.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>The <code>workflow_dispatch</code> trigger forces GitHub to generate a web form. We define <code>inputs</code> such as an <code>environment</code> choice dropdown (staging/production) and a <code>debug_mode</code> boolean toggle. The script then securely accesses these inputs using the <code>${{ inputs.environment }}</code> expression context.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Empowers QA engineers or Product Managers to trigger deployments safely without touching code. Reduces bottlenecks on the DevOps team for ad-hoc requests.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>You can use this to execute database rollbacks, trigger massive data migrations safely with specific dynamic parameters, or forcefully clear CDN web caches instantly via the GitHub UI.</p>
+                            </div>
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
 on:
   workflow_dispatch:
     inputs:
-      env:
-        description: 'Target Environment'
+      environment:
+        description: 'Environment to deploy to'
         required: true
         default: 'staging'
         type: choice
-        options: [staging, production]
+        options:
+        - staging
+        - production
+      debug_mode:
+        description: 'Enable debug logging'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying to ${{ inputs.env }}!"
+      - name: Print inputs
+        run: |
+          echo "Deploying to environment: ${{ inputs.environment }}"
+          echo "Debug mode enabled: ${{ inputs.debug_mode }}"
                             </code></pre>
                         </div>
                     </div>
@@ -386,31 +421,57 @@ jobs:
             <!-- Scenario 4 -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">Scenario 04</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-table-cells text-gradient"></i> Matrix Strategy</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/04-matrix-strategy.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
                     <div class="flex-container">
                         <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">Scenario 04</span>
-                            <h2 style="font-size: 2em;"><i class="fa-solid fa-table-cells text-gradient"></i> Matrix Strategy</h2>
-                            <p style="font-size: 1.1em;">Multiply your productivity. Test your app across multiple operating systems in parallel.</p>
                             <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/04-matrix-strategy.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To mathematically multiply our productivity. Modern libraries must work flawlessly across Windows, Linux, Mac, and various language versions simultaneously.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>The <code>strategy: matrix:</code> block defines arrays of OS architectures and Node versions. GitHub computes the Cartesian product (e.g., 3 OS types × 2 Node versions = 6 parallel jobs). It spins up 6 independent VMs at the exact same time, dynamically injecting the variables into <code>runs-on: ${{ matrix.os }}</code>.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Ensures bulletproof cross-platform compatibility. What would take 30 minutes sequentially now takes only 5 minutes because all permutations execute in parallel.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>You can use the Matrix strategy to deploy microservices independently, run tests against multiple database providers (MySQL, Postgres, SQLite), or compile native C++ binaries for vastly different CPU architectures.</p>
+                            </div>
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
 jobs:
-  test:
+  test-across-environments:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [18, 20]
+        node-version: [18.x, 20.x]
+      fail-fast: false
+    
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm test
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies and Run Tests
+        run: |
+          npm install
+          npm test
                             </code></pre>
                         </div>
                     </div>
@@ -420,65 +481,74 @@ jobs:
             <!-- Scenario 6 -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #0ea5e9, #0369a1);">Scenario 06</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-brands fa-docker text-gradient"></i> Docker Build & Publish</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/06-docker-publish.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
+
                     <div class="flex-container">
                         <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #0ea5e9, #0369a1);">Scenario 06</span>
-                            <h2 style="font-size: 2em;"><i class="fa-brands fa-docker text-gradient"></i> Docker Publish</h2>
-                            <p style="font-size: 1.1em;">Build and push your container images to DockerHub seamlessly on every new tag.</p>
                             <img src="https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/06-docker-publish.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
+                            
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
+                                <p>To fully automate the container deployment lifecycle. Building and pushing Docker images manually is slow, error-prone, and a massive security risk if a developer's laptop gets compromised.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
+                                <p>Triggered exclusively when a Git tag (like <code>v1.0</code>) is pushed. The workflow logs into DockerHub securely using encrypted Repository Secrets. It then utilizes Docker's official Buildx Action to compile the <code>Dockerfile</code> natively on the runner and push it to the remote registry automatically tagged with the exact Git reference.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
+                                <p>Creates a fully immutable, traceable release artifact. Ensures that the exact code tested in CI is exactly what ends up packaged in the production container image.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
+                                <p>You can seamlessly push images to AWS Elastic Container Registry (ECR), Google Artifact Registry, run automated container vulnerability scans (Trivy) before pushing, or deploy instantly to Kubernetes clusters using ArgoCD.</p>
+                            </div>
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
-steps:
-  - name: Login to DockerHub
-    uses: docker/login-action@v3
-    with:
-      username: ${{ secrets.DOCKER_USER }}
-      password: ${{ secrets.DOCKER_PAT }}
-      
-  - name: Build and Push
-    uses: docker/build-push-action@v5
-    with:
-      context: .
-      push: true
-      tags: myorg/myapp:${{ github.ref_name }}
+on:
+  push:
+    tags: [ 'v*.*.*' ]
+
+jobs:
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: myusername/my-app:${{ github.ref_name }}
                             </code></pre>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Scenario 11 -->
-            <section data-transition="slide">
-                <div class="glass-panel">
-                    <div class="flex-container">
-                        <div class="content-col">
-                            <span class="badge" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">Scenario 11</span>
-                            <h2 style="font-size: 2em;"><i class="fa-solid fa-bolt text-gradient"></i> Dependency Caching</h2>
-                            <p style="font-size: 1.1em;">Drastically reduce your build times by caching massive `node_modules` folders.</p>
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" class="feature-image">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/11-caching.yml" target="_blank" class="btn-view-code">
-                                <i class="fa-brands fa-github fa-lg"></i> View Full Workflow YAML
-                            </a>
-                        </div>
-                        <div class="code-col">
-                            <pre><code class="language-yaml" data-trim>
-steps:
-  - uses: actions/checkout@v4
-  - uses: actions/cache@v4
-    with:
-      path: ~/.npm
-      key: npm-${{ hashFiles('package-lock.json') }}
-      restore-keys: |
-        npm-
-        
-  - run: npm install
-                            </code></pre>
-                        </div>
-                    </div>
+            <!-- Q&A Slide -->
+            <section data-transition="zoom">
+                <div class="glass-panel center" style="padding: 80px 40px;">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80" style="width: 100%; height: 350px; object-fit: cover; border-radius: 15px; margin-bottom: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                    <h1 class="text-gradient" style="font-size: 4em;"><i class="fa-solid fa-comments"></i> Any Questions?</h1>
+                    <p style="font-size: 1.5em; color: #94a3b8; max-width: 900px; line-height: 1.6; margin-top: 20px;">
+                        Thank you for attending. <br><br>I am now open to discuss any advanced scenarios, architecture decisions, custom runners, or deep dives into the workflows!
+                    </p>
                 </div>
             </section>
 
@@ -496,10 +566,10 @@ steps:
             backgroundTransition: 'zoom',
             controls: true,
             progress: true,
-            center: false, // Important to use 100% height naturally
-            margin: 0.05,
-            width: 1600,
-            height: 900,
+            center: false,
+            margin: 0.03,
+            width: 1700,
+            height: 950,
             disableLayout: false
         });
     </script>
