@@ -1497,7 +1497,7 @@ jobs:
                     appendTerm(`Waiting 5 seconds for GitHub Actions to trigger...`, "#f59e0b");
                     
                     // Wait for CI to start
-                    setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
+                    setTimeout(() => fetchActionLogs(repo, branchName, headers, newCommitSha), 5000);
                 } else {
                     appendTerm("Failed to open PR. Check token permissions.", "#ef4444");
                 }
@@ -1507,16 +1507,18 @@ jobs:
             }
         }
 
-        async function fetchActionLogs(repo, branchName, headers) {
+        async function fetchActionLogs(repo, branchName, headers, commitSha) {
             appendTerm("Polling GitHub API for CI Pipeline execution...", "#38bdf8");
             
             try {
                 // Find the workflow run for this branch
-                const runsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs?head_branch=${branchName}`, { headers });
+                const runsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs?head_branch=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
                 const runsData = await runsRes.json();
                 
-                if (runsData.total_count > 0) {
-                    const run = runsData.workflow_runs[0];
+                // Filter runs specifically to the commit we just pushed!
+                const run = runsData.workflow_runs.find(r => r.head_sha === commitSha);
+                
+                if (run) {
                     appendTerm(`Found active CI Pipeline! (Run #${run.run_number})`, "#10b981");
                     appendTerm(`Current Status: <strong style="color:#f59e0b;">${run.status}</strong>`, "#e2e8f0");
                     appendTerm(`View Live Web Interface: <a href="${run.html_url}" target="_blank" style="color:#38bdf8;">${run.html_url}</a>`, "#e2e8f0");
@@ -1525,7 +1527,7 @@ jobs:
                     pollJobStatus(repo, run.id, headers);
                 } else {
                     appendTerm("No workflows found yet. Retrying in 5 seconds...", "#f59e0b");
-                    setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
+                    setTimeout(() => fetchActionLogs(repo, branchName, headers, commitSha), 5000);
                 }
             } catch(e) {
                 appendTerm("Error fetching logs.", "#ef4444");
@@ -1535,7 +1537,7 @@ jobs:
         async function pollJobStatus(repo, runId, headers) {
             const pollInterval = setInterval(async () => {
                 try {
-                    const jobsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs/${runId}/jobs`, { headers });
+                    const jobsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs/${runId}/jobs?t=${Date.now()}`, { headers, cache: 'no-store' });
                     const jobsData = await jobsRes.json();
                     
                     if (jobsData.jobs && jobsData.jobs.length > 0) {
@@ -1616,16 +1618,17 @@ jobs:
                     })
                 });
                 
+                const putData = await putRes.json();
                 if (!putRes.ok) {
-                    const errData = await putRes.json();
-                    throw new Error(`GitHub API Error ${putRes.status}: ${errData.message}`);
+                    throw new Error(`GitHub API Error ${putRes.status}: ${putData.message}`);
                 }
+                const fixCommitSha = putData.commit.sha;
                 
                 appendTerm("Success! The Pull Request has been updated.", "#10b981");
                 appendTerm("Waiting 5 seconds for GitHub Actions to re-trigger...", "#f59e0b");
                 
                 // Wait for CI to start
-                setTimeout(() => fetchActionLogs(repo, branchName, headers), 5000);
+                setTimeout(() => fetchActionLogs(repo, branchName, headers, fixCommitSha), 5000);
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
