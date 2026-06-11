@@ -1829,7 +1829,7 @@ jobs:
             const list = document.getElementById('live-actions-dashboard');
             if (!list) return;
             try {
-                const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/runs?per_page=5', {
+                const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/runs?per_page=15', {
                     headers: getAuthHeaders()
                 });
                 
