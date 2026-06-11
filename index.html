@@ -403,42 +403,7 @@ try {
                 </div>
             </section>
 
-            <!-- Live Dashboard API -->
-            <section data-transition="slide">
-                <div class="glass-panel">
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
-                        <div>
-                            <span class="badge" style="background: linear-gradient(135deg, #f43f5e, #be123c);">Live API</span>
-                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-satellite-dish text-gradient"></i> Real-Time Workflow Dashboard</h2>
-                        </div>
-                        <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
-                    </div>
 
-                    <div class="flex-container">
-                        <div class="content-col" style="flex: 1;">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 250px;">
-                            <div class="detail-block" style="border-left-color: #38bdf8;">
-                                <strong><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> Live GitHub API Integration</strong>
-                                <p>This slide isn't a screenshot! To prove how powerful this is, we are making a real-time API request to GitHub right now. It fetches the 5 most recent workflow executions for this exact repository.</p>
-                            </div>
-                            <div class="detail-block" style="border-left-color: #fbbf24;">
-                                <strong><i class="fa-solid fa-play" style="color: #fbbf24;"></i> Demo Instructions</strong>
-                                <p>Go to the repository, push a new commit (or trigger a manual job), and simply refresh this presentation page. You will see your pipeline status instantly appear on this slide as "In Progress"!</p>
-                            </div>
-                        </div>
-                        <div class="code-col" style="flex: 1.5; padding-left: 20px;">
-                            <h3 style="margin-bottom: 20px; font-size: 1.5em; color: #e2e8f0;"><i class="fa-solid fa-server"></i> Recent Executions</h3>
-                            <div id="live-actions-dashboard" style="height: 500px; overflow-y: auto; padding-right: 15px;">
-                                <!-- Populated by JS -->
-                                <div style="text-align: center; margin-top: 50px;">
-                                    <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: #38bdf8;"></i>
-                                    <p style="margin-top: 20px; color: #94a3b8; font-size: 1.2em;">Fetching live workflow data from GitHub API...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- Scenario 1 -->
             <section data-transition="slide">
@@ -499,6 +464,7 @@ jobs:
       - name: Run Tests
         run: npm test
                             </code></pre>
+                            <div class="live-status-box" data-workflow="01-ci-pipeline.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -552,6 +518,7 @@ jobs:
       - name: Run daily backup or check
         run: echo "This is a scheduled job that runs automatically."
                             </code></pre>
+                            <div class="live-status-box" data-workflow="02-scheduled-job.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -616,6 +583,7 @@ jobs:
           echo "Deploying to environment: ${{ inputs.environment }}"
           echo "Debug mode enabled: ${{ inputs.debug_mode }}"
                             </code></pre>
+                            <div class="live-status-box" data-workflow="03-manual-trigger.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -676,6 +644,7 @@ jobs:
           npm install
           npm test
                             </code></pre>
+                            <div class="live-status-box" data-workflow="04-matrix-strategy.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -739,6 +708,7 @@ jobs:
           push: true
           tags: myusername/my-app:${{ github.ref_name }}
                             </code></pre>
+                            <div class="live-status-box" data-workflow="06-docker-publish.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -787,6 +757,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: echo "Deploying to production server!"
                             </code></pre>
+                            <div class="live-status-box" data-workflow="05-conditional-steps.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -832,6 +803,7 @@ jobs:
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
                             </code></pre>
+                            <div class="live-status-box" data-workflow="08-caller-workflow.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -882,6 +854,7 @@ jobs:
           name: my-artifact
       - run: cat output.txt
                             </code></pre>
+                            <div class="live-status-box" data-workflow="09-artifacts.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -931,6 +904,7 @@ jobs:
           # The secret is masked with *** in logs
           ./login.sh ${{ secrets.SUPER_SECRET_TOKEN }}
                             </code></pre>
+                            <div class="live-status-box" data-workflow="10-env-vars-secrets.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -977,6 +951,7 @@ steps:
   - name: Install dependencies
     run: npm install
                             </code></pre>
+                            <div class="live-status-box" data-workflow="11-caching.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -1025,6 +1000,7 @@ jobs:
           files: dist.zip
           generate_release_notes: true
                             </code></pre>
+                            <div class="live-status-box" data-workflow="12-github-release.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
                 </div>
@@ -1076,6 +1052,44 @@ jobs:
           gh pr merge ${{ github.event.pull_request.html_url }} \
             --auto --squash
                             </code></pre>
+                            <div class="live-status-box" data-workflow="13-auto-merge-pr.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Live Dashboard API -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #f43f5e, #be123c);">Live API</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-satellite-dish text-gradient"></i> Real-Time Workflow Dashboard</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
+                    </div>
+
+                    <div class="flex-container">
+                        <div class="content-col" style="flex: 1;">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 250px;">
+                            <div class="detail-block" style="border-left-color: #38bdf8;">
+                                <strong><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> Live GitHub API Integration</strong>
+                                <p>This slide isn't a screenshot! To prove how powerful this is, we are making a real-time API request to GitHub right now. It fetches the 5 most recent workflow executions for this exact repository.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24;">
+                                <strong><i class="fa-solid fa-play" style="color: #fbbf24;"></i> Demo Instructions</strong>
+                                <p>Go to the repository, push a new commit (or trigger a manual job), and simply refresh this presentation page. You will see your pipeline status instantly appear on this slide as "In Progress"!</p>
+                            </div>
+                        </div>
+                        <div class="code-col" style="flex: 1.5; padding-left: 20px;">
+                            <h3 style="margin-bottom: 20px; font-size: 1.5em; color: #e2e8f0;"><i class="fa-solid fa-server"></i> Recent Executions</h3>
+                            <div id="live-actions-dashboard" style="height: 500px; overflow-y: auto; padding-right: 15px;">
+                                <!-- Populated by JS -->
+                                <div style="text-align: center; margin-top: 50px;">
+                                    <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: #38bdf8;"></i>
+                                    <p style="margin-top: 20px; color: #94a3b8; font-size: 1.2em;">Fetching live workflow data from GitHub API...</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1164,8 +1178,52 @@ jobs:
             }
         }
         
-        // Execute on load
+        
+        async function fetchMiniStatuses() {
+            const boxes = document.querySelectorAll('.live-status-box');
+            for (let box of boxes) {
+                const wf = box.getAttribute('data-workflow');
+                try {
+                    const res = await fetch('https://api.github.com/repos/gjarunselvan/Github_Action_Example/actions/workflows/' + wf + '/runs?per_page=1');
+                    const data = await res.json();
+                    if (data.workflow_runs && data.workflow_runs.length > 0) {
+                        const run = data.workflow_runs[0];
+                        let statusColor = '#94a3b8';
+                        let statusIcon = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                        let statusText = 'Running';
+                        
+                        if (run.status === 'completed') {
+                            if (run.conclusion === 'success') {
+                                statusColor = '#10b981';
+                                statusIcon = '<i class="fa-solid fa-circle-check"></i>';
+                                statusText = 'Success';
+                            } else if (run.conclusion === 'failure') {
+                                statusColor = '#ef4444';
+                                statusIcon = '<i class="fa-solid fa-circle-xmark"></i>';
+                                statusText = 'Failed';
+                            } else {
+                                statusColor = '#f59e0b';
+                                statusIcon = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                                statusText = 'Skipped';
+                            }
+                        } else {
+                            statusColor = '#38bdf8';
+                        }
+                        
+                        box.innerHTML = `<div style="display:flex; align-items:center; gap: 10px;"><strong style="color: #e2e8f0;"><i class="fa-solid fa-satellite-dish"></i> Live Exec:</strong> <span style="color: ${statusColor}; font-weight: bold;">${statusIcon} ${statusText}</span> <span style="color: #64748b; font-size: 0.9em;">(#${run.run_number})</span></div> <a href="${run.html_url}" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: bold; background: rgba(56,189,248,0.1); padding: 4px 10px; border-radius: 5px;">View Log <i class="fa-solid fa-arrow-right"></i></a>`;
+                        box.style.borderLeft = '4px solid ' + statusColor;
+                    } else {
+                        box.innerHTML = '<span style="color: #64748b;"><i class="fa-solid fa-info-circle"></i> No runs yet.</span>';
+                    }
+                } catch(e) {
+                    box.innerHTML = '<span style="color: #ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> API Error</span>';
+                }
+            }
+        }
+        
         fetchLatestRuns();
+        fetchMiniStatuses();
+
     </script>
 </body>
 </html>
