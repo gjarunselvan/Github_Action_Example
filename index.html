@@ -4,43 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GitHub Actions Masterclass</title>
-    <!-- Reveal.js CSS -->
+    
+    <!-- Reveal.js Base CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/dracula.min.css" id="theme">
     
     <!-- Code Syntax Highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
+        /* Beautiful Animated Gradient Background */
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #082f49);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Typography */
+        .reveal {
+            font-family: 'Inter', sans-serif;
+            color: #f8fafc;
+        }
+
         .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Montserrat', sans-serif;
             text-transform: none;
-            font-weight: 700;
-            background: -webkit-linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .text-gradient {
+            background: -webkit-linear-gradient(45deg, #38bdf8, #818cf8, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        .text-gradient-success {
+            background: -webkit-linear-gradient(45deg, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .reveal p, .reveal li {
-            font-size: 0.8em;
-            line-height: 1.4em;
+            font-size: 0.85em;
+            line-height: 1.5em;
+            color: #cbd5e1;
         }
-        .reveal .code-wrapper pre {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-radius: 8px;
+
+        /* Glassmorphism Containers */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 900px;
+            text-align: left;
         }
+
+        .glass-panel.center {
+            text-align: center;
+        }
+
+        /* Code Blocks styling */
+        .reveal pre {
+            width: 100%;
+            margin: 20px 0 0 0;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .reveal pre code {
+            padding: 20px;
+            font-size: 1.1em;
+            line-height: 1.4;
+            border-radius: 12px;
+            background: #1e1e1e !important;
+        }
+
+        /* Badges */
         .badge {
             display: inline-block;
-            padding: 0.2em 0.6em;
+            padding: 8px 16px;
             font-size: 0.5em;
             font-weight: 700;
-            line-height: 1;
+            letter-spacing: 1px;
             color: #fff;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.25rem;
-            background-color: #007bff;
+            text-transform: uppercase;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 32px;
+            font-size: 0.7em;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.5);
+            margin-top: 30px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        }
+
+        .icon-large {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(45deg, #38bdf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Layout Utilities */
+        .flex-row {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            justify-content: space-between;
+        }
+        .flex-col-50 {
+            width: 50%;
         }
     </style>
 </head>
@@ -48,25 +164,37 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- Intro Slide -->
-            <section>
-                <h1>GitHub Actions</h1>
-                <h3>The Ultimate Scenario Guide</h3>
-                <p>Mastering Automation, CI/CD, and Workflows</p>
-                <br>
-                <button onclick="document.documentElement.requestFullscreen()" style="padding: 15px 30px; font-size: 1.2em; background-color: #4ECDC4; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-                    🚀 Enter Fullscreen for Leadership
-                </button>
-                <p style="font-size: 0.6em; margin-top: 15px; opacity: 0.7;">(Or press 'F' on your keyboard at any time)</p>
+            <!-- Title Slide -->
+            <section data-transition="zoom">
+                <div class="glass-panel center" style="padding: 60px;">
+                    <i class="fa-brands fa-github" style="font-size: 5em; color: #fff; margin-bottom: 20px;"></i>
+                    <h1 class="text-gradient" style="font-size: 3em;">GitHub Actions</h1>
+                    <h3>The Ultimate Masterclass</h3>
+                    <p style="font-size: 1.1em; color: #94a3b8;">Automate your workflows, optimize CI/CD, and ship faster.</p>
+                    
+                    <button class="btn-primary" onclick="document.documentElement.requestFullscreen()">
+                        <i class="fa-solid fa-expand"></i> Enter Fullscreen for Presentation
+                    </button>
+                    <p style="font-size: 0.5em; margin-top: 15px; color: #64748b;">(Or press 'F' at any time)</p>
+                </div>
             </section>
 
             <!-- Scenario 1 -->
-            <section>
-                <span class="badge" style="background-color: #28a745;">Scenario 01</span>
-                <h2>Basic CI Pipeline</h2>
-                <p>Run tests automatically on push and pull requests to ensure code quality.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Scenario 01</span>
+                    <h2 class="text-gradient-success"><i class="fa-solid fa-vial-circle-check"></i> Basic CI Pipeline</h2>
+                    <div class="flex-row">
+                        <div class="flex-col-50">
+                            <p>Automatically run your test suite every time code is pushed or a Pull Request is opened.</p>
+                            <ul style="font-size: 0.8em; color: #cbd5e1;">
+                                <li>Ensures code quality</li>
+                                <li>Prevents broken builds in <code>main</code></li>
+                                <li>Provides immediate developer feedback</li>
+                            </ul>
+                        </div>
+                        <div class="flex-col-50">
+                            <pre><code class="language-yaml" data-trim>
 on:
   push:
     branches: [ "main" ]
@@ -78,60 +206,71 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm test
-                    </code></pre>
+                            </code></pre>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Scenario 2 -->
-            <section>
-                <span class="badge" style="background-color: #17a2b8;">Scenario 02</span>
-                <h2>Scheduled Jobs (Cron)</h2>
-                <p>Run tasks at specific times, like daily database backups or nightly builds.</p>
-                <div class="code-wrapper">
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Scenario 02</span>
+                    <h2><i class="fa-regular fa-clock text-gradient"></i> Scheduled Jobs (Cron)</h2>
+                    <p>Automate repetitive tasks that need to run at specific times.</p>
                     <pre><code class="language-yaml" data-trim>
 on:
   schedule:
-    - cron: '0 12 * * *' # Every day at 12 PM UTC
+    # Runs every day at 12 PM UTC
+    - cron: '0 12 * * *' 
 
 jobs:
   daily-backup:
     runs-on: ubuntu-latest
     steps:
-      - run: ./run_backup.sh
+      - run: ./scripts/run_backup.sh
+      - run: echo "Backup completed successfully!"
                     </code></pre>
                 </div>
             </section>
 
             <!-- Scenario 3 -->
-            <section>
-                <span class="badge" style="background-color: #ffc107; color: black;">Scenario 03</span>
-                <h2>Manual Trigger</h2>
-                <p>Allow developers to trigger workflows from the UI and pass custom inputs.</p>
-                <div class="code-wrapper">
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #ec4899, #be185d);">Scenario 03</span>
+                    <h2><i class="fa-solid fa-hand-pointer text-gradient"></i> Manual Trigger</h2>
+                    <p>Use <code>workflow_dispatch</code> to give your team a beautiful UI to trigger deployments or maintenance scripts on-demand.</p>
                     <pre><code class="language-yaml" data-trim>
 on:
   workflow_dispatch:
     inputs:
       env:
         description: 'Target Environment'
+        required: true
         default: 'staging'
+        type: choice
+        options: [staging, production]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying to ${{ inputs.env }}"
+      - run: echo "Deploying to ${{ inputs.env }}!"
                     </code></pre>
                 </div>
             </section>
 
             <!-- Scenario 4 -->
-            <section>
-                <span class="badge" style="background-color: #dc3545;">Scenario 04</span>
-                <h2>Matrix Strategy</h2>
-                <p>Test your code simultaneously across different operating systems and languages.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">Scenario 04</span>
+                    <h2><i class="fa-solid fa-table-cells text-gradient"></i> Matrix Strategy</h2>
+                    <div class="flex-row">
+                        <div class="flex-col-50">
+                            <p>Multiply your productivity. Test your application across multiple operating systems and language versions in parallel.</p>
+                        </div>
+                        <div class="flex-col-50">
+                            <pre><code class="language-yaml" data-trim>
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -143,188 +282,92 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 5 -->
-            <section>
-                <span class="badge" style="background-color: #6f42c1;">Scenario 05</span>
-                <h2>Issue Management</h2>
-                <p>Automate community engagement by acting on GitHub events (e.g., Issue opened).</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-on:
-  issues:
-    types: [opened]
-
-jobs:
-  welcome:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "Thanks for the issue!"
-            })
-                    </code></pre>
+                            </code></pre>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Scenario 6 -->
-            <section>
-                <span class="badge" style="background-color: #007bff;">Scenario 06</span>
-                <h2>Docker Build & Publish</h2>
-                <p>Automate your container lifecycle. Build and push to DockerHub on new tags.</p>
-                <div class="code-wrapper">
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #0ea5e9, #0369a1);">Scenario 06</span>
+                    <h2><i class="fa-brands fa-docker text-gradient"></i> Docker Build & Publish</h2>
+                    <p>Automate your container lifecycle. Build your images and push them to DockerHub or AWS ECR seamlessly when tags are created.</p>
                     <pre><code class="language-yaml" data-trim>
 steps:
-  - uses: docker/login-action@v3
+  - name: Login to DockerHub
+    uses: docker/login-action@v3
     with:
       username: ${{ secrets.DOCKER_USER }}
       password: ${{ secrets.DOCKER_PAT }}
-  - uses: docker/build-push-action@v5
+      
+  - name: Build and Push
+    uses: docker/build-push-action@v5
     with:
       push: true
-      tags: user/app:${{ github.ref_name }}
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 7 -->
-            <section>
-                <span class="badge" style="background-color: #20c997;">Scenario 07</span>
-                <h2>Reusable Workflows</h2>
-                <p>DRY (Don't Repeat Yourself). Create templates to share across multiple repositories.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-# In the Caller Workflow:
-jobs:
-  call-template:
-    uses: ./.github/workflows/template.yml
-    with:
-      config: 'prod'
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 8 -->
-            <section>
-                <span class="badge" style="background-color: #e83e8c;">Scenario 08</span>
-                <h2>Contexts & Expressions</h2>
-                <p>Dynamically control your workflows using conditional logic and GitHub contexts.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-jobs:
-  conditional-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run only if branch is main
-        if: github.ref == 'refs/heads/main'
-        run: echo "Production Deploy!"
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 9 -->
-            <section>
-                <span class="badge" style="background-color: #fd7e14;">Scenario 09</span>
-                <h2>Artifacts</h2>
-                <p>Pass files (like build binaries or test reports) between jobs.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-- uses: actions/upload-artifact@v4
-  with:
-    name: build-output
-    path: dist/
-    
-# In a later job:
-- uses: actions/download-artifact@v4
-  with:
-    name: build-output
+      tags: myorg/myapp:${{ github.ref_name }}
                     </code></pre>
                 </div>
             </section>
 
             <!-- Scenario 10 -->
-            <section>
-                <span class="badge" style="background-color: #6610f2;">Scenario 10</span>
-                <h2>Environment Vars & Secrets</h2>
-                <p>Securely inject API keys, passwords, and environment data.</p>
-                <div class="code-wrapper">
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">Scenario 10</span>
+                    <h2><i class="fa-solid fa-user-secret text-gradient"></i> Environments & Secrets</h2>
+                    <p>Securely inject API keys, cloud credentials, and dynamic environment variables without exposing them in your code.</p>
                     <pre><code class="language-yaml" data-trim>
 env:
-  GLOBAL_VAR: "Hello"
+  GLOBAL_VAR: "Hello from Global"
   
 jobs:
-  job1:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -H "Auth: ${{ secrets.API_KEY }}"
+      - name: Call API
+        run: curl -H "Auth: Bearer ${{ secrets.PROD_API_KEY }}" https://api.com
+        
+      - name: Login to Cloud
+        run: az login --service-principal -u ${{ secrets.APP_ID }} -p ${{ secrets.PASS }}
                     </code></pre>
                 </div>
             </section>
 
             <!-- Scenario 11 -->
-            <section>
-                <span class="badge" style="background-color: #28a745;">Scenario 11</span>
-                <h2>Dependency Caching</h2>
-                <p>Speed up your pipelines by caching massive dependency directories.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <span class="badge" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">Scenario 11</span>
+                    <h2><i class="fa-solid fa-bolt text-gradient"></i> Dependency Caching</h2>
+                    <div class="flex-row">
+                        <div class="flex-col-50">
+                            <p>Drastically reduce your build times by caching large directories (like <code>node_modules</code> or <code>.m2</code>) across different workflow runs.</p>
+                        </div>
+                        <div class="flex-col-50">
+                            <pre><code class="language-yaml" data-trim>
 - uses: actions/cache@v4
   with:
     path: ~/.npm
-    key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+    key: npm-${{ hashFiles('package-lock.json') }}
     restore-keys: |
-      ${{ runner.os }}-node-
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 12 -->
-            <section>
-                <span class="badge" style="background-color: #17a2b8;">Scenario 12</span>
-                <h2>Auto Create Release</h2>
-                <p>Draft and publish GitHub Releases automatically when tags are pushed.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-- uses: softprops/action-gh-release@v2
-  with:
-    generate_release_notes: true
-    draft: false
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-- Scenario 13 -->
-            <section>
-                <span class="badge" style="background-color: #ffc107; color: black;">Scenario 13</span>
-                <h2>Auto Approve & Merge</h2>
-                <p>Approve Dependabot PRs instantly to keep dependencies up-to-date.</p>
-                <div class="code-wrapper">
-                    <pre><code class="language-yaml" data-trim>
-- uses: hmarr/auto-approve-action@v4
-  if: github.actor == 'dependabot[bot]'
-  
-- run: gh pr merge --auto --merge "$PR_URL"
-  env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    </code></pre>
+      npm-
+                            </code></pre>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Outro Slide -->
-            <section>
-                <h2>Thank You!</h2>
-                <p>You can find all these YAML examples in the <code>.github/workflows</code> folder.</p>
-                <p>Happy Automating! 🚀</p>
+            <section data-transition="zoom">
+                <div class="glass-panel center" style="padding: 80px 40px;">
+                    <i class="fa-solid fa-rocket icon-large" style="font-size: 4em;"></i>
+                    <h1 class="text-gradient" style="font-size: 2.5em;">Ready to Automate?</h1>
+                    <p style="font-size: 1.2em;">You can find all 13 YAML scenario examples in the <br><code style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 5px 10px; border-radius: 5px;">.github/workflows</code> folder of this repository.</p>
+                    <br>
+                    <a href="https://github.com/gjarunselvan/Github_Action_Example" target="_blank" class="btn-primary" style="margin-top: 20px;">
+                        <i class="fa-brands fa-github"></i> View Source Code
+                    </a>
+                </div>
             </section>
 
         </div>
@@ -338,7 +381,11 @@ jobs:
             hash: true,
             plugins: [ RevealHighlight ],
             transition: 'slide',
-            backgroundTransition: 'zoom'
+            backgroundTransition: 'zoom',
+            controls: true,
+            progress: true,
+            center: true,
+            margin: 0.1
         });
     </script>
 </body>
