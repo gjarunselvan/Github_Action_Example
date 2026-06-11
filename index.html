@@ -114,6 +114,18 @@
             padding-right: 15px;
         }
         
+        
+        .inline-code {
+            font-family: monospace;
+            color: #38bdf8;
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            display: inline;
+        }
+
         /* Custom scrollbar for content col */
         .content-col::-webkit-scrollbar {
             width: 8px;
@@ -425,11 +437,11 @@
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-sitemap" style="color: #a78bfa;"></i> Repository Structure</strong>
-                                <p>We have <code>server.js</code> (an HTTP web server), <code>test.js</code> (an automated testing script), <code>package.json</code> (dependencies), and a <code>Dockerfile</code> for containerization.</p>
+                                <p>We have <span class="inline-code">server.js</span> (an HTTP web server), <span class="inline-code">test.js</span> (an automated testing script), <span class="inline-code">package.json</span> (dependencies), and a <span class="inline-code">Dockerfile</span> for containerization.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #fbbf24;">
                                 <strong><i class="fa-solid fa-link" style="color: #fbbf24;"></i> How it connects to the workflows</strong>
-                                <p>When you see <code>npm test</code> or <code>docker build</code> in the upcoming slides, the GitHub Action is actually natively executing those commands against this exact codebase in real-time!</p>
+                                <p>When you see <span class="inline-code">npm test</span> or <span class="inline-code">docker build</span> in the upcoming slides, the GitHub Action is actually natively executing those commands against this exact codebase in real-time!</p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -465,19 +477,19 @@ try {
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div class="detail-block" style="border-left-color: #38bdf8; background: rgba(56, 189, 248, 0.05);">
                             <strong><i class="fa-solid fa-vial" style="color: #38bdf8;"></i> 1. The CI Engine (test.js)</strong>
-                            <p>Workflows 01 & 04 run <code>npm test</code>, physically executing your <code>test.js</code> script. If you write bad code, the test fails, the GitHub Action turns Red, and the bad code is blocked from merging.</p>
+                            <p>Workflows 01 & 04 run <span class="inline-code">npm test</span>, physically executing your <span class="inline-code">test.js</span> script. If you write bad code, the test fails, the GitHub Action turns Red, and the bad code is blocked from merging.</p>
                         </div>
                         <div class="detail-block" style="border-left-color: #10b981; background: rgba(16, 185, 129, 0.05);">
                             <strong><i class="fa-brands fa-docker" style="color: #10b981;"></i> 2. Dockerizing (Dockerfile)</strong>
-                            <p>Workflow 06 doesn't build a random container. It finds your specific <code>Dockerfile</code> and physically copies your <code>server.js</code> into a Linux container so it can be hosted on AWS or Azure.</p>
+                            <p>Workflow 06 doesn't build a random container. It finds your specific <span class="inline-code">Dockerfile</span> and physically copies your <span class="inline-code">server.js</span> into a Linux container so it can be hosted on AWS or Azure.</p>
                         </div>
                         <div class="detail-block" style="border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
                             <strong><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> 3. Dependency Caching (package.json)</strong>
-                            <p>Workflow 11 calculates a cryptographic hash of your <code>package.json</code> file. If you add a new dependency, the hash changes, and GitHub knows to update the cache instantly.</p>
+                            <p>Workflow 11 calculates a cryptographic hash of your <span class="inline-code">package.json</span> file. If you add a new dependency, the hash changes, and GitHub knows to update the cache instantly.</p>
                         </div>
                         <div class="detail-block" style="border-left-color: #ec4899; background: rgba(236, 72, 153, 0.05);">
                             <strong><i class="fa-solid fa-gift" style="color: #ec4899;"></i> 4. Release Delivery (dist.zip)</strong>
-                            <p>Workflow 12 grabs your <code>server.js</code> and compresses it into a <code>dist.zip</code> file, attaching it to a public GitHub Release page so users can download your exact app binary.</p>
+                            <p>Workflow 12 grabs your <span class="inline-code">server.js</span> and compresses it into a <span class="inline-code">dist.zip</span> file, attaching it to a public GitHub Release page so users can download your exact app binary.</p>
                         </div>
                     </div>
                 </div>
@@ -508,7 +520,7 @@ try {
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The workflow triggers precisely on <code>push</code> or <code>pull_request</code> to the <code>main</code> branch. It provisions an <code>ubuntu-latest</code> virtual machine, checks out the repository source code using a pre-built action, installs the Node.js runtime environment (v20), installs dependencies via <code>npm install</code>, and runs the automated test suite via <code>npm test</code>. <strong>Notice how this test command executes directly against our Hello World app's <code>test.js</code> script!</strong></p>
+                                <p>The workflow triggers precisely on <span class="inline-code">push</span> or <span class="inline-code">pull_request</span> to the <span class="inline-code">main</span> branch. It provisions an <span class="inline-code">ubuntu-latest</span> virtual machine, checks out the repository source code using a pre-built action, installs the Node.js runtime environment (v20), installs dependencies via <span class="inline-code">npm install</span>, and runs the automated test suite via <span class="inline-code">npm test</span>. <strong>Notice how this test command executes directly against our Hello World app's <span class="inline-code">test.js</span> script!</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -586,7 +598,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Instead of listening for a push, the <code>schedule</code> event uses standard Unix <code>cron</code> syntax (e.g., <code>0 12 * * *</code>). At precisely 12:00 UTC every single day, GitHub Actions provisions a server and executes the custom backup script we define in the repository.</p>
+                                <p>Instead of listening for a push, the <span class="inline-code">schedule</span> event uses standard Unix <span class="inline-code">cron</span> syntax (e.g., <span class="inline-code">0 12 * * *</span>). At precisely 12:00 UTC every single day, GitHub Actions provisions a server and executes the custom backup script we define in the repository.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -644,7 +656,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The <code>workflow_dispatch</code> trigger forces GitHub to generate a web form. We define <code>inputs</code> such as an <code>environment</code> choice dropdown (staging/production) and a <code>debug_mode</code> boolean toggle. The script then securely accesses these inputs using the <code>${{ inputs.environment }}</code> expression context.</p>
+                                <p>The <span class="inline-code">workflow_dispatch</span> trigger forces GitHub to generate a web form. We define <span class="inline-code">inputs</span> such as an <span class="inline-code">environment</span> choice dropdown (staging/production) and a <span class="inline-code">debug_mode</span> boolean toggle. The script then securely accesses these inputs using the <span class="inline-code">${{ inputs.environment }}</span> expression context.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -716,7 +728,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The <code>strategy: matrix:</code> block defines arrays of OS architectures and Node versions. GitHub computes the Cartesian product (e.g., 3 OS types × 2 Node versions = 6 parallel jobs). It spins up 6 independent VMs at the exact same time, dynamically injecting the variables into <code>runs-on: ${{ matrix.os }}</code>. <strong>This guarantees that our Hello World Node.js application functions flawlessly on Windows, Mac, and Linux environments simultaneously.</strong></p>
+                                <p>The <span class="inline-code">strategy: matrix:</span> block defines arrays of OS architectures and Node versions. GitHub computes the Cartesian product (e.g., 3 OS types × 2 Node versions = 6 parallel jobs). It spins up 6 independent VMs at the exact same time, dynamically injecting the variables into <span class="inline-code">runs-on: ${{ matrix.os }}</span>. <strong>This guarantees that our Hello World Node.js application functions flawlessly on Windows, Mac, and Linux environments simultaneously.</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -791,7 +803,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Triggered exclusively when a Git tag (like <code>v1.0</code>) is pushed. The workflow logs into DockerHub securely using encrypted Repository Secrets. It then utilizes Docker's official Buildx Action to compile the <code>Dockerfile</code> natively on the runner and push it to the remote registry automatically tagged with the exact Git reference. <strong>This workflow actually builds the <code>Dockerfile</code> included in our repository, packaging our Hello World <code>server.js</code> into a production-ready container!</strong></p>
+                                <p>Triggered exclusively when a Git tag (like <span class="inline-code">v1.0</span>) is pushed. The workflow logs into DockerHub securely using encrypted Repository Secrets. It then utilizes Docker's official Buildx Action to compile the <span class="inline-code">Dockerfile</span> natively on the runner and push it to the remote registry automatically tagged with the exact Git reference. <strong>This workflow actually builds the <span class="inline-code">Dockerfile</span> included in our repository, packaging our Hello World <span class="inline-code">server.js</span> into a production-ready container!</strong></p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -859,15 +871,15 @@ jobs:
                             
                             <div class="detail-block" style="border-left-color: #38bdf8;">
                                 <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
-                                <p>To intelligently route logic. You may want to run a build on every branch, but only execute the "Deploy" step if the branch is exactly <code>main</code>.</p>
+                                <p>To intelligently route logic. You may want to run a build on every branch, but only execute the "Deploy" step if the branch is exactly <span class="inline-code">main</span>.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Using the <code>if:</code> keyword allows you to write boolean expressions. In the code, <code>if: github.ref == 'refs/heads/main'</code> ensures that the subsequent run command is completely skipped unless the commit was made to the main production branch.</p>
+                                <p>Using the <span class="inline-code">if:</span> keyword allows you to write boolean expressions. In the code, <span class="inline-code">if: github.ref == 'refs/heads/main'</span> ensures that the subsequent run command is completely skipped unless the commit was made to the main production branch.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #fbbf24;">
                                 <strong><i class="fa-solid fa-rocket" style="color: #fbbf24;"></i> What else can be achieved?</strong>
-                                <p>You can use <code>if: failure()</code> to send a Slack notification only when a previous step crashes, or <code>if: always()</code> to ensure temporary test databases are torn down even if tests fail.</p>
+                                <p>You can use <span class="inline-code">if: failure()</span> to send a Slack notification only when a previous step crashes, or <span class="inline-code">if: always()</span> to ensure temporary test databases are torn down even if tests fail.</p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -926,7 +938,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Scenario 07 defines a blueprint using <code>on: workflow_call</code>. Scenario 08 (shown here) acts as the "Caller" by using the <code>uses:</code> directive to point to the reusable file, passing in variables via the <code>with:</code> block.</p>
+                                <p>Scenario 07 defines a blueprint using <span class="inline-code">on: workflow_call</span>. Scenario 08 (shown here) acts as the "Caller" by using the <span class="inline-code">uses:</span> directive to point to the reusable file, passing in variables via the <span class="inline-code">with:</span> block.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #34d399;">
                                 <strong><i class="fa-solid fa-chart-line" style="color: #34d399;"></i> Business Benefits</strong>
@@ -979,7 +991,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Job 1 uses <code>actions/upload-artifact</code> to package the generated <code>output.txt</code> and send it to GitHub's cloud storage. Job 2 then uses <code>actions/download-artifact</code> to pull that exact file down into its own isolated environment.</p>
+                                <p>Job 1 uses <span class="inline-code">actions/upload-artifact</span> to package the generated <span class="inline-code">output.txt</span> and send it to GitHub's cloud storage. Job 2 then uses <span class="inline-code">actions/download-artifact</span> to pull that exact file down into its own isolated environment.</p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -1047,7 +1059,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>We define the <code>environment: production</code> block, which ties this job to GitHub's secure environment protections. We securely inject the hidden token using <code>${{ secrets.SUPER_SECRET_TOKEN }}</code>, ensuring it is masked with <code>***</code> in all logs.</p>
+                                <p>We define the <span class="inline-code">environment: production</span> block, which ties this job to GitHub's secure environment protections. We securely inject the hidden token using <span class="inline-code">${{ secrets.SUPER_SECRET_TOKEN }}</span>, ensuring it is masked with <span class="inline-code">***</span> in all logs.</p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -1103,11 +1115,11 @@ jobs:
                             
                             <div class="detail-block" style="border-left-color: #38bdf8;">
                                 <strong><i class="fa-solid fa-circle-question" style="color: #38bdf8;"></i> Why do we use this?</strong>
-                                <p>Running <code>npm install</code> or downloading Maven dependencies on every single run can add 5+ minutes to build times, destroying developer velocity.</p>
+                                <p>Running <span class="inline-code">npm install</span> or downloading Maven dependencies on every single run can add 5+ minutes to build times, destroying developer velocity.</p>
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>The <code>actions/cache</code> action zips the <code>~/.npm</code> folder. We hash the <code>package.json</code> file to create a unique key. If the <code>package.json</code> hasn't changed, the cache is restored instantly, skipping the massive download step entirely. <strong>This workflow specifically caches the dependencies defined in our Hello World app's <code>package.json</code>, accelerating our CI pipeline substantially.</strong></p>
+                                <p>The <span class="inline-code">actions/cache</span> action zips the <span class="inline-code">~/.npm</span> folder. We hash the <span class="inline-code">package.json</span> file to create a unique key. If the <span class="inline-code">package.json</span> hasn't changed, the cache is restored instantly, skipping the massive download step entirely. <strong>This workflow specifically caches the dependencies defined in our Hello World app's <span class="inline-code">package.json</span>, accelerating our CI pipeline substantially.</strong></p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -1168,7 +1180,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>Triggered exclusively by tags (<code>v*</code>), it builds a <code>dist.zip</code> artifact. It then utilizes <code>softprops/action-gh-release</code> to create an official GitHub Release page automatically, attaching the zip file for public download and auto-generating the changelog.</p>
+                                <p>Triggered exclusively by tags (<span class="inline-code">v*</span>), it builds a <span class="inline-code">dist.zip</span> artifact. It then utilizes <span class="inline-code">softprops/action-gh-release</span> to create an official GitHub Release page automatically, attaching the zip file for public download and auto-generating the changelog.</p>
                             </div>
                         </div>
                         <div class="code-col">
@@ -1226,7 +1238,7 @@ jobs:
                             </div>
                             <div class="detail-block" style="border-left-color: #a78bfa;">
                                 <strong><i class="fa-solid fa-code" style="color: #a78bfa;"></i> Detailed Code Explanation</strong>
-                                <p>It triggers on <code>pull_request</code> when a specific label is applied. The workflow uses the official GitHub CLI (<code>gh pr merge</code>) injected with the <code>GITHUB_TOKEN</code> to squash and merge the PR automatically.</p>
+                                <p>It triggers on <span class="inline-code">pull_request</span> when a specific label is applied. The workflow uses the official GitHub CLI (<span class="inline-code">gh pr merge</span>) injected with the <span class="inline-code">GITHUB_TOKEN</span> to squash and merge the PR automatically.</p>
                             </div>
                         </div>
                         <div class="code-col">
