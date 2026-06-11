@@ -1426,6 +1426,7 @@ jobs:
             const repo = "gjarunselvan/Github_Action_Example";
             const branchName = "demo-failure-" + Math.floor(Math.random() * 10000);
             window.demoBranchName = branchName;
+            localStorage.setItem('gh_presentation_demo_branch', branchName);
             const headers = {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
@@ -1576,13 +1577,13 @@ jobs:
                 return;
             }
             
-            if (!window.demoBranchName) {
+            const branchName = window.demoBranchName || localStorage.getItem('gh_presentation_demo_branch');
+            if (!branchName) {
                 appendTerm("ERROR: You must Break the Build first before you can fix it!", "#ef4444");
                 return;
             }
             
             const repo = "gjarunselvan/Github_Action_Example";
-            const branchName = window.demoBranchName;
             const headers = {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
