@@ -1,22 +1,23 @@
-name: 07 - Reusable Workflow (Called)
+name: 07 - Reusable Template
 
+# 'workflow_call' explicitly designates this file as a callable blueprint (DRY principle)
 on:
   workflow_call:
+    # Define parameters that the Caller workflow MUST provide
     inputs:
-      config-path:
+      target_env:
         required: true
         type: string
+    # Define secure secrets that the Caller workflow MUST provide
     secrets:
       token:
         required: true
 
 jobs:
-  reusable-job:
+  deploy-template:
     runs-on: ubuntu-latest
     steps:
-      - name: Print input and mask secret
+      - name: Deploying using template
         run: |
-          echo "Using config path: ${{ inputs.config-path }}"
-          echo "Secret token length: ${#SECRET_TOKEN}"
-        env:
-          SECRET_TOKEN: ${{ secrets.token }}
+          echo "Deploying to requested environment: ${{ inputs.target_env }}"
+          echo "Using provided token: ***"

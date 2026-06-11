@@ -1,27 +1,30 @@
-name: 03 - Manual Trigger
+name: 03 - Manual Trigger with Inputs
 
 on:
+  # 'workflow_dispatch' creates a "Run workflow" button in the GitHub UI
   workflow_dispatch:
+    # We can define input fields that the user must fill out before running
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: 'Target Environment to deploy to'
         required: true
         default: 'staging'
+        # Dropdown selection in the UI
         type: choice
         options:
-        - staging
-        - production
+          - staging
+          - production
       debug_mode:
-        description: 'Enable debug logging'
+        description: 'Enable verbose debug logging'
         required: false
         type: boolean
-        default: false
 
 jobs:
-  deploy:
+  manual-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print inputs
+      # We read the user's input using the github.event.inputs object
+      - name: Execute based on inputs
         run: |
-          echo "Deploying to environment: ${{ inputs.environment }}"
-          echo "Debug mode enabled: ${{ inputs.debug_mode }}"
+          echo "Deploying to environment: ${{ github.event.inputs.environment }}"
+          echo "Debug mode enabled: ${{ github.event.inputs.debug_mode }}"

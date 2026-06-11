@@ -1,32 +1,34 @@
-name: 09 - Upload and Download Artifacts
+name: 09 - Build Artifacts
 
 on:
   workflow_dispatch:
 
 jobs:
+  # JOB 1: Compiles the code and creates a binary/file
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Create a file
-        run: echo "Hello world from build job" > hello.txt
-
+      # We create a dummy file to represent our compiled application
+      - run: echo "Hello World - Compiled Binary" > output.txt
+      
+      # Because VMs are isolated, we MUST upload the file to GitHub's cloud storage
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
-          path: hello.txt
+          name: my-compiled-app-artifact
+          path: output.txt
 
-  test:
+  # JOB 2: Deploys the binary. It runs on a completely DIFFERENT Virtual Machine!
+  deploy:
+    # 'needs' ensures Job 2 waits for Job 1 to finish successfully
     needs: build
     runs-on: ubuntu-latest
     steps:
+      # We download the file from GitHub's cloud storage into this new VM
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: my-artifact
-
-      - name: Display structure of downloaded files
-        run: ls -R
-      
-      - name: Verify Content
-        run: cat hello.txt
+          name: my-compiled-app-artifact
+          
+      - name: Verify Download
+        run: cat output.txt

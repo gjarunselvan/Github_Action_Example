@@ -1,0 +1,24 @@
+name: 12 - Automated GitHub Release
+
+on:
+  push:
+    # Only trigger when a user creates a new semantic version tag (e.g. v2.0.1)
+    tags: [ 'v*' ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Package our application into a compressed zip file
+      - run: zip -r dist.zip ./*
+      
+      # Automatically create a formal Release page on GitHub using a 3rd-party action
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # Attach the zip file for users to download
+          files: dist.zip
+          # Automatically scrape pull requests to write the Changelog notes!
+          generate_release_notes: true

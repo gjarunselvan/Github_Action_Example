@@ -1,0 +1,15 @@
+name: 08 - Caller Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-reusable-workflow:
+    # Instead of defining 'steps', we use 'uses' to invoke the Reusable Template (Scenario 07)
+    uses: ./.github/workflows/07-reusable-workflow.yml
+    # We pass the required parameters into the template via 'with'
+    with:
+      target_env: 'production'
+    # We pass the required secrets into the template via 'secrets'
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

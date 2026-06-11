@@ -1,13 +1,16 @@
-name: 02 - Scheduled Job (Cron)
+name: 02 - Scheduled Nightly Job
 
+# Trigger the workflow on a schedule (cron format)
 on:
   schedule:
-    # Runs every day at 12:00 UTC
-    - cron: '0 12 * * *'
+    # Cron format: Minute Hour Day Month DayOfWeek
+    # '0 0 * * *' means "Run precisely at Midnight (00:00) every single day"
+    - cron: '0 0 * * *'
 
 jobs:
-  daily-task:
+  nightly-cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Run daily backup or check
-        run: echo "This is a scheduled job that runs automatically."
+      # Example Step: Connect to a database and run a cleanup script
+      - name: Run Database Cleanup
+        run: echo "Running nightly garbage collection and cache clearing..."

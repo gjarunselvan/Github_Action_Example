@@ -8,21 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
+      # The actions/cache tool saves folders between workflow runs to speed up builds
       - name: Cache Node Modules
         uses: actions/cache@v4
         with:
+          # We specify the exact folder path we want to zip and save
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          # The cache 'key' uses a hash of package.json. If package.json changes, the hash changes, invalidating the cache!
+          key: npm-${{ hashFiles('**/package.json') }}
+          # Fallback key if exact match isn't found
           restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies (Uses Cache)
-        run: npm install || echo "No package.json found, skipping for demo"
+            npm-
+            
+      # Because of the cache above, this step might take 2 seconds instead of 2 minutes!
+      - name: Install dependencies
+        run: npm install

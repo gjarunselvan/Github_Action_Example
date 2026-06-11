@@ -1,25 +1,36 @@
 name: 01 - Basic CI Pipeline
 
+# The 'on' block defines exactly WHEN this workflow should trigger.
 on:
+  # Trigger automatically when a developer pushes code to the 'main' branch
   push:
     branches: [ "main" ]
+  # Also trigger when a Pull Request is opened against the 'main' branch
   pull_request:
     branches: [ "main" ]
 
+# 'jobs' define the actual work to be done. Each job runs in parallel by default.
 jobs:
   build-and-test:
+    # 'runs-on' requests a specific virtual machine environment from GitHub
     runs-on: ubuntu-latest
+    
+    # 'steps' are executed sequentially on the chosen virtual machine
     steps:
+      # Step 1: Download the repository code into the virtual machine
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Install Node.js runtime environment (version 20)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # Step 3: Install all packages defined in package.json
       - name: Install Dependencies
         run: npm install
       
+      # Step 4: Execute the test.js script to ensure code is healthy
       - name: Run Tests
         run: npm test

@@ -1,27 +1,33 @@
-name: 04 - Matrix Strategy
+name: 04 - Matrix Strategy Build
 
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
-  test-across-environments:
-    runs-on: ${{ matrix.os }}
+  matrix-build:
+    # 'strategy' allows us to run this same job multiple times with different variables
     strategy:
+      # 'matrix' defines the variables. GitHub will compute the Cartesian product.
+      # 3 Operating Systems * 3 Node Versions = 9 parallel Virtual Machines!
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [18.x, 20.x]
-      # Stop other matrix jobs if one fails
+        node-version: [16.x, 18.x, 20.x]
+      # 'fail-fast: false' ensures all jobs finish even if one of the 9 fails early
       fail-fast: false
-    
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+    # Dynamically assign the OS based on the current matrix iteration
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Dynamically assign the Node version based on the current matrix iteration
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies and Run Tests
+          
+      - name: Install and Test
         run: |
           npm install
           npm test

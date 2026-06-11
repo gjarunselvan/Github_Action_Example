@@ -1,0 +1,25 @@
+name: 05 - Conditional Steps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # This step has no condition, so it will ALWAYS run
+      - name: Build Application (Runs Always)
+        run: echo "Building app..."
+
+      # The 'if' keyword evaluates a boolean expression. 
+      # This step is SKIPPED entirely unless the branch is 'main'
+      - name: Deploy to Production (Runs only on Main)
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to production server!"
+        
+      # 'if: failure()' means this step only runs if a previous step crashed
+      - name: Send Slack Alert on Failure
+        if: failure()
+        run: echo "Alerting team that the build has failed!"

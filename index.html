@@ -239,26 +239,35 @@
 
             <!-- Why GitHub Actions? -->
             <section data-transition="slide">
-                <div class="glass-panel">
+                <div class="glass-panel" style="padding: 30px;">
                     <div class="flex-container">
-                        <div class="content-col" style="flex: 1;">
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 100%; max-height: 500px;">
-                        </div>
-                        <div class="code-col" style="flex: 1.5; padding-left: 40px; justify-content: center;">
-                            <h2 style="font-size: 3em; margin-bottom: 20px;"><i class="fa-solid fa-lightbulb text-gradient"></i> Why GitHub Actions?</h2>
-                            <p style="font-size: 1.5em; margin-bottom: 40px; color: #94a3b8;">The modern industry standard for automation.</p>
+                        <div class="code-col" style="flex: 1.5; padding-right: 40px; justify-content: center;">
+                            <h2 style="font-size: 2.5em; margin-bottom: 20px;"><i class="fa-solid fa-lightbulb text-gradient"></i> Why GitHub Actions?</h2>
+                            <p style="font-size: 1.3em; margin-bottom: 30px; color: #94a3b8;">The modern industry standard for automation.</p>
                             
-                            <div class="detail-block" style="border-left-color: #38bdf8;">
-                                <strong><i class="fa-brands fa-github" style="color: #38bdf8;"></i> Native Integration</strong>
-                                <p>Built directly into where your code lives. No external webhooks or messy credentials to manage.</p>
+                            <div class="detail-block" style="border-left-color: #38bdf8; padding: 10px 20px; margin-bottom: 15px;">
+                                <strong><i class="fa-brands fa-github" style="color: #38bdf8;"></i> 1. Native Integration</strong>
+                                <p style="font-size: 0.9em;">Built directly into where your code lives. No external webhooks, no context-switching, and no massive credential management.</p>
                             </div>
-                            <div class="detail-block" style="border-left-color: #34d399;">
-                                <strong><i class="fa-solid fa-server" style="color: #34d399;"></i> Zero Infrastructure</strong>
-                                <p>GitHub hosts the runners (Linux, Windows, macOS). No servers to patch, secure, or maintain.</p>
+                            <div class="detail-block" style="border-left-color: #34d399; padding: 10px 20px; margin-bottom: 15px;">
+                                <strong><i class="fa-solid fa-server" style="color: #34d399;"></i> 2. Zero Infrastructure Overhead</strong>
+                                <p style="font-size: 0.9em;">GitHub hosts the runners (Linux, Windows, macOS). Say goodbye to patching Jenkins VMs at 3 AM.</p>
                             </div>
-                            <div class="detail-block" style="border-left-color: #f472b6;">
-                                <strong><i class="fa-solid fa-bolt" style="color: #f472b6;"></i> Event-Driven Architecture</strong>
-                                <p>It can trigger on <em>any</em> GitHub event (issues, comments, PRs, releases), not just code pushes.</p>
+                            <div class="detail-block" style="border-left-color: #f472b6; padding: 10px 20px; margin-bottom: 15px;">
+                                <strong><i class="fa-solid fa-bolt" style="color: #f472b6;"></i> 3. True Event-Driven Architecture</strong>
+                                <p style="font-size: 0.9em;">It triggers on <em>any</em> GitHub event (Issue opened, PR review, Wiki update, Label added), not just code pushes.</p>
+                            </div>
+                            <div class="detail-block" style="border-left-color: #fbbf24; padding: 10px 20px; margin-bottom: 15px;">
+                                <strong><i class="fa-solid fa-store" style="color: #fbbf24;"></i> 4. Massive Action Marketplace</strong>
+                                <p style="font-size: 0.9em;">Over 20,000+ pre-built, open-source actions available instantly. Do not reinvent the wheel.</p>
+                            </div>
+                        </div>
+                        <div class="content-col" style="flex: 1;">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" class="feature-image" style="height: 250px; margin-bottom: 20px;">
+                            
+                            <div class="detail-block" style="border-left-color: #ef4444; background: rgba(239,68,68,0.1);">
+                                <strong><i class="fa-solid fa-fire" style="color: #ef4444;"></i> Real-Time Use Case: IssueOps</strong>
+                                <p style="font-size: 0.85em; margin-top: 10px;">Imagine an open-source repo where a user opens an Issue. Actions immediately triggers a script to read the issue text, auto-label it as "Bug", assigns an available developer, and pings the team on Slack. <strong>No other CI tool handles GitHub Ops so seamlessly!</strong></p>
                             </div>
                         </div>
                     </div>
@@ -308,42 +317,68 @@
 
             <!-- Tool Comparison -->
             <section data-transition="slide">
-                <div class="glass-panel">
-                    <h2 style="font-size: 3em; margin-bottom: 30px; text-align: center;"><i class="fa-solid fa-scale-balanced text-gradient"></i> Industry Tool Comparison</h2>
+                <div class="glass-panel" style="padding: 20px;">
+                    <h2 style="font-size: 2.5em; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-scale-balanced text-gradient"></i> Industry Tool Comparison</h2>
                     
-                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9em; color: #cbd5e1; background: rgba(0,0,0,0.3); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.75em; color: #cbd5e1; background: rgba(0,0,0,0.3); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                         <thead>
                             <tr style="background: rgba(255,255,255,0.1); text-align: left;">
-                                <th style="padding: 20px;">Feature</th>
-                                <th style="padding: 20px; color: #38bdf8;"><i class="fa-brands fa-github"></i> GitHub Actions</th>
-                                <th style="padding: 20px; color: #fca5a5;"><i class="fa-brands fa-jenkins"></i> Jenkins</th>
-                                <th style="padding: 20px; color: #f97316;"><i class="fa-brands fa-gitlab"></i> GitLab CI</th>
+                                <th style="padding: 15px;">Feature</th>
+                                <th style="padding: 15px; color: #38bdf8;"><i class="fa-brands fa-github"></i> GitHub Actions</th>
+                                <th style="padding: 15px; color: #fca5a5;"><i class="fa-brands fa-jenkins"></i> Jenkins</th>
+                                <th style="padding: 15px; color: #f97316;"><i class="fa-brands fa-gitlab"></i> GitLab CI</th>
+                                <th style="padding: 15px; color: #6ee7b7;"><i class="fa-solid fa-circle-nodes"></i> CircleCI</th>
+                                <th style="padding: 15px; color: #60a5fa;"><i class="fa-brands fa-microsoft"></i> Azure DevOps</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <td style="padding: 20px; font-weight: bold;">Infrastructure</td>
-                                <td style="padding: 20px;">SaaS (Fully Managed)</td>
-                                <td style="padding: 20px;">Self-Hosted VM (Heavy)</td>
-                                <td style="padding: 20px;">SaaS or Self-Hosted</td>
+                                <td style="padding: 15px; font-weight: bold;">Infrastructure</td>
+                                <td style="padding: 15px;">SaaS (Fully Managed)</td>
+                                <td style="padding: 15px;">Self-Hosted VM (Heavy)</td>
+                                <td style="padding: 15px;">SaaS or Self-Hosted</td>
+                                <td style="padding: 15px;">SaaS (Fully Managed)</td>
+                                <td style="padding: 15px;">SaaS or Self-Hosted</td>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <td style="padding: 20px; font-weight: bold;">Syntax</td>
-                                <td style="padding: 20px;">YAML</td>
-                                <td style="padding: 20px;">Groovy Scripting</td>
-                                <td style="padding: 20px;">YAML</td>
+                                <td style="padding: 15px; font-weight: bold;">Configuration</td>
+                                <td style="padding: 15px;">YAML</td>
+                                <td style="padding: 15px;">Groovy Scripting</td>
+                                <td style="padding: 15px;">YAML</td>
+                                <td style="padding: 15px;">YAML</td>
+                                <td style="padding: 15px;">YAML or Classic UI</td>
                             </tr>
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <td style="padding: 20px; font-weight: bold;">Ecosystem</td>
-                                <td style="padding: 20px;">Marketplace (20k+ Actions)</td>
-                                <td style="padding: 20px;">Plugin Hell</td>
-                                <td style="padding: 20px;">Uses raw Docker images</td>
+                                <td style="padding: 15px; font-weight: bold;">Ecosystem Plugins</td>
+                                <td style="padding: 15px;">Marketplace (20k+ Actions)</td>
+                                <td style="padding: 15px;">Plugin Hell (Breaks)</td>
+                                <td style="padding: 15px;">Raw Docker images</td>
+                                <td style="padding: 15px;">Orbs (Limited size)</td>
+                                <td style="padding: 15px;">Azure Marketplace</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 15px; font-weight: bold;">Native Integration</td>
+                                <td style="padding: 15px;">Flawless GitHub native</td>
+                                <td style="padding: 15px;">Fragile Webhooks</td>
+                                <td style="padding: 15px;">Flawless GitLab native</td>
+                                <td style="padding: 15px;">API Webhooks</td>
+                                <td style="padding: 15px;">Flawless Azure Repo</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <td style="padding: 15px; font-weight: bold;">Matrix Builds</td>
+                                <td style="padding: 15px;">Native 3D Cartesian Arrays</td>
+                                <td style="padding: 15px;">Complex scripted arrays</td>
+                                <td style="padding: 15px;">Parallel Matrix</td>
+                                <td style="padding: 15px;">Matrix Support</td>
+                                <td style="padding: 15px;">Matrix Support</td>
                             </tr>
                             <tr>
-                                <td style="padding: 20px; font-weight: bold;">Native Integration</td>
-                                <td style="padding: 20px;">Flawless GitHub native</td>
-                                <td style="padding: 20px;">Fragile Webhooks</td>
-                                <td style="padding: 20px;">Flawless GitLab native</td>
+                                <td style="padding: 15px; font-weight: bold;">Pricing Setup</td>
+                                <td style="padding: 15px; color: #10b981;">Free for Open Source</td>
+                                <td style="padding: 15px; color: #ef4444;">High VM Compute Cost</td>
+                                <td style="padding: 15px; color: #fbbf24;">Freemium Tiers</td>
+                                <td style="padding: 15px; color: #fbbf24;">Credit based</td>
+                                <td style="padding: 15px; color: #fbbf24;">Included in Azure</td>
                             </tr>
                         </tbody>
                     </table>
@@ -440,30 +475,44 @@ try {
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 01 - Basic CI Pipeline
+
+# The 'on' block defines exactly WHEN this workflow should trigger.
 on:
+  # Trigger automatically when a developer pushes code to the 'main' branch
   push:
     branches: [ "main" ]
+  # Also trigger when a Pull Request is opened against the 'main' branch
   pull_request:
     branches: [ "main" ]
 
+# 'jobs' define the actual work to be done. Each job runs in parallel by default.
 jobs:
   build-and-test:
+    # 'runs-on' requests a specific virtual machine environment from GitHub
     runs-on: ubuntu-latest
+    
+    # 'steps' are executed sequentially on the chosen virtual machine
     steps:
+      # Step 1: Download the repository code into the virtual machine
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Install Node.js runtime environment (version 20)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # Step 3: Install all packages defined in package.json
       - name: Install Dependencies
         run: npm install
       
+      # Step 4: Execute the test.js script to ensure code is healthy
       - name: Run Tests
         run: npm test
-                            </code></pre>
+
+</code></pre>
                             <div class="live-status-box" data-workflow="01-ci-pipeline.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -504,20 +553,24 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
-name: 02 - Scheduled Job (Cron)
+name: 02 - Scheduled Nightly Job
 
+# Trigger the workflow on a schedule (cron format)
 on:
   schedule:
-    # Runs every day at 12:00 UTC
-    - cron: '0 12 * * *'
+    # Cron format: Minute Hour Day Month DayOfWeek
+    # '0 0 * * *' means "Run precisely at Midnight (00:00) every single day"
+    - cron: '0 0 * * *'
 
 jobs:
-  daily-task:
+  nightly-cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Run daily backup or check
-        run: echo "This is a scheduled job that runs automatically."
-                            </code></pre>
+      # Example Step: Connect to a database and run a cleanup script
+      - name: Run Database Cleanup
+        run: echo "Running nightly garbage collection and cache clearing..."
+
+</code></pre>
                             <div class="live-status-box" data-workflow="02-scheduled-job.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -558,31 +611,38 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 03 - Manual Trigger with Inputs
+
 on:
+  # 'workflow_dispatch' creates a "Run workflow" button in the GitHub UI
   workflow_dispatch:
+    # We can define input fields that the user must fill out before running
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: 'Target Environment to deploy to'
         required: true
         default: 'staging'
+        # Dropdown selection in the UI
         type: choice
         options:
-        - staging
-        - production
+          - staging
+          - production
       debug_mode:
-        description: 'Enable debug logging'
+        description: 'Enable verbose debug logging'
+        required: false
         type: boolean
-        default: false
 
 jobs:
-  deploy:
+  manual-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print inputs
+      # We read the user's input using the github.event.inputs object
+      - name: Execute based on inputs
         run: |
-          echo "Deploying to environment: ${{ inputs.environment }}"
-          echo "Debug mode enabled: ${{ inputs.debug_mode }}"
-                            </code></pre>
+          echo "Deploying to environment: ${{ github.event.inputs.environment }}"
+          echo "Debug mode enabled: ${{ github.event.inputs.debug_mode }}"
+
+</code></pre>
                             <div class="live-status-box" data-workflow="03-manual-trigger.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -623,27 +683,41 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 04 - Matrix Strategy Build
+
+on:
+  workflow_dispatch:
+
 jobs:
-  test-across-environments:
-    runs-on: ${{ matrix.os }}
+  matrix-build:
+    # 'strategy' allows us to run this same job multiple times with different variables
     strategy:
+      # 'matrix' defines the variables. GitHub will compute the Cartesian product.
+      # 3 Operating Systems * 3 Node Versions = 9 parallel Virtual Machines!
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [18.x, 20.x]
+        node-version: [16.x, 18.x, 20.x]
+      # 'fail-fast: false' ensures all jobs finish even if one of the 9 fails early
       fail-fast: false
-    
+
+    # Dynamically assign the OS based on the current matrix iteration
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v4
+      
+      # Dynamically assign the Node version based on the current matrix iteration
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Install dependencies and Run Tests
+          
+      - name: Install and Test
         run: |
           npm install
           npm test
-                            </code></pre>
+
+</code></pre>
                             <div class="live-status-box" data-workflow="04-matrix-strategy.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -684,30 +758,38 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 06 - Publish Docker Image
+
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    # Trigger ONLY when a Git tag starting with 'v' is pushed (e.g., v1.0, v2.4.1)
+    tags:
+      - 'v*'
 
 jobs:
-  build-and-push-docker:
+  push_to_registry:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      # Step 1: Securely authenticate with DockerHub using encrypted secrets
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      # Step 2: Use Docker's official Buildx action to build and push the container
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: . # Looks for the Dockerfile in the root of the repo
           push: true
-          tags: myusername/my-app:${{ github.ref_name }}
-                            </code></pre>
+          # Tags the image with the repository name and the exact Git Tag version
+          tags: myusername/hello-world-app:${{ github.ref_name }}
+
+</code></pre>
                             <div class="live-status-box" data-workflow="06-docker-publish.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -744,19 +826,33 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 05 - Conditional Steps
+
+on:
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
+      # This step has no condition, so it will ALWAYS run
       - name: Build Application (Runs Always)
         run: echo "Building app..."
 
+      # The 'if' keyword evaluates a boolean expression. 
+      # This step is SKIPPED entirely unless the branch is 'main'
       - name: Deploy to Production (Runs only on Main)
         if: github.ref == 'refs/heads/main'
         run: echo "Deploying to production server!"
-                            </code></pre>
+        
+      # 'if: failure()' means this step only runs if a previous step crashed
+      - name: Send Slack Alert on Failure
+        if: failure()
+        run: echo "Alerting team that the build has failed!"
+
+</code></pre>
                             <div class="live-status-box" data-workflow="05-conditional-steps.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -793,16 +889,23 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
-# 08-caller-workflow.yml
+name: 08 - Caller Workflow
+
+on:
+  workflow_dispatch:
+
 jobs:
   call-reusable-workflow:
-    # We call the template defined in 07
+    # Instead of defining 'steps', we use 'uses' to invoke the Reusable Template (Scenario 07)
     uses: ./.github/workflows/07-reusable-workflow.yml
+    # We pass the required parameters into the template via 'with'
     with:
       target_env: 'production'
+    # We pass the required secrets into the template via 'secrets'
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
-                            </code></pre>
+
+</code></pre>
                             <div class="live-status-box" data-workflow="08-caller-workflow.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -835,25 +938,42 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 09 - Build Artifacts
+
+on:
+  workflow_dispatch:
+
 jobs:
+  # JOB 1: Compiles the code and creates a binary/file
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World" > output.txt
-      - uses: actions/upload-artifact@v4
+      # We create a dummy file to represent our compiled application
+      - run: echo "Hello World - Compiled Binary" > output.txt
+      
+      # Because VMs are isolated, we MUST upload the file to GitHub's cloud storage
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
+          name: my-compiled-app-artifact
           path: output.txt
 
+  # JOB 2: Deploys the binary. It runs on a completely DIFFERENT Virtual Machine!
   deploy:
+    # 'needs' ensures Job 2 waits for Job 1 to finish successfully
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      # We download the file from GitHub's cloud storage into this new VM
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
         with:
-          name: my-artifact
-      - run: cat output.txt
-                            </code></pre>
+          name: my-compiled-app-artifact
+          
+      - name: Verify Download
+        run: cat output.txt
+
+</code></pre>
                             <div class="live-status-box" data-workflow="09-artifacts.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -886,24 +1006,34 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 10 - Environments and Secrets
+
+on:
+  workflow_dispatch:
+
+# We can define Environment Variables that are available globally across all jobs
+env:
+  GLOBAL_APP_NAME: "My Awesome App"
+
 jobs:
   deploy-to-prod:
     runs-on: ubuntu-latest
+    # Tying this job to an 'environment' enables GitHub protection rules (e.g., Manual Approvals)
     environment: production
-    env:
-      GLOBAL_APP_NAME: "My Awesome App"
-      
+    
     steps:
       - name: Print Variables
         run: |
           echo "App Name: $GLOBAL_APP_NAME"
           
+      # We securely inject the hidden token using ${{ secrets.XXX }}
+      # GitHub automatically masks this value with '***' in all public logs
       - name: Secure Login
         run: |
           echo "Logging in securely..."
-          # The secret is masked with *** in logs
-          ./login.sh ${{ secrets.SUPER_SECRET_TOKEN }}
-                            </code></pre>
+          echo "Token is: ${{ secrets.SUPER_SECRET_TOKEN }}"
+
+</code></pre>
                             <div class="live-status-box" data-workflow="10-env-vars-secrets.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -936,21 +1066,35 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
-steps:
-  - uses: actions/checkout@v4
-  
-  - name: Cache Node Modules
-    uses: actions/cache@v4
-    with:
-      path: ~/.npm
-      # Cache key changes if package file changes
-      key: npm-${{ hashFiles('**/package.json') }}
-      restore-keys: |
-        npm-
-        
-  - name: Install dependencies
-    run: npm install
-                            </code></pre>
+name: 11 - Dependency Caching
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # The actions/cache tool saves folders between workflow runs to speed up builds
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        with:
+          # We specify the exact folder path we want to zip and save
+          path: ~/.npm
+          # The cache 'key' uses a hash of package.json. If package.json changes, the hash changes, invalidating the cache!
+          key: npm-${{ hashFiles('**/package.json') }}
+          # Fallback key if exact match isn't found
+          restore-keys: |
+            npm-
+            
+      # Because of the cache above, this step might take 2 seconds instead of 2 minutes!
+      - name: Install dependencies
+        run: npm install
+
+</code></pre>
                             <div class="live-status-box" data-workflow="11-caching.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -983,8 +1127,11 @@ steps:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 12 - Automated GitHub Release
+
 on:
   push:
+    # Only trigger when a user creates a new semantic version tag (e.g. v2.0.1)
     tags: [ 'v*' ]
 
 jobs:
@@ -992,14 +1139,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      # Package our application into a compressed zip file
       - run: zip -r dist.zip ./*
       
+      # Automatically create a formal Release page on GitHub using a 3rd-party action
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          # Attach the zip file for users to download
           files: dist.zip
+          # Automatically scrape pull requests to write the Changelog notes!
           generate_release_notes: true
-                            </code></pre>
+
+</code></pre>
                             <div class="live-status-box" data-workflow="12-github-release.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
@@ -1032,14 +1185,19 @@ jobs:
                         </div>
                         <div class="code-col">
                             <pre><code class="language-yaml" data-trim>
+name: 13 - Auto-Merge PRs
+
 on:
   pull_request:
+    # Trigger this workflow whenever a user adds a label to a Pull Request
     types: [labeled]
 
 jobs:
   auto-merge:
+    # Only execute if the label added was precisely 'automerge'
     if: contains(github.event.pull_request.labels.*.name, 'automerge')
     runs-on: ubuntu-latest
+    # Grant the GitHub Token permission to actively modify pull requests
     permissions:
       pull-requests: write
       contents: write
@@ -1048,10 +1206,11 @@ jobs:
       - name: Auto Merge PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Use the official GitHub CLI to squash and merge the PR, bypassing manual human clicks
         run: |
-          gh pr merge ${{ github.event.pull_request.html_url }} \
-            --auto --squash
-                            </code></pre>
+          gh pr merge ${{ github.event.pull_request.html_url }} --auto --squash
+
+</code></pre>
                             <div class="live-status-box" data-workflow="13-auto-merge-pr.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
                     </div>
