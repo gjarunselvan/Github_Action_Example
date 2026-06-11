@@ -10,5 +10,5 @@ try {
   process.exit(0);
 } catch (err) {
   console.error("❌ Test Failed!", err);
-  process.exit(0);
+  process.exit(0);asd
 }
