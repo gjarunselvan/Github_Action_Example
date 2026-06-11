@@ -1314,7 +1314,107 @@ jobs:
             </section>
 
             
-            <!-- Live Destruction Demo Slide -->
+            
+            <!-- Enterprise Advanced Topic: OIDC -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <div style="height: 140px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800" style="width: 100%; height: 100%; object-fit: cover;" alt="Security Lock">
+                            </div>
+                            <span class="badge" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">Enterprise Architecture</span>
+                            <h2 style="font-size: 1.8em; margin: 10px 0;"><i class="fa-solid fa-key text-gradient"></i> Secretless OIDC Deployments</h2>
+                            <p style="color: #cbd5e1; font-size: 0.9em; line-height: 1.5; margin-bottom: 20px;">
+                                Storing static, long-lived cloud passwords (like AWS Access Keys) in GitHub Secrets is a major security risk. If a token leaks, attackers have permanent access to your infrastructure.
+                            </p>
+                            <div class="detail-block">
+                                <strong><i class="fa-solid fa-shield-halved" style="color: #8b5cf6;"></i> OpenID Connect (OIDC)</strong>
+                                <p>Instead of passwords, GitHub Actions requests a temporary, short-lived cryptographic token directly from AWS/Azure/GCP. The token expires in 1 hour, making credential theft mathematically impossible.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml">name: Secure AWS Deployment
+on: [push]
+
+# OIDC requires explicit permission to request an ID token
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 🚫 NO SECRETS REQUIRED!
+      # We just tell AWS which IAM Role we want to assume
+      - name: Configure AWS Credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::1234567890:role/GitHubActionDeployRole
+          aws-region: us-east-1
+
+      # The runner is now securely authenticated to AWS for 1 hour
+      - name: Deploy Serverless App
+        run: aws s3 sync ./build s3://my-production-bucket
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enterprise Advanced Topic: Self-Hosted Runners -->
+            <section data-transition="slide">
+                <div class="glass-panel">
+                    <div class="flex-container">
+                        <div class="content-col">
+                            <div style="height: 140px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800" style="width: 100%; height: 100%; object-fit: cover;" alt="Server Rack">
+                            </div>
+                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Enterprise Architecture</span>
+                            <h2 style="font-size: 1.8em; margin: 10px 0;"><i class="fa-solid fa-server text-gradient"></i> Self-Hosted Runners</h2>
+                            <p style="color: #cbd5e1; font-size: 0.9em; line-height: 1.5; margin-bottom: 20px;">
+                                By default, GitHub Actions execute on GitHub's public cloud virtual machines. However, banks, healthcare, and enterprise companies cannot allow their source code to leave their private firewalls.
+                            </p>
+                            <div class="detail-block">
+                                <strong><i class="fa-solid fa-network-wired" style="color: #10b981;"></i> Private VPC Execution</strong>
+                                <p>You can install the GitHub Runner agent directly on your own on-premise servers or private AWS VPC. The agent reaches out to GitHub for instructions, executing the CI/CD pipeline entirely behind your corporate firewall.</p>
+                            </div>
+                        </div>
+                        <div class="code-col">
+                            <pre><code class="language-yaml">name: Private Firewall Deployment
+on: [push]
+
+jobs:
+  enterprise-build:
+    # Instead of requesting 'ubuntu-latest' from GitHub's Cloud,
+    # we target our own private servers by using custom tags!
+    runs-on: [self-hosted, linux, x64, gpu-enabled]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Because this runs inside our Private Network,
+      # we can access internal company databases directly!
+      - name: Run Integration Tests against Internal DB
+        run: |
+          ping internal-corp-database.local
+          npm run test:e2e
+        env:
+          DB_HOST: internal-corp-database.local
+
+      # Self-hosted runners can have specialized hardware (GPUs)
+      - name: Train Machine Learning Model
+        run: python train_model.py --use-gpu
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<!-- Live Destruction Demo Slide -->
             <section data-transition="zoom">
                 <div class="glass-panel" style="padding: 30px; text-align: left;">
                     <h2 style="font-size: 2.5em; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-burst text-gradient"></i> Live Interactive Demo</h2>
