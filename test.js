@@ -7,7 +7,7 @@ console.log("Running tests...");
 try {
   assert.ok(server !== null, "Server should be defined");
   console.log("✅ Test Passed: Server loaded successfully!");
-  console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);
+  process.exit(0);
 } catch (err) {
   console.error("❌ Test Failed!", err);
   process.exit(1);
