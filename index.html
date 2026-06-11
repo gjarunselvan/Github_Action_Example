@@ -1318,25 +1318,28 @@ jobs:
             <!-- Enterprise Advanced Topic: OIDC -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">Enterprise Architecture</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-key text-gradient"></i> Secretless OIDC Deployments</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/14-oidc.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
                     <div class="flex-container">
                         <div class="content-col">
-                            <div style="height: 140px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800" style="width: 100%; height: 100%; object-fit: cover;" alt="Security Lock">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=800" class="feature-image" alt="Security Lock">
+                            <div class="detail-block" style="border-left-color: #8b5cf6;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #8b5cf6;"></i> The Security Risk</strong>
+                                <p>Storing static cloud passwords (like AWS Access Keys) in GitHub Secrets is dangerous. If a token leaks, attackers have permanent access to your infrastructure.</p>
                             </div>
-                            <span class="badge" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">Enterprise Architecture</span>
-                            <h2 style="font-size: 1.8em; margin: 10px 0;"><i class="fa-solid fa-key text-gradient"></i> Secretless OIDC Deployments</h2>
-                            <p style="color: #cbd5e1; font-size: 0.9em; line-height: 1.5; margin-bottom: 20px;">
-                                Storing static, long-lived cloud passwords (like AWS Access Keys) in GitHub Secrets is a major security risk. If a token leaks, attackers have permanent access to your infrastructure.
-                            </p>
-                            <div class="detail-block">
-                                <strong><i class="fa-solid fa-shield-halved" style="color: #8b5cf6;"></i> OpenID Connect (OIDC)</strong>
-                                <p>Instead of passwords, GitHub Actions requests a temporary, short-lived cryptographic token directly from AWS/Azure/GCP. The token expires in 1 hour, making credential theft mathematically impossible.</p>
+                            <div class="detail-block" style="border-left-color: #a78bfa;">
+                                <strong><i class="fa-solid fa-shield-halved" style="color: #a78bfa;"></i> OpenID Connect (OIDC)</strong>
+                                <p>Instead of passwords, Actions requests a temporary cryptographic token directly from AWS. It expires in 1 hour, making credential theft impossible.</p>
                             </div>
                         </div>
                         <div class="code-col">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/14-oidc.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
                             <pre><code class="language-yaml">name: 14 - Secure AWS Deployment
-on: [push]
+on: [push, workflow_dispatch]
 
 # OIDC requires explicit permission to request an ID token
 permissions:
@@ -1354,12 +1357,12 @@ jobs:
       - name: Configure AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::1234567890:role/GitHubActionDeployRole
+          role-to-assume: arn:aws:iam::123456789:role/DeployRole
           aws-region: us-east-1
 
-      # The runner is now securely authenticated to AWS for 1 hour
+      # The runner is securely authenticated for 1 hour
       - name: Deploy Serverless App
-        run: aws s3 sync ./build s3://my-production-bucket
+        run: aws s3 sync ./build s3://my-prod-bucket
 </code></pre>
                             <div class="live-status-box" data-workflow="14-oidc.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
@@ -1370,25 +1373,28 @@ jobs:
             <!-- Enterprise Advanced Topic: Self-Hosted Runners -->
             <section data-transition="slide">
                 <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 25px;">
+                        <div>
+                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Enterprise Architecture</span>
+                            <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-server text-gradient"></i> Self-Hosted Runners</h2>
+                        </div>
+                        <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/15-self-hosted.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
+                    </div>
                     <div class="flex-container">
                         <div class="content-col">
-                            <div style="height: 140px; border-radius: 10px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800" style="width: 100%; height: 100%; object-fit: cover;" alt="Server Rack">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800" class="feature-image" alt="Server Rack">
+                            <div class="detail-block" style="border-left-color: #10b981;">
+                                <strong><i class="fa-solid fa-circle-question" style="color: #10b981;"></i> The Compliance Problem</strong>
+                                <p>Banks and healthcare companies cannot allow their proprietary source code to leave their private firewalls to run on GitHub's public cloud VMs.</p>
                             </div>
-                            <span class="badge" style="background: linear-gradient(135deg, #10b981, #059669);">Enterprise Architecture</span>
-                            <h2 style="font-size: 1.8em; margin: 10px 0;"><i class="fa-solid fa-server text-gradient"></i> Self-Hosted Runners</h2>
-                            <p style="color: #cbd5e1; font-size: 0.9em; line-height: 1.5; margin-bottom: 20px;">
-                                By default, GitHub Actions execute on GitHub's public cloud virtual machines. However, banks, healthcare, and enterprise companies cannot allow their source code to leave their private firewalls.
-                            </p>
-                            <div class="detail-block">
-                                <strong><i class="fa-solid fa-network-wired" style="color: #10b981;"></i> Private VPC Execution</strong>
-                                <p>You can install the GitHub Runner agent directly on your own on-premise servers or private AWS VPC. The agent reaches out to GitHub for instructions, executing the CI/CD pipeline entirely behind your corporate firewall.</p>
+                            <div class="detail-block" style="border-left-color: #34d399;">
+                                <strong><i class="fa-solid fa-network-wired" style="color: #34d399;"></i> Private VPC Execution</strong>
+                                <p>You can install the GitHub Runner agent directly on your on-premise servers. The pipeline executes entirely behind your firewall, with direct access to internal databases!</p>
                             </div>
                         </div>
                         <div class="code-col">
-                            <a href="https://github.com/gjarunselvan/Github_Action_Example/blob/main/.github/workflows/15-self-hosted.yml" target="_blank" class="btn-view-code"><i class="fa-brands fa-github fa-lg"></i> View Live YAML</a>
                             <pre><code class="language-yaml">name: 15 - Private Firewall Deployment
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   enterprise-build:
@@ -1401,16 +1407,14 @@ jobs:
 
       # Because this runs inside our Private Network,
       # we can access internal company databases directly!
-      - name: Run Integration Tests against Internal DB
-        run: |
-          ping internal-corp-database.local
-          npm run test:e2e
+      - name: Integration Tests
+        run: npm run test:e2e
         env:
           DB_HOST: internal-corp-database.local
 
-      # Self-hosted runners can have specialized hardware (GPUs)
-      - name: Train Machine Learning Model
-        run: python train_model.py --use-gpu
+      # Self-hosted runners can have specialized hardware!
+      - name: Train AI Model
+        run: python train.py --use-gpu
 </code></pre>
                             <div class="live-status-box" data-workflow="15-self-hosted.yml" style="margin-top: 15px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); font-size: 0.85em; display: flex; justify-content: space-between; align-items: center;"><span style="color: #94a3b8;"><i class="fa-solid fa-circle-notch fa-spin" style="color: #38bdf8;"></i> Loading execution data...</span></div>
                         </div>
