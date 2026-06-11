@@ -2,6 +2,7 @@ name: 01 - Basic CI Pipeline
 
 # The 'on' block defines exactly WHEN this workflow should trigger.
 on:
+  workflow_dispatch:
   # Trigger automatically when a developer pushes code to the 'main' branch
   push:
     branches: [ "main" ]

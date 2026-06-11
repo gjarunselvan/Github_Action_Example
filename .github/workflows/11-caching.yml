@@ -1,6 +1,7 @@
 name: 11 - Dependency Caching
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
 

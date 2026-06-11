@@ -1440,7 +1440,10 @@ jobs:
                             <span class="badge" style="background: linear-gradient(135deg, #f43f5e, #be123c);">Live API</span>
                             <h2 style="display: inline-block; margin: 0 0 0 15px; font-size: 2.2em; vertical-align: middle;"><i class="fa-solid fa-satellite-dish text-gradient"></i> Real-Time Workflow Dashboard</h2>
                         </div>
-                        <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
+                        <div style="display: flex; gap: 15px;">
+                            <button onclick="triggerAllWorkflows()" class="btn-view-code" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); border: none; cursor: pointer; box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);"><i class="fa-solid fa-rocket fa-lg"></i> TRIGGER ALL WORKFLOWS</button>
+                            <a href="https://github.com/gjarunselvan/Github_Action_Example/actions" target="_blank" class="btn-view-code" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fa-solid fa-external-link-alt fa-lg"></i> Open GitHub Actions natively</a>
+                        </div>
                     </div>
 
                     <div class="flex-container">
@@ -1737,6 +1740,46 @@ jobs:
             }
         }
 
+        
+        async function triggerAllWorkflows() {
+            const token = localStorage.getItem('gh_presentation_token');
+            if (!token) {
+                alert("Please add your GitHub PAT using the Key icon first!");
+                return;
+            }
+            const repo = "gjarunselvan/Github_Action_Example";
+            const workflows = [
+                "01-ci-pipeline.yml", "02-cron-job.yml", "03-manual-trigger.yml",
+                "04-matrix-strategy.yml", "05-conditional-steps.yml", "06-docker-publish.yml",
+                "07-environments.yml", "08-caller-workflow.yml", "09-artifacts.yml",
+                "10-env-vars-secrets.yml", "11-caching.yml", "12-github-release.yml",
+                "13-auto-merge-pr.yml"
+            ];
+            
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            };
+            
+            let triggeredCount = 0;
+            for (const wf of workflows) {
+                try {
+                    // Try to trigger the workflow. Some might fail if they don't have workflow_dispatch on the main branch yet.
+                    const res = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/${wf}/dispatches`, {
+                        method: 'POST',
+                        headers,
+                        body: JSON.stringify({ ref: 'main' })
+                    });
+                    if (res.ok) triggeredCount++;
+                } catch(e) {
+                    console.error("Failed to trigger", wf, e);
+                }
+            }
+            
+            alert(`Successfully dispatched ${triggeredCount} workflows! Give the API 3-5 seconds, then watch the dashboard light up!`);
+        }
+        
         // --- API Authenticator ---
         function setGitHubToken() {
             const token = prompt("Enter a GitHub Personal Access Token (PAT) to bypass the 60 req/hr rate limit:\n(This token is saved ONLY in your local browser storage)");

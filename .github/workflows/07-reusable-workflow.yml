@@ -2,6 +2,7 @@ name: 07 - Reusable Template
 
 # 'workflow_call' explicitly designates this file as a callable blueprint (DRY principle)
 on:
+  workflow_dispatch:
   workflow_call:
     # Define parameters that the Caller workflow MUST provide
     inputs:

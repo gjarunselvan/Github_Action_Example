@@ -1,6 +1,7 @@
 name: 12 - Automated GitHub Release
 
 on:
+  workflow_dispatch:
   push:
     # Only trigger when a user creates a new semantic version tag (e.g. v2.0.1)
     tags: [ 'v*' ]
