@@ -1665,6 +1665,11 @@ jobs:
                     })
                 });
                 
+                if (!putRes.ok) {
+                    const putData = await putRes.json();
+                    throw new Error(`Failed to commit file! GitHub says: ${putData.message}`);
+                }
+                
                 // 6. Open Pull Request
                 appendTerm("Opening Pull Request against main...", "#94a3b8");
                 const prRes = await fetch(`https://api.github.com/repos/${repo}/pulls`, {
