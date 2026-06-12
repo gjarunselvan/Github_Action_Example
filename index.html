@@ -1638,11 +1638,30 @@ jobs:
                 appendTerm(`Waiting 15 seconds for the PR to be created and the CI Pipeline to trigger...`, "#f59e0b");
                 
                 // Wait 15 seconds for the injector workflow to finish and trigger the main CI pipeline
-                setTimeout(() => fetchActionLogs(repo, branchName, headers, null), 15000);
+                setTimeout(() => pollForPR(repo, branchName, headers, null), 15000);
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
                 console.error(err);
+            }
+        }
+
+        async function pollForPR(repo, branchName, headers, commitSha) {
+            try {
+                appendTerm("Looking for the Pull Request...", "#38bdf8");
+                const prRes = await fetch(`https://api.github.com/repos/${repo}/pulls?head=gjarunselvan:${branchName}&state=open`, { headers, cache: 'no-store' });
+                const prData = await prRes.json();
+                
+                if (prData.length > 0) {
+                    appendTerm(`Success! Pull Request opened at: <a href="${prData[0].html_url}" target="_blank" style="color:#10b981; text-decoration:underline;">${prData[0].html_url}</a>`, "#10b981");
+                    fetchActionLogs(repo, branchName, headers, commitSha);
+                } else {
+                    appendTerm("PR not found yet. Retrying in 5 seconds...", "#f59e0b");
+                    setTimeout(() => pollForPR(repo, branchName, headers, commitSha), 5000);
+                }
+            } catch(e) {
+                appendTerm("Error fetching PR.", "#ef4444");
+                fetchActionLogs(repo, branchName, headers, commitSha); // Fallback to logs
             }
         }
 
