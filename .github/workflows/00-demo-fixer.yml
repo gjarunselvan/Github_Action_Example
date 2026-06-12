@@ -15,6 +15,15 @@ jobs:
   fix-bug:
     runs-on: ubuntu-latest
     steps:
+      - name: Check for PAT_TOKEN Secret
+        run: |
+          if [ -z "${{ secrets.PAT_TOKEN }}" ]; then
+            echo "::error::CRITICAL ERROR: You forgot to add PAT_TOKEN to your Repository Secrets!"
+            echo "::error::Go to Settings -> Secrets and variables -> Actions -> 'Secrets' tab."
+            echo "::error::Make sure you are on the SECRETS tab, not the VARIABLES tab!"
+            exit 1
+          fi
+
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
