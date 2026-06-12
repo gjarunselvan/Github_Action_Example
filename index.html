@@ -1620,7 +1620,7 @@ jobs:
             };
             
             try {
-                appendTerm("Bypassing Corporate DLP... Engaging Cloud Injector!", "#38bdf8");
+                appendTerm("Starting Live Demo Sequence...", "#38bdf8");
                 
                 // Dispatch the Cloud Workflow
                 const dispatchRes = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/00-demo-injector.yml/dispatches`, {
@@ -1634,8 +1634,8 @@ jobs:
                     throw new Error(`Cloud dispatch failed: ${errorText}`);
                 }
                 
-                appendTerm(`Cloud Engine engaged! Workflow dispatched to branch: ${branchName}`, "#10b981");
-                appendTerm(`The Cloud Runner is actively injecting the bug and creating the PR...`, "#f59e0b");
+                appendTerm(`Automated bot dispatched to create branch: ${branchName}`, "#10b981");
+                appendTerm(`The bot is actively preparing the workspace and opening the PR...`, "#f59e0b");
                 appendTerm(`Waiting 15 seconds for the PR to be created and the CI Pipeline to trigger...`, "#f59e0b");
                 
                 // Wait 15 seconds for the injector workflow to finish and trigger the main CI pipeline
