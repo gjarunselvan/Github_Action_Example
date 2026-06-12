@@ -1638,7 +1638,8 @@ jobs:
                 appendTerm(`Waiting 15 seconds for the PR to be created and the CI Pipeline to trigger...`, "#f59e0b");
                 
                 // Wait 15 seconds for the injector workflow to finish and trigger the main CI pipeline
-                setTimeout(() => pollForPR(repo, branchName, headers, null), 15000);
+                const dispatchTime = Date.now() - 5000; // Subtract 5s just to handle clock drift
+                setTimeout(() => pollForPR(repo, branchName, headers, dispatchTime), 15000);
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
@@ -1665,7 +1666,7 @@ jobs:
             }
         }
 
-        async function fetchActionLogs(repo, branchName, headers, commitSha) {
+        async function fetchActionLogs(repo, branchName, headers, minTimestamp) {
             appendTerm("Polling GitHub API for CI Pipeline execution...", "#38bdf8");
             
             try {
@@ -1673,10 +1674,11 @@ jobs:
                 const runsRes = await fetch(`https://api.github.com/repos/${repo}/actions/runs?head_branch=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
                 const runsData = await runsRes.json();
                 
-                // Filter runs specifically to the commit we just pushed!
-                // Filter strictly to the 01-ci-pipeline.yml workflow to avoid polling the wrong action!
-                // We order by latest run first and pick the top one for this branch.
-                const run = runsData.workflow_runs.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).find(r => r.path === ".github/workflows/01-ci-pipeline.yml");
+                // Filter strictly to the 01-ci-pipeline.yml workflow, and only accept runs created AFTER our dispatch
+                const run = runsData.workflow_runs
+                    .filter(r => r.path === ".github/workflows/01-ci-pipeline.yml")
+                    .filter(r => !minTimestamp || new Date(r.created_at).getTime() >= minTimestamp)
+                    .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))[0];
                 
                 if (run) {
                     appendTerm(`Found active CI Pipeline! (Run #${run.run_number})`, "#10b981");
@@ -1687,7 +1689,7 @@ jobs:
                     pollJobStatus(repo, run.id, headers);
                 } else {
                     appendTerm("No workflows found yet. Retrying in 5 seconds...", "#f59e0b");
-                    setTimeout(() => fetchActionLogs(repo, branchName, headers, commitSha), 5000);
+                    setTimeout(() => fetchActionLogs(repo, branchName, headers, minTimestamp), 5000);
                 }
             } catch(e) {
                 appendTerm("Error fetching logs.", "#ef4444");
@@ -1753,42 +1755,25 @@ jobs:
                 appendTerm("========================================", "#38bdf8");
                 appendTerm("Starting Emergency Fix Sequence...", "#38bdf8");
                 
-                // 1. Get broken test.js file info
-                appendTerm(`Downloading broken test.js from ${branchName}...`, "#94a3b8");
-                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
-                const fileData = await fileRes.json();
-                const fileSha = fileData.sha;
-                const fileContent = decodeURIComponent(escape(atob(fileData.content)));
+                const dispatchTime = Date.now() - 5000; // Subtract 5s for clock drift
                 
-                // 2. Fix Error in test.js
-                appendTerm("Removing fatal error and restoring code...", "#10b981");
-                const fixedContent = fileContent.replace("console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);", "process.exit(0);");
-                const encodedContent = btoa(unescape(encodeURIComponent(fixedContent)));
-                
-                // 3. Commit Fixed File
-                appendTerm("Pushing emergency fix to the Pull Request...", "#94a3b8");
-                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
-                    method: 'PUT',
+                // Dispatch the Cloud Fixer Workflow
+                const dispatchRes = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/00-demo-fixer.yml/dispatches`, {
+                    method: 'POST',
                     headers,
-                    body: JSON.stringify({
-                        message: "🔧 Fix the build: Restore test.js",
-                        content: encodedContent,
-                        sha: fileSha,
-                        branch: branchName
-                    })
+                    body: JSON.stringify({ ref: 'main', inputs: { branchName: branchName } })
                 });
                 
-                const putData = await putRes.json();
-                if (!putRes.ok) {
-                    throw new Error(`GitHub API Error ${putRes.status}: ${putData.message}`);
+                if (!dispatchRes.ok) {
+                    const errorText = await dispatchRes.text();
+                    throw new Error(`Cloud dispatch failed: ${errorText}`);
                 }
-                const fixCommitSha = putData.commit.sha;
                 
-                appendTerm("Success! The Pull Request has been updated.", "#10b981");
-                appendTerm("Waiting 5 seconds for GitHub Actions to re-trigger...", "#f59e0b");
+                appendTerm(`Automated bot deployed to fix branch: ${branchName}`, "#10b981");
+                appendTerm(`Waiting 15 seconds for the bot to commit the code and trigger the CI Pipeline...`, "#f59e0b");
                 
                 // Wait for CI to start
-                setTimeout(() => fetchActionLogs(repo, branchName, headers, fixCommitSha), 5000);
+                setTimeout(() => fetchActionLogs(repo, branchName, headers, dispatchTime), 15000);
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
