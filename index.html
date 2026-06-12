@@ -1686,7 +1686,9 @@ jobs:
                     // Wait for CI to start
                     setTimeout(() => fetchActionLogs(repo, branchName, headers, newCommitSha), 5000);
                 } else {
-                    appendTerm("Failed to open PR. Check token permissions.", "#ef4444");
+                    const errorDetails = prData.message || "Unknown error";
+                    const errorErrors = prData.errors ? JSON.stringify(prData.errors) : "";
+                    appendTerm(`Failed to open PR. GitHub API says: ${errorDetails} ${errorErrors}`, "#ef4444");
                 }
                 
             } catch (err) {
