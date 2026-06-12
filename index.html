@@ -1666,8 +1666,8 @@ jobs:
                 });
                 
                 if (!putRes.ok) {
-                    const putData = await putRes.json();
-                    throw new Error(`Failed to commit file! GitHub says: ${putData.message}`);
+                    const putText = await putRes.text();
+                    throw new Error(`Failed to commit file! GitHub says: ${putText}`);
                 }
                 
                 // 6. Open Pull Request
@@ -1698,6 +1698,7 @@ jobs:
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
+                console.error(err);
             }
         }
 
