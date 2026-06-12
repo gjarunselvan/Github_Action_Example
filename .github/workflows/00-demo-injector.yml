@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
         
       - name: Create branch and inject bug
         run: |
@@ -31,7 +33,7 @@ jobs:
           
       - name: Open Pull Request
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           gh pr create \
             --title "🚨 DO NOT MERGE: Live Demo Breakage (${{ inputs.branchName }})" \
