@@ -1,0 +1,30 @@
+name: 00 - Live Demo Bug Fixer
+
+on:
+  workflow_dispatch:
+    inputs:
+      branchName:
+        description: 'Branch name to fix'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  fix-bug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branchName }}
+          
+      - name: Fix bug
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          sed -i "s/console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);/process.exit(0);/" test.js
+          git add test.js
+          git commit -m "🚑 Fix the build for live demo"
+          git push origin ${{ inputs.branchName }}

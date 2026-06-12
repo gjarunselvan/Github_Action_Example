@@ -1,0 +1,40 @@
+name: 00 - Live Demo Bug Injector
+
+on:
+  workflow_dispatch:
+    inputs:
+      branchName:
+        description: 'Branch name for the PR'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  inject-bug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Create branch and inject bug
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ inputs.branchName }}
+          sed -i "s/process.exit(0);/console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);/" test.js
+          git add test.js
+          git commit -m "💥 Break the build for live demo"
+          git push origin ${{ inputs.branchName }}
+          
+      - name: Open Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "🚨 DO NOT MERGE: Live Demo Breakage (${{ inputs.branchName }})" \
+            --body "This PR was automatically created by the cloud presentation to demonstrate GitHub Actions catching a fatal CI error." \
+            --head ${{ inputs.branchName }} \
+            --base main

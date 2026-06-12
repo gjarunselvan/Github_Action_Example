@@ -1620,81 +1620,26 @@ jobs:
             };
             
             try {
-                appendTerm("Starting Live Destruction Sequence...", "#38bdf8");
+                appendTerm("Bypassing Corporate DLP... Engaging Cloud Injector!", "#38bdf8");
                 
-                // 1. Get Main Branch SHA
-                appendTerm("Fetching main branch SHA...", "#94a3b8");
-                const mainRefRes = await fetch(`https://api.github.com/repos/${repo}/git/refs/heads/main`, { headers });
-                if (!mainRefRes.ok) throw new Error(`GitHub API Error: ${mainRefRes.status}. Ensure your PAT has full 'repo' scope!`);
-                const mainRefData = await mainRefRes.json();
-                const mainSha = mainRefData.object.sha;
-                
-                // 2. Create New Branch
-                appendTerm(`Creating new branch: ${branchName}`, "#94a3b8");
-                const createRes = await fetch(`https://api.github.com/repos/${repo}/git/refs`, {
+                // Dispatch the Cloud Workflow
+                const dispatchRes = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/00-demo-injector.yml/dispatches`, {
                     method: 'POST',
                     headers,
-                    body: JSON.stringify({ ref: `refs/heads/${branchName}`, sha: mainSha })
-                });
-                if (!createRes.ok) throw new Error(`GitHub API Error ${createRes.status} on Create Branch. Your Personal Access Token (PAT) MUST have the 'repo' scope checked in GitHub settings to grant write access!`);
-                
-                // 3. Get test.js file info
-                appendTerm("Downloading test.js...", "#94a3b8");
-                const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js?ref=${branchName}&t=${Date.now()}`, { headers, cache: 'no-store' });
-                if (!fileRes.ok) throw new Error(`Failed to download test.js: ${fileRes.status}`);
-                const fileData = await fileRes.json();
-                if (!fileData.content) throw new Error("GitHub returned empty content for test.js");
-                const fileSha = fileData.sha;
-                const fileContent = decodeURIComponent(escape(atob(fileData.content)));
-                
-                // 4. Inject Error into test.js
-                appendTerm("Injecting fatal error into test.js...", "#f59e0b");
-                const brokenContent = fileContent.replace("process.exit(0);", "console.error('💣 INTENTIONAL DEMO FAILURE TRIGGERED!'); process.exit(1);");
-                const encodedContent = btoa(unescape(encodeURIComponent(brokenContent)));
-                
-                // 5. Commit Broken File
-                appendTerm("Committing broken code to GitHub...", "#94a3b8");
-                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/test.js`, {
-                    method: 'PUT',
-                    headers,
-                    body: JSON.stringify({
-                        message: "💥 Break the build for live demo",
-                        content: encodedContent,
-                        sha: fileSha,
-                        branch: branchName
-                    })
+                    body: JSON.stringify({ ref: 'main', inputs: { branchName: branchName } })
                 });
                 
-                if (!putRes.ok) {
-                    const putText = await putRes.text();
-                    throw new Error(`Failed to commit file! GitHub says: ${putText}`);
+                if (!dispatchRes.ok) {
+                    const errorText = await dispatchRes.text();
+                    throw new Error(`Cloud dispatch failed: ${errorText}`);
                 }
                 
-                // 6. Open Pull Request
-                appendTerm("Opening Pull Request against main...", "#94a3b8");
-                const prRes = await fetch(`https://api.github.com/repos/${repo}/pulls`, {
-                    method: 'POST',
-                    headers,
-                    body: JSON.stringify({
-                        title: `🚨 DO NOT MERGE: Live Demo Breakage (${branchName})`,
-                        body: "This PR was automatically created by the presentation to demonstrate GitHub Actions catching a fatal CI error.",
-                        head: branchName,
-                        base: "main"
-                    })
-                });
-                const prData = await prRes.json();
+                appendTerm(`Cloud Engine engaged! Workflow dispatched to branch: ${branchName}`, "#10b981");
+                appendTerm(`The Cloud Runner is actively injecting the bug and creating the PR...`, "#f59e0b");
+                appendTerm(`Waiting 15 seconds for the PR to be created and the CI Pipeline to trigger...`, "#f59e0b");
                 
-                if (prData.html_url) {
-                    appendTerm(`Success! Pull Request created at: <a href="${prData.html_url}" target="_blank" style="color:#10b981; text-decoration:underline;">${prData.html_url}</a>`, "#10b981");
-                    appendTerm(`Waiting 5 seconds for GitHub Actions to trigger...`, "#f59e0b");
-                    
-                    // Wait for CI to start
-                    setTimeout(() => fetchActionLogs(repo, branchName, headers, newCommitSha), 5000);
-                } else {
-                    const errorDetails = prData.message || "Unknown error";
-                    const errorErrors = prData.errors ? JSON.stringify(prData.errors) : "";
-                    appendTerm(`Failed to open PR. GitHub API says: ${errorDetails} ${errorErrors}`, "#ef4444");
-                }
+                // Wait 15 seconds for the injector workflow to finish and trigger the main CI pipeline
+                setTimeout(() => fetchActionLogs(repo, branchName, headers, null), 15000);
                 
             } catch (err) {
                 appendTerm(`ERROR: ${err.message}`, "#ef4444");
@@ -1712,7 +1657,8 @@ jobs:
                 
                 // Filter runs specifically to the commit we just pushed!
                 // Filter strictly to the 01-ci-pipeline.yml workflow to avoid polling the wrong action!
-                const run = runsData.workflow_runs.find(r => r.head_sha === commitSha && r.path === ".github/workflows/01-ci-pipeline.yml");
+                // We order by latest run first and pick the top one for this branch.
+                const run = runsData.workflow_runs.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).find(r => r.path === ".github/workflows/01-ci-pipeline.yml");
                 
                 if (run) {
                     appendTerm(`Found active CI Pipeline! (Run #${run.run_number})`, "#10b981");
