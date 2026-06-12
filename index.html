@@ -1574,11 +1574,10 @@ jobs:
             progress: true,
             center: false,
             margin: 0.02,
-            // 16:10 logical canvas. Reveal scales this automatically to any browser;
-            // on a 1920x1200 HP EliteBook at 150% Windows scaling this maps cleanly
-            // to the browser's approximate 1280x800 CSS viewport.
-            width: 1600,
-            height: 1000,
+            // 16:9 logical canvas. Reveal scales this automatically to any browser;
+            // perfectly optimized for 14-inch HP EliteBook screens without shrinking text.
+            width: 1280,
+            height: 720,
             minScale: 0.1,
             maxScale: 3.0,
             disableLayout: false
