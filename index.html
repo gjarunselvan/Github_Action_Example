@@ -20,12 +20,16 @@
 
     <style>
         :root {
-            --deck-width: 1920px;
-            --deck-height: 1200px;
             --panel-bg: rgba(15, 23, 42, 0.9);
             --panel-border: rgba(255, 255, 255, 0.22);
             --body-text: #f1f5f9;
             --muted-text: #e2e8f0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
         }
 
         /* Beautiful Animated Gradient Background */
@@ -43,16 +47,15 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Utilize Max Space */
-        .reveal .slides {
-            width: 96% !important;
-            max-width: var(--deck-width) !important;
-            height: 96% !important;
-        }
+        /*
+         * Let Reveal.js own slide sizing and transforms. Hard-coding the
+         * .slides element breaks Reveal's browser-fit calculations, especially
+         * on 1920x1200 displays using 150% Windows scaling.
+         */
 
         /* HP EliteBook target: 1920x1200 display at 150% Windows scaling
-           renders as an approximately 1280x800 CSS viewport. Keep the
-           presentation on a native 16:10 canvas and prevent washed-out text. */
+           renders as an approximately 1280x800 CSS viewport. Let Reveal.js
+           fit the 16:10 logical canvas and prevent washed-out text. */
         .reveal .slides section.present,
         .reveal .slides section.present .fragment.visible {
             opacity: 1 !important;
@@ -60,8 +63,16 @@
 
         /* Typography */
         .reveal {
+            width: 100vw;
+            height: 100vh;
             font-family: 'Inter', sans-serif;
             color: #ffffff;
+        }
+
+        .reveal .slides > section {
+            box-sizing: border-box;
+            height: 100%;
+            padding: 0;
         }
 
         .reveal h1, .reveal h2, .reveal h3 {
@@ -102,12 +113,14 @@
             padding: 40px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             width: 100%;
-            min-height: 100%;
+            height: 100%;
+            min-height: 0;
+            max-height: 100%;
             box-sizing: border-box;
             text-align: left;
             display: flex;
             flex-direction: column;
-            height: auto;
+            overflow: hidden;
         }
 
         .glass-panel.center {
@@ -121,13 +134,18 @@
             display: flex;
             gap: 40px;
             flex-grow: 1;
-            height: auto;
+            min-height: 0;
+            height: 100%;
+            overflow: hidden;
         }
 
         .content-col {
             flex: 1.2;
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
         }
         
         
@@ -165,6 +183,9 @@
             flex: 1.8;
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
         }
 
         /* Beautiful Images */
@@ -195,6 +216,8 @@
             border-radius: 12px;
             background: #0f172a !important;
             box-sizing: border-box;
+            max-height: 100%;
+            overflow: auto;
         }
         
         
@@ -1550,14 +1573,19 @@ jobs:
             controls: true,
             progress: true,
             center: false,
-            margin: 0.03,
-            // Native HP EliteBook 16:10 canvas: 1920x1200 at 150% OS scaling.
-            width: 1920,
-            height: 1200,
-            minScale: 0.2,
-            maxScale: 1.5,
+            margin: 0.02,
+            // 16:10 logical canvas. Reveal scales this automatically to any browser;
+            // on a 1920x1200 HP EliteBook at 150% Windows scaling this maps cleanly
+            // to the browser's approximate 1280x800 CSS viewport.
+            width: 1600,
+            height: 1000,
+            minScale: 0.1,
+            maxScale: 3.0,
             disableLayout: false
         });
+
+        window.addEventListener('load', () => Reveal.layout());
+        window.addEventListener('resize', () => Reveal.layout());
 
         // Real-Time GitHub API Fetcher
         
