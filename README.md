@@ -11,6 +11,18 @@
 
 ---
 
+## 🎓 Interactive Presentation
+
+This repository hosts a stunning, animated, full-screen HTML presentation that explains the core concepts of GitHub Actions, compares it to legacy tools like Jenkins, and dives deep into the code.
+
+✨ **Features**:
+- **Live Interactive Demo**: Simulates a live CI failure and resolution natively from the browser using the GitHub API.
+- **Mass Parallel Dispatch**: Triggers all 15 workflows simultaneously to populate a real-time Live Dashboard.
+
+👉 **[View the Live Presentation Demo Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
+
+---
+
 ## 🛡️ SonarQube & SonarCloud Security Integration 
 
 This repository serves as a hands-on demonstration of integrating **Continuous Integration / Continuous Deployment (CI/CD)** pipelines with **Static Application Security Testing (SAST)** tools.
@@ -40,18 +52,6 @@ podman run --rm -v "${PWD}:/usr/src" --network host sonarsource/sonar-scanner-cl
 ```
 
 *(Note: For the automated cloud version, no manual commands are needed! Just push to `main` and watch the GitHub Actions tab.)*
-
----
-
-## 🎓 Interactive Presentation
-
-This repository hosts a stunning, animated, full-screen HTML presentation that explains the core concepts of GitHub Actions, compares it to legacy tools like Jenkins, and dives deep into the code.
-
-✨ **Features**:
-- **Live Interactive Demo**: Simulates a live CI failure and resolution natively from the browser using the GitHub API.
-- **Mass Parallel Dispatch**: Triggers all 15 workflows simultaneously to populate a real-time Live Dashboard.
-
-👉 **[View the Live Presentation Demo Here!](https://gjarunselvan.github.io/Github_Action_Example/)** 👈
 
 ---
 

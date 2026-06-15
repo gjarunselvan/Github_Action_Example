@@ -468,6 +468,36 @@
                 </div>
             </section>
 
+            <!-- SonarQube SAST Integration -->
+            <section data-transition="slide">
+                <div class="glass-panel" style="padding: 20px;">
+                    <h2 style="font-size: 2.5em; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-shield-halved" style="color: #ef4444;"></i> SonarQube SAST Integration</h2>
+                    <div style="display: flex; gap: 30px; text-align: left;">
+                        <div style="flex: 1;">
+                            <h3 style="color: #f87171;"><i class="fa-solid fa-bug"></i> Static Application Security Testing</h3>
+                            <p style="font-size: 0.8em; margin-bottom: 20px;">GitHub Actions flawlessly integrates with external security tools like <strong>SonarCloud</strong> to implement strict Quality Gates. When a developer pushes vulnerable code (like SQL injections or hardcoded passwords), the pipeline instantly runs a deep static analysis.</p>
+                            <div class="detail-block" style="border-left-color: #ef4444; background: rgba(239,68,68,0.1);">
+                                <strong><i class="fa-solid fa-ban" style="color: #ef4444;"></i> The Quality Gate</strong>
+                                <p style="font-size: 0.85em; margin-top: 10px;">If the security score drops below an 'A' or the code smells exceed the threshold, the Action physically blocks the Pull Request from merging into production.</p>
+                            </div>
+                        </div>
+                        <div style="flex: 1; background: #0f172a; padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            <h4 style="color: #38bdf8; margin-top: 0; font-size: 1.2em;"><i class="fa-brands fa-github"></i> 02-sonarcloud-scan.yml</h4>
+                            <pre style="margin:0; box-shadow:none; border:none;"><code class="language-yaml">jobs:
+  sonarcloud:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Security Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- The Base Codebase -->
             <section data-transition="slide">
                 <div class="glass-panel">
