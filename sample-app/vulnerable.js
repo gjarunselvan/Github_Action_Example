@@ -43,4 +43,10 @@ function processData(userInput) {
     console.log("Result is: " + result);
 }
 
-module.exports = { authenticateUser, calculateDiscount, processData };
+function executeQuery(userInput) {
+    // 🚩 SECURITY VULNERABILITY: SQL Injection
+    const query = "SELECT * FROM users WHERE username = '" + userInput + "'";
+    console.log("Executing: " + query);
+}
+
+module.exports = { authenticateUser, calculateDiscount, processData, executeQuery };
