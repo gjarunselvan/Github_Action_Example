@@ -24,3 +24,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provided automatically by GitHub
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # You must add this to your GitHub Repository Secrets!
+
+      # 🛡️ NEW: Quality Gate Break
+      # This step will physically FAIL the GitHub Action (red X) if SonarCloud 
+      # detects too many vulnerabilities or bugs, blocking the Pull Request!
+      - name: SonarCloud Quality Gate Check
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
